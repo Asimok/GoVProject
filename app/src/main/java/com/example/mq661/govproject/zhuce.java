@@ -27,12 +27,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class zhuce extends AppCompatActivity implements View.OnClickListener {
-    EditText zhanghu,mima,Name,PhoneNumber,Email,Ministry;
+    EditText zhanghu,mima,Name,PhoneNumber,Email,Ministry,remima;
     RadioGroup Sex;
     RadioButton man,woman;
     Button zhuce;
     private OkHttpClient okhttpClient;
-    private String zhanghu1,mima1,Name1,PhoneNumber1,Email1,Ministry1;
+    private String zhanghu1,mima1,Name1,PhoneNumber1,Email1,Ministry1,remima1;
     private int Sex1=3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
 
         zhanghu = findViewById(R.id.zhanghao);
         mima = findViewById(R.id.mima);
+        remima = findViewById(R.id.remima);
         Name = findViewById(R.id.Name);
         Sex=findViewById(R.id.Sex);
         PhoneNumber=findViewById(R.id.PhoneNumber);
@@ -87,6 +88,7 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
 
          zhanghu1 = zhanghu.getText().toString().trim();
          mima1 = mima.getText().toString().trim();
+         remima1 = remima.getText().toString().trim();
          Name1 = tounicode.gbEncoding(Name.getText().toString().trim());
 
          PhoneNumber1 = PhoneNumber.getText().toString().trim();
@@ -121,6 +123,10 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "请填写部门", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!remima1.equals(mima1)) {
+            Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         new Thread(new Runnable() {
@@ -143,7 +149,6 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
         map.put("PhoneNumber", PhoneNumber1);
         map.put("Email", Email1);
         map.put("Ministry", Ministry1);
-
 
 
 

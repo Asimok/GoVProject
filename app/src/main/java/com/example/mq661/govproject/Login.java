@@ -139,8 +139,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 //dafeng 192.168.2.176
               //  .url("http://192.168.2.176:8080/LoginProject/login")
               // .url("http://192.168.43.174:8080/LoginProject/login")
-                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
-                //.url("http://192.168.43.174:8080/SmartRoom/LoginServlet")
+               // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
+                .url("http://192.168.43.174:8080/SmartRoom/LoginServlet")//MQ
                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -182,7 +182,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if(zhanghu.getText().toString().equals(zhanghu4)&&mima.getText().toString().equals(mima4)) {
+                if(zhanghu.getText().toString().equals(zhanghu4)&&
+                        tomd5.tomd5(mima.getText().toString()).equals(mima4)) {
                     Toast.makeText(Login.this,"登录成功！",Toast.LENGTH_SHORT).show();
                 }
                 else
