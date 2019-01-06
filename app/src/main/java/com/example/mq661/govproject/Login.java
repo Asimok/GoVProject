@@ -129,10 +129,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Map map = new HashMap();
         map.put("zhanghu", zhanghu1);
         map.put("mima", mima1);
+
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
 //        Log.d("这将JSON对象转换为json字符串", jsonString);
-        RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
+        RequestBody body = RequestBody.create(null, jsonString);  //以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
                 //dafeng 192.168.2.176
@@ -151,7 +152,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -185,7 +186,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(Login.this,"登录成功！",Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(Login.this,"密码错误！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this,"密码错误！！",Toast.LENGTH_SHORT).show();
             }
         });
     }
