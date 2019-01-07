@@ -1,4 +1,4 @@
-package com.example.mq661.govproject;
+package com.example.mq661.govproject.Login_Register;
 
 
 
@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.TokenUtil;
+import com.example.mq661.govproject.tools.tomd5;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +34,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     CheckBox CK;
     Button login;
     private OkHttpClient okhttpClient;
-    private String zhanghu1,mima1;
+    private String zhanghu1,mima1,Token=null;
+    Map<String, String> userInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +52,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login=findViewById(R.id.login);
         login.setOnClickListener(this);
         // 记住密码功能
-        Map<String, String> userInfo = saveinfo.getUserInfo(this);
+      userInfo = saveinfo.getUserInfo(this);
         try {
             if (userInfo != null) {
                 // 显示在界面上
@@ -64,7 +69,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     mima.setText(userInfo.get("password"));
                 }
-
+                Toast.makeText(Login.this,userInfo.get("Token"),Toast.LENGTH_SHORT).show();
             }
             //CK.setChecked(true);
         }
@@ -88,6 +93,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         String number = zhanghu.getText().toString().trim();
         String password = mima.getText().toString();
+       //
+        if(userInfo.get("Token").toString().isEmpty())
+        {
+            Token =TokenUtil.genToken();
+            Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Token=userInfo.get("Token");
+            Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
+        }
+
         if (TextUtils.isEmpty(number)) {
             Toast.makeText(this, "请输入员工号", Toast.LENGTH_SHORT).show();
             return;
@@ -101,7 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         try {
             if (CK.isChecked()) {
 
-                boolean isSaveSuccess = saveinfo.saveUserInfo(this, number, password);
+                boolean isSaveSuccess = saveinfo.saveUserInfo(this, number, password,Token);
                 if (isSaveSuccess) {
                     Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
                 } else {
@@ -111,7 +128,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 number = "请输入员工号";
                 password = "请输入密码";
 
-                saveinfo.saveUserInfo(this, number, password);
+                saveinfo.saveUserInfo(this, number, password,Token);
             }
         }
         catch (Exception e)
@@ -129,6 +146,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Map map = new HashMap();
         map.put("zhanghu", zhanghu1);
         map.put("mima", mima1);
+        map.put("Token",Token);
 
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
@@ -166,6 +184,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     JSONObject jsonObj = new JSONObject(res);
                     String zhanghu3 = jsonObj.getString("zhanghu");
                     String mima3 = jsonObj.getString("mima");
+
                     showRequestResult(zhanghu3,mima3);
                 } catch (JSONException e) {
                     e.printStackTrace();

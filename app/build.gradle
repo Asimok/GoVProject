@@ -16,14 +16,60 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'org/apache/commons/codec/language/*'
+        exclude 'org/apache/commons/codec/language/bm/ash_approx_russian.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_exact_greeklatin.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_exact_german.txt'
+        exclude 'org/apache/commons/codec/language/bm/sep_rules_french.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_approx_czech.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_hebrew_common.txt'
+        exclude 'org/apache/commons/codec/language/bm/ash_exact_common.txt'
+        exclude 'org/apache/commons/codec/language/bm/ash_approx_romanian.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_approx_greek.txt'
+        exclude 'org/apache/commons/codec/language/bm/sep_exact_spanish.txt'
+        exclude 'index-all.html'
+        exclude 'org/apache/commons/codec/language/bm/gen_rules_romanian.txt'
+        exclude 'org/apache/commons/codec/language/bm/gen_exact_english.txt'
+        exclude 'org/apache/commons/codec/language/bm/ash_exact_german.txt'
+        exclude 'org/apache/commons/codec/language/bm/*'
+        exclude 'stylesheet.css'
+        exclude 'bla.tar.xz'
+        exclude 'allclasses-frame.html'
+        exclude 'package-list'
+        exclude 'serialized-form.html'
+        exclude 'help-doc.html'
+        exclude 'constant-values.html'
+        exclude 'deprecated-list.html'
+        exclude 'allclasses-noframe.html'
+        exclude 'index.html'
+        exclude 'bla.tar'
+        exclude 'overview-summary.html'
+        exclude 'overview-frame.html'
+        exclude 'overview-tree.html'
+    }
 }
+
 
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation files('libs/commons-codec-1.11-javadoc.jar')
+   // implementation files('libs/commons-codec-1.11-sources.jar')
+   // implementation files('libs/commons-codec-1.11-test-sources.jar')
+   // implementation files('libs/commons-codec-1.11-tests.jar')
+   // implementation files('libs/commons-codec-1.11.jar')
+   // implementation files('libs/commons-lang-2.6-javadoc.jar')
+   // implementation files('libs/commons-lang-2.6-sources.jar')
+    implementation files('libs/commons-lang-2.6.jar')
+
 }
+
+
+
+

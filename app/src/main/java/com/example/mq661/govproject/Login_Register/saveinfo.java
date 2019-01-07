@@ -1,15 +1,16 @@
-package com.example.mq661.govproject;
+package com.example.mq661.govproject.Login_Register;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class saveinfo {
 
         // 保存QQ号码和登录密码,到data.xml文件中
-        public static boolean saveUserInfo(Context context, String number, String password)
+        public static boolean saveUserInfo(Context context, String number, String password,String Token)
         {
             SharedPreferences sp = context.getSharedPreferences("data",
                     Context.MODE_PRIVATE);
@@ -17,6 +18,7 @@ public class saveinfo {
             //number password字段为默认值
             edit.putString("userName", number);
             edit.putString("pwd", password);
+            edit.putString("Token", Token);
             edit.commit();
             return true;
         }
@@ -27,11 +29,14 @@ public class saveinfo {
                     Context.MODE_PRIVATE);
             String number = sp.getString("userName", null);
             String password = sp.getString("pwd", null);
+            String Token = sp.getString("Token", null);
 
             Map<String, String> userMap = new HashMap<String, String>();
             userMap.put("number", number);
             userMap.put("password", password);
+            userMap.put("Token", Token);
             return userMap;
+
         }
     }
 

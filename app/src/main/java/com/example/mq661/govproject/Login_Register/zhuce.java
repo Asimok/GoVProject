@@ -1,4 +1,4 @@
-package com.example.mq661.govproject;
+package com.example.mq661.govproject.Login_Register;
 
 
 
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
