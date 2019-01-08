@@ -128,25 +128,40 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:paddingLeft="50dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:text="会议室等级:"
+            android:text="最低可使用职务"
             android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/MettingRomeLevel"
-            android:layout_width="254dp"
+
+        <RadioGroup
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
-            android:hint="请输入会议室等级"
-            android:paddingLeft="40dp"
+            android:orientation="horizontal"
             android:paddingTop="10dp"
-            android:paddingRight="40dp"
-            android:gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/MeetingRomeLevel">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dsz"
+                android:text="董事长"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/zjl"
+                android:text="总经理"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bmjl"
+                android:text="部门经理"/>
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout

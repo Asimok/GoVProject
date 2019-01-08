@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,9 +59,9 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
 
-        BuildNumber1 = BuildNumber.getText().toString().trim();
+        BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        Time1 = Time.getText().toString().trim();
+        Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
         Token1 =Token.get("Token");
         Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {

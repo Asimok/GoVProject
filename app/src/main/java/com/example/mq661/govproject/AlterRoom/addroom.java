@@ -34,11 +34,13 @@ import okhttp3.Response;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 
 public class addroom extends AppCompatActivity implements View.OnClickListener {
-    EditText BuildNumber,RoomNumber,Time,Size,Function,MeetingRoomLevel;
+    EditText BuildNumber,RoomNumber,Time,Size,Function;
+    RadioGroup MeetingRoomLevel;
+    RadioButton dsz,zjl,bmjl;
     Button commit;
     Map<String, String> Token;
     private OkHttpClient okhttpClient;
-    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1;
+    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1,level=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,26 +55,53 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         RoomNumber = findViewById(R.id.RoomNumber);
         Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
-        Function=findViewById(R.id.Function);
-        MeetingRoomLevel=findViewById(R.id.MettingRomeLevel);
-        commit=findViewById(R.id.commit);
+        Function = findViewById(R.id.Function);
+        MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
+        zjl = findViewById(R.id.zjl);
+        bmjl = findViewById(R.id.bmjl);
+        dsz = findViewById(R.id.dsz);
+        commit = findViewById(R.id.commit);
 
         commit.setOnClickListener(this);
         // 提交修改
 
         Token = saveinfo.getUserInfo(this);
-    }
 
+        MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                // 获取用户选中的性别
+                //String sex = "";
+                switch (checkedId) {
+                    case R.id.dsz:
+                        level = "董事长";
+                        break;
+                    case R.id.zjl:
+                        level = "总经理";
+                        break;
+                    case R.id.bmjl:
+                        level = "部门经理";
+                        break;
+                    default:
+                        break;
+                }
+
+                // 消息提示
+                Toast.makeText(addroom.this,
+                        "最低使用权限是：" + level, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
 
-        BuildNumber1 = BuildNumber.getText().toString().trim();
+        BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        Time1 = Time.getText().toString().trim();
+        Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
         Size1 = Size.getText().toString().trim();
         Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
-        MeetingRomeLevel1 = tounicode.gbEncoding(MeetingRoomLevel.getText().toString().trim());
+        MeetingRomeLevel1 = tounicode.gbEncoding(level);
         Token1 =Token.get("Token");
         Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
