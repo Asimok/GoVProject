@@ -135,14 +135,14 @@
             android:layout_gravity="left"
             android:paddingLeft="50dp"
             android:paddingTop="10dp"
-            android:text="会议室等级:"
+            android:text="是否开会:"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/MettingRomeLevel"
+            android:id="@+id/IsMeeting"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
-            android:hint="显示会议室等级"
+            android:hint="显示否开会"
             android:paddingLeft="40dp"
             android:paddingTop="10dp"
             android:paddingRight="40dp"

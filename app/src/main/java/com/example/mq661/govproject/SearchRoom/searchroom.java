@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class searchroom extends AppCompatActivity implements View.OnClickListener {
-    TextView BuildNumber,RoomNumber,Time,Size,Function,MeetingRoomLevel;
+    TextView BuildNumber,RoomNumber,Time,Size,Function,IsMeeting;
 
     Button commit;
     Map<String, String> Token;
@@ -50,7 +51,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
         Function=findViewById(R.id.Function);
-        MeetingRoomLevel=findViewById(R.id.MettingRomeLevel);
+        IsMeeting=findViewById(R.id.IsMeeting);
         commit=findViewById(R.id.commit);
 
         commit.setOnClickListener(this);
@@ -93,7 +94,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 //  .url("http://192.168.2.176:8080/LoginProject/login")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://192.168.43.174:8080/SmartRoom/RegistServlet") //马琦IP
+                .url("http://192.168.43.174:8080/SmartRoom/SearchServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -120,13 +121,13 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
                     String BuildNumber1 = jsonObj.getString("BuildNumber");
                     String RoomNumber1 = jsonObj.getString("RoomNumber");
-                    String Time1 = jsonObj.getString("Time");
+                    String Time1 = tounicode.decodeUnicode( jsonObj.getString("Time"));
                     String  Size1 = jsonObj.getString("Size");
-                    String  Function1 =jsonObj.getString("Function");
-                    String  MettingRomeLevel1 = jsonObj.getString("MeetingRoomLevel");
+                    String  Function1 =tounicode.decodeUnicode(jsonObj.getString("Function"));
+                    String  IsMeeting = jsonObj.getString("IsMeeting");
 
 
-                    showRequestResult(BuildNumber1, RoomNumber1, Time1, Size1, Function1, MettingRomeLevel1);
+                    showRequestResult(BuildNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -136,7 +137,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
 
     private void showRequestResult(final String BuildNumber1,final String RoomNumber1,final String Time1,final String Size1,
-                                   final    String Function1,final String MettingRomeLevel1) {
+                                   final    String Function1,final String IsMeeting1) {
         runOnUiThread(new Runnable() {
             @Override
             /**
@@ -149,7 +150,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                  Time.setText(Time1 );
                  Size.setText(Size1 );
                  Function.setText(Function1 );
-                MeetingRoomLevel.setText(MettingRomeLevel1 );
+                IsMeeting.setText(IsMeeting1 );
 
             }
         });
