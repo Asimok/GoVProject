@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mq661.govproject.AlterRoom.alterroom;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.TokenUtil;
 import com.example.mq661.govproject.tools.tomd5;
@@ -216,5 +217,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         intent = new Intent(this, zhuce.class);
         startActivityForResult(intent, 0);
     }
+
+    public void room(View view) {
+        Intent intent;
+        intent = new Intent(this, alterroom.class);
+        startActivityForResult(intent, 0);
+    }
+
 }
 

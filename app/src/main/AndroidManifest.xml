@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AlterRoom.alterroom"
+        <activity android:name=".Login_Register.Login"
             android:icon="@drawable/app"
             >
             <intent-filter>
@@ -19,10 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login_Register.zhuce"></activity>
+        <activity android:name=".AlterRoom.alterroom"></activity>
         <activity android:name=".AlterRoom.addroom"></activity>
         <activity android:name=".AlterRoom.deleteroom"></activity>
         <activity android:name=".AlterRoom.changeroom"></activity>
         <activity android:name=".SearchRoom.searchroom"></activity>
+        <activity android:name=".SearchRoom.searchroomAdapter"></activity>
     </application>
 
 </manifest>

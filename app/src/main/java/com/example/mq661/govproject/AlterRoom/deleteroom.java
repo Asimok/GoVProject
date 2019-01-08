@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -63,7 +64,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
         Token1 =Token.get("Token");
-        Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
             return;
@@ -155,14 +156,17 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
              */
             public void run() {
                 if (status.equals("-1")) {
-                    Toast.makeText(deleteroom.this, "删除失败！", Toast.LENGTH_SHORT).show();
-                } else if (status.equals("1")) {
-                    Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(deleteroom.this, "删除失败！", Toast.LENGTH_LONG).show();
+                } else if (status.equals("0")) {
+                    Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
+
     }
-}
+
+    }
+
 
 

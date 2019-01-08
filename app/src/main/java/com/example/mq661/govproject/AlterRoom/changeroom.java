@@ -101,7 +101,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
         MeetingRoomLevel1 = tounicode.gbEncoding(level);
         Token1 =Token.get("Token");
-        Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
             return;
@@ -186,6 +186,8 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
+
+
                 String res = response.body().string();//获取到传过来的字符串
                 try {
                     JSONObject jsonObj = new JSONObject(res);
@@ -209,7 +211,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             public void run() {
                 if (status.equals("-1")) {
                     Toast.makeText(changeroom.this, "修改失败！", Toast.LENGTH_SHORT).show();
-                } else if (status.equals("1")) {
+                } else if (status.equals("0")) {
                     Toast.makeText(changeroom.this, "修改成功！", Toast.LENGTH_SHORT).show();
                 }
 

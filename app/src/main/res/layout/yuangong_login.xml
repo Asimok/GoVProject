@@ -103,7 +103,7 @@
             android:textSize="20sp"
             android:onClick="login"/>
         <Button
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,6 +111,16 @@
             android:text="注册账号"
             android:background="#ffc55c"
             android:onClick="zhuce"
+            />
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/room"
+            android:text="会议室"
+            android:background="#ffc55c"
+            android:onClick="room"
             />
     </LinearLayout>
 

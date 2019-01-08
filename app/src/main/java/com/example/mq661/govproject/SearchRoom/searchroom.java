@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mq661.govproject.AlterRoom.changeroom;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
@@ -30,7 +31,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class searchroom extends AppCompatActivity implements View.OnClickListener {
-    TextView BuildNumber,RoomNumber,Time,Size,Function,IsMeeting;
+    TextView BuildingNumber,RoomNumber,Time,Size,Function,IsMeeting;
 
     Button commit;
     Map<String, String> Token;
@@ -46,7 +47,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
     private void initView() {
 
-        BuildNumber = findViewById(R.id.BuildNumber);
+        BuildingNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
         Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
@@ -66,7 +67,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
 
         Token1 =Token.get("Token");
-        Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
 
 
 
@@ -117,17 +118,17 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
                 String res = response.body().string();//获取到传过来的字符串
                 try {
-                    JSONObject jsonObj = new JSONObject(res);
 
-                    String BuildNumber1 = jsonObj.getString("BuildNumber");
+                    JSONObject jsonObj = new JSONObject(res);
+                    String BuildingNumber1 = tounicode.decodeUnicode(jsonObj.getString("BuildingNumber"));
                     String RoomNumber1 = jsonObj.getString("RoomNumber");
                     String Time1 = tounicode.decodeUnicode( jsonObj.getString("Time"));
                     String  Size1 = jsonObj.getString("Size");
                     String  Function1 =tounicode.decodeUnicode(jsonObj.getString("Function"));
                     String  IsMeeting = jsonObj.getString("IsMeeting");
+                    String AA="AAAAA";
 
-
-                    showRequestResult(BuildNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting);
+                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,AA);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -136,21 +137,22 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void showRequestResult(final String BuildNumber1,final String RoomNumber1,final String Time1,final String Size1,
-                                   final    String Function1,final String IsMeeting1) {
+    private void showRequestResult(final String BuildNumber1,final String RoomNumber1,final String Time1,final String Size1,final String Function1,final String IsMeeting1,final String AA) {
         runOnUiThread(new Runnable() {
             @Override
             /**
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
+                Toast.makeText(searchroom.this, "修改失败！", Toast.LENGTH_SHORT).show();
 
-                 BuildNumber.setText(BuildNumber1);
-                 RoomNumber.setText(RoomNumber1 );
-                 Time.setText(Time1 );
-                 Size.setText(Size1 );
-                 Function.setText(Function1 );
-                IsMeeting.setText(IsMeeting1 );
+                Toast.makeText(searchroom.this, AA, Toast.LENGTH_LONG).show();
+                BuildingNumber.setText(BuildNumber1);
+                 RoomNumber.setText(RoomNumber1);
+                 Time.setText(Time1);
+                 Size.setText(Size1);
+                 Function.setText(Function1);
+                IsMeeting.setText(IsMeeting1);
 
             }
         });
