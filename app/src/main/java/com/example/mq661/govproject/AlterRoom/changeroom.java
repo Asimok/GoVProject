@@ -37,7 +37,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
     private OkHttpClient okhttpClient;
     RadioGroup MeetingRoomLevel;
     RadioButton dsz,zjl,bmjl;
-    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRoomLevel1,Token1,level=null;
+    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRoomLevel1,Token1,level="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

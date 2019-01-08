@@ -1,4 +1,5 @@
-package com.example.mq661.govproject.AlterRoom;
+package com.example.mq661.govproject.BookRoom;
+
 
 import android.support.v7.app.AppCompatActivity;
 
@@ -30,17 +31,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class deleteroom extends AppCompatActivity implements View.OnClickListener {
+public class bookroom extends AppCompatActivity implements View.OnClickListener {
     EditText BuildNumber,RoomNumber,Time;
-
     Button commit;
+    TextView bookinfo;
     Map<String, String> Token;
     private OkHttpClient okhttpClient;
     private String BuildNumber1,RoomNumber1,Time1,Token1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.deleteroom_layout);
+        setContentView(R.layout.bookroom_layout);
         initView();
 
     }
@@ -50,9 +51,8 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
         Time = findViewById(R.id.Time);
-
         commit=findViewById(R.id.commit);
-
+        bookinfo=findViewById(R.id.bookinfo);
         commit.setOnClickListener(this);
         // 提交修改
 
@@ -99,7 +99,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1) {
         Map map = new HashMap();
-        map.put("BuildNumber", BuildNumber1);
+        map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Token", Token1);
@@ -116,7 +116,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-               .url("http://192.168.43.174:8080/SmartRoom/DeleteServlet") //马琦IP
+                .url("http://192.168.43.174:8080/SmartRoom/DeleteServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -128,7 +128,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(deleteroom.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(bookroom.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -141,8 +141,13 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 try {
                     JSONObject jsonObj = new JSONObject(res);
                     String status = jsonObj.getString("status");
+                    String MeetingNumber = jsonObj.getString("MeetingNumber");
+                    String EmployeeNumber = tounicode.decodeUnicode(jsonObj.getString("EmployeeNumber"));
+                    String Name = tounicode.decodeUnicode(jsonObj.getString("Name"));
 
-                    showRequestResult(status);
+
+
+                    showRequestResult(status,MeetingNumber,EmployeeNumber,Name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -151,7 +156,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void showRequestResult(final String status) {
+    private void showRequestResult(final String status,final String MeetingNumber,final String EmployeeNumber,final String Name) {
         runOnUiThread(new Runnable() {
             @Override
             /**
@@ -159,11 +164,10 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
              */
             public void run() {
                 if (status.equals("-1")) {
-                    Toast.makeText(deleteroom.this, "删除失败！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(bookroom.this, "预定失败！", Toast.LENGTH_LONG).show();
                 } else if (status.equals("0")) {
-                    Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_LONG).show();
-
-
+                    Toast.makeText(bookroom.this, "预定成功！", Toast.LENGTH_LONG).show();
+                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber+" 会议编号:"+MeetingNumber);
                 }
 
             }
@@ -171,7 +175,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    }
+}
 
 
 

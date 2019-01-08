@@ -71,8 +71,8 @@ public class searchroomAdapter extends AppCompatActivity {
 
             View view =View.inflate(searchroomAdapter.this,R.layout.searchroom_adp_layout,null);
 
-            TextView name=view.findViewById(R.id.name);
-            TextView size=view.findViewById(R.id.size);
+            TextView name=view.findViewById(R.id.BuildNumber);
+            TextView size=view.findViewById(R.id.Size);
 
             name.setText(data.get(position).getBuildingNumber());
             size.setText(data.get(position).getSize());

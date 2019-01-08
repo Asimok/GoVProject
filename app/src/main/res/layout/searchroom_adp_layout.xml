@@ -1,26 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="应用程序名"
-            android:layout_marginLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="楼号："
             android:textSize="20sp"
             android:textColor="#ff0000"/>
         <TextView
-            android:id="@+id/size"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="大小"
-            android:layout_marginLeft="40dp"
+            android:id="@+id/BuildNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="楼号"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="房间号："
             android:textSize="20sp"
             android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/RoomNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="房间号"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="容量："
+            android:textSize="20sp"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/Size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="容量"
+            android:textSize="20sp"
+            />
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开放时间："
+            android:textSize="20sp"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="开放时间"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="功能："
+            android:textSize="20sp"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/Function"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="功能"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否开会："
+            android:textSize="20sp"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/IsMeeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="开会否"
+            android:textSize="20sp"
+            />
+            <Button
+                android:id="@+id/select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_marginLeft="100dp"
+                android:text="选中"
+                />
+    </LinearLayout>
+
 </LinearLayout>
