@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
@@ -34,7 +35,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     EditText BuildNumber,RoomNumber,Time;
 
     Button commit;
-    Map<String, String> Token;
+    Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private String BuildNumber1,RoomNumber1,Time1,Token1;
     @Override
@@ -56,7 +57,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         commit.setOnClickListener(this);
         // 提交修改
 
-        Token = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);//用作读取本地token
     }
 
     @Override
@@ -66,7 +67,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
-        Token1 =Token.get("Token");
+        Token1=usertoken.get("Token");//读本地
         //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -108,7 +109,6 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
 
-//        Log.d("这将JSON对象转换为json字符串", jsonString);
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
