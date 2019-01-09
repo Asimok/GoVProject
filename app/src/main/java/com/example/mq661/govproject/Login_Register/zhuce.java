@@ -209,15 +209,15 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if (status.equals("1")) {
+                if (status.equals("0")) {
                     Toast.makeText(zhuce.this, "注册成功！", Toast.LENGTH_SHORT).show();
-                } else if (status.equals("0")) {
+                } else if (status.equals("-1")) {
                     Toast.makeText(zhuce.this, "信息不存在，注册失败！", Toast.LENGTH_SHORT).show();
                 }
-                else if (status.equals("3")) {
+                else if (status.equals("2")) {
                     Toast.makeText(zhuce.this, "该员工号已注册！请重新输入！", Toast.LENGTH_SHORT).show();
                 }
-                else if (status.equals("4")) {
+                else if (status.equals("3")) {
                     Toast.makeText(zhuce.this, "执行SQL语句出错！", Toast.LENGTH_SHORT).show();
                 }
             }

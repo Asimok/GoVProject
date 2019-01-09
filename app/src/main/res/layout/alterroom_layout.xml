@@ -39,12 +39,5 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:onClick="bookroom"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="适配器"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="searchroomAdapter"/>
 
 </LinearLayout>

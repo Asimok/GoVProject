@@ -75,6 +75,7 @@ dependencies {
     implementation files('libs/jjwt-0.7.0.jar')
     implementation files('libs/commons-codec-1.6.jar')
     implementation files('libs/commons-codec-1.6.jar')
+    implementation files('libs/commons-codec-1.11-javadoc.jar')
 }
 
 

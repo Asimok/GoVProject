@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
@@ -35,7 +36,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     EditText BuildNumber,RoomNumber,Time;
     Button commit;
     TextView bookinfo;
-    Map<String, String> Token;
+    Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private String BuildNumber1,RoomNumber1,Time1,Token1;
     @Override
@@ -56,7 +57,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         commit.setOnClickListener(this);
         // 提交修改
 
-        Token = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);//用作读取本地token
     }
 
     @Override
@@ -66,7 +67,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
-        Token1 =Token.get("Token");
+        Token1=usertoken.get("Token");//读本地
         //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -116,7 +117,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://192.168.43.174:8080/SmartRoom/DeleteServlet") //马琦IP
+                .url("http://192.168.43.174:8080/SmartRoom/BookRoomServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -140,14 +141,14 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 String res = response.body().string();//获取到传过来的字符串
                 try {
                     JSONObject jsonObj = new JSONObject(res);
-                    String status = jsonObj.getString("status");
-                    String MeetingNumber = jsonObj.getString("MeetingNumber");
-                    String EmployeeNumber = tounicode.decodeUnicode(jsonObj.getString("EmployeeNumber"));
-                    String Name = tounicode.decodeUnicode(jsonObj.getString("Name"));
+                    String Status = jsonObj.getString("Status");
+
+                    String EmployeeNumber =jsonObj.getString("EmployeeNumber");
+                    String Name = jsonObj.getString("Name");
+    showRequestResult(Status,EmployeeNumber,Name);
 
 
 
-                    showRequestResult(status,MeetingNumber,EmployeeNumber,Name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -156,18 +157,20 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     }
 
 
-    private void showRequestResult(final String status,final String MeetingNumber,final String EmployeeNumber,final String Name) {
+    private void showRequestResult(final String Status,final String EmployeeNumber,final String Name) {
         runOnUiThread(new Runnable() {
             @Override
             /**
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if (status.equals("-1")) {
+                Toast.makeText(bookroom.this, "进入判断！", Toast.LENGTH_LONG).show();
+                if (Status.equals("-1")) {
                     Toast.makeText(bookroom.this, "预定失败！", Toast.LENGTH_LONG).show();
-                } else if (status.equals("0")) {
+                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
+                } else if (Status.equals("0")) {
                     Toast.makeText(bookroom.this, "预定成功！", Toast.LENGTH_LONG).show();
-                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber+" 会议编号:"+MeetingNumber);
+                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 }
 
             }

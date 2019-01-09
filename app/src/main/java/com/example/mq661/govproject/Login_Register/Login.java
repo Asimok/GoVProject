@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mq661.govproject.AlterRoom.addroom;
 import com.example.mq661.govproject.AlterRoom.alterroom;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.TokenUtil;
@@ -126,7 +127,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if(Token1==null)
         {
             Token =TokenUtil.genToken();
-            savetoken.saveUsertoken(this, Token);
+            //savetoken.saveUsertoken(this, Token);//存本地
             Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
         }
         else Token =Token1;
@@ -208,10 +209,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String res = response.body().string();//获取到传过来的字符串
                 try {
                     JSONObject jsonObj = new JSONObject(res);
-                    String zhanghu3 = jsonObj.getString("zhanghu");
-                    String mima3 = jsonObj.getString("mima");
+                    String status = jsonObj.getString("status");
 
-                    showRequestResult(zhanghu3,mima3);
+                    showRequestResult(status);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -220,19 +220,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void showRequestResult(final String zhanghu4,final String mima4) {
+    private void showRequestResult(final String status) {
         runOnUiThread(new Runnable() {
             @Override
             /**
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if(zhanghu.getText().toString().equals(zhanghu4)&&
-                        tomd5.tomd5(mima.getText().toString()).equals(mima4)) {
-                    Toast.makeText(Login.this,"登录成功！",Toast.LENGTH_SHORT).show();
+                if (status.equals("-1")) {
+                    Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
+                } else if (status.equals("0")) {
+                    Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                    savetoken.saveUsertoken(Login.this, Token);
+
                 }
-                else
-                    Toast.makeText(Login.this,"密码错误！！",Toast.LENGTH_SHORT).show();
+
             }
         });
     }

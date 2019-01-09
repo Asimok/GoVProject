@@ -24,7 +24,6 @@
         <activity android:name=".AlterRoom.deleteroom"></activity>
         <activity android:name=".AlterRoom.changeroom"></activity>
         <activity android:name=".SearchRoom.searchroom"></activity>
-        <activity android:name=".SearchRoom.searchroomAdapter"></activity>
         <activity android:name=".BookRoom.bookroom"></activity>
     </application>
 

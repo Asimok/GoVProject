@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -33,7 +34,7 @@ import okhttp3.Response;
 public class changeroom extends AppCompatActivity implements View.OnClickListener {
     EditText BuildNumber,RoomNumber,Time,Size,Function;
     Button commit;
-    Map<String, String> Token;
+    Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     RadioGroup MeetingRoomLevel;
     RadioButton dsz,zjl,bmjl;
@@ -62,7 +63,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         commit.setOnClickListener(this);
         // 提交修改
 
-        Token = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);//用作读取本地token
         MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -100,7 +101,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         Size1 = Size.getText().toString().trim();
         Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
         MeetingRoomLevel1 = tounicode.gbEncoding(level);
-        Token1 =Token.get("Token");
+        Token1=usertoken.get("Token");//读本地
         //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();

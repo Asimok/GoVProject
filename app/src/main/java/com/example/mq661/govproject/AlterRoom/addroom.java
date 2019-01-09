@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
@@ -38,7 +39,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
     RadioGroup MeetingRoomLevel;
     RadioButton dsz,zjl,bmjl;
     Button commit;
-    Map<String, String> Token;
+    Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1,level=null;
     @Override
@@ -64,8 +65,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
 
         commit.setOnClickListener(this);
         // 提交修改
-
-        Token = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
         MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -102,7 +102,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         Size1 = Size.getText().toString().trim();
         Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
         MeetingRomeLevel1 = tounicode.gbEncoding(level);
-        Token1 =Token.get("Token");
+        Token1=usertoken.get("Token");//读本地
        // Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -159,7 +159,6 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
 
-//        Log.d("这将JSON对象转换为json字符串", jsonString);
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()

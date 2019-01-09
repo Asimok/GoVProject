@@ -41,8 +41,9 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     TextView BuildingNumber,RoomNumber,Time,Size,Function,IsMeeting;
     private List<roomAdapterInfo>  data;
     Button commit;
-    Map<String, String> usertoken;
+
     private OkHttpClient okhttpClient;
+    Map<String, String> usertoken;
     private String Token1;
     private ListView searchroomlv;
     @Override
@@ -62,7 +63,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         searchroomlv=findViewById(R.id.searchroomlv);
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
-        usertoken = savetoken.getUsertoken(this);
+        usertoken = savetoken.getUsertoken(this);//用作读取本地token
     }
 
     @Override
@@ -156,7 +157,6 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                Toast.makeText(searchroom.this, "修改失败！", Toast.LENGTH_SHORT).show();
 //                data=new ArrayList<roomAdapterInfo>();
                 roomAdapterInfo  mapx=new roomAdapterInfo();
                 mapx.setBuildingNumber(BuildNumber1);
