@@ -2,7 +2,7 @@ package com.example.mq661.govproject.tools;
 
 import org.apache.commons.codec.binary.Base64;
 
-
+//import android.util.Base64;
 public class XXTEAUtil {
 
     /**

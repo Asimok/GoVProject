@@ -3,8 +3,8 @@ package com.example.mq661.govproject.Login_Register;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +35,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     CheckBox CK;
     Button login;
     private OkHttpClient okhttpClient;
-    private String zhanghu1,mima1,Token=null;
-    Map<String, String> userInfo;
+    Map<String, String> userInfo,usertoken;
+    private String zhanghu1,mima1,Token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +54,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login.setOnClickListener(this);
         // 记住密码功能
       userInfo = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);
         try {
             if (userInfo != null) {
                 // 显示在界面上
-
                 if (userInfo.get("number").equals("请输入员工号")) {
                     zhanghu.setHint("请输入员工号");
                 } else {
@@ -70,7 +70,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     mima.setText(userInfo.get("password"));
                 }
-                Toast.makeText(Login.this,userInfo.get("Token"),Toast.LENGTH_SHORT).show();
+
+//                if(userInfo.get("Token").toString().isEmpty())
+//                {
+//                    Token =TokenUtil.genToken();
+//                    Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
+//                }
+//                else if(!TokenUtil.verificationToken(TokenUtil.genToken()).equals("成功"))
+//                {
+//                    Token =TokenUtil.genToken();
+//                    Toast.makeText(Login.this,"已经替换无效token"+Token,Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    Token=userInfo.get("Token");
+//                    Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
+//                }
+
+
             }
             //CK.setChecked(true);
         }
@@ -91,20 +107,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-
         String number = zhanghu.getText().toString().trim();
         String password = mima.getText().toString();
-       //
-        if(userInfo.get("Token").toString().isEmpty())
-        {
-            Token =TokenUtil.genToken();
-            Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Token=userInfo.get("Token");
-            Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
-        }
+
+
 
         if (TextUtils.isEmpty(number)) {
             Toast.makeText(this, "请输入员工号", Toast.LENGTH_SHORT).show();
@@ -114,12 +120,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
+        String Token1=usertoken.get("Token");//读本地
+        Toast.makeText(Login.this,"查出来的"+Token1,Toast.LENGTH_SHORT).show();
+     //   TokenUtil.verificationToken(TokenUtil.genToken());
+        if(Token1==null)
+        {
+            Token =TokenUtil.genToken();
+            savetoken.saveUsertoken(this, Token);
+            Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
+        }
+        else Token =Token1;
+//        else if(!TokenUtil.verificationToken(Token1).equals("成功"))
+//        {
+//            Token =TokenUtil.genToken();
+//            Toast.makeText(Login.this,"已经替换无效token"+Token,Toast.LENGTH_SHORT).show();
+//        }
+//        else{
+//            Token=userInfo.get("Token");
+//            Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
+//        }
 
 
         try {
             if (CK.isChecked()) {
 
-                boolean isSaveSuccess = saveinfo.saveUserInfo(this, number, password,Token);
+                boolean isSaveSuccess = saveinfo.saveUserInfo(this, number, password);
                 if (isSaveSuccess) {
                     Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
                 } else {
@@ -129,7 +154,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 number = "请输入员工号";
                 password = "请输入密码";
 
-                saveinfo.saveUserInfo(this, number, password,Token);
+                saveinfo.saveUserInfo(this, number, password);
             }
         }
         catch (Exception e)

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.changeroom;
 import com.example.mq661.govproject.Login_Register.saveinfo;
+import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -40,7 +41,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     TextView BuildingNumber,RoomNumber,Time,Size,Function,IsMeeting;
     private List<roomAdapterInfo>  data;
     Button commit;
-    Map<String, String> Token;
+    Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private String Token1;
     private ListView searchroomlv;
@@ -61,15 +62,15 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         searchroomlv=findViewById(R.id.searchroomlv);
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
-        Token = saveinfo.getUserInfo(this);
+        usertoken = savetoken.getUsertoken(this);
     }
 
     @Override
     public void onClick(View v) {
         data=new ArrayList<roomAdapterInfo>();
-        Toast.makeText(this,"点击成功",Toast.LENGTH_LONG).show();
-        Token1 =Token.get("Token");
-        Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+
+        Token1=usertoken.get("Token");//读本地
+        Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
         new Thread(new Runnable() {
             @Override
             public void run() {

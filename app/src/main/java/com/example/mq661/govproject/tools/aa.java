@@ -4,7 +4,7 @@ public class aa {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		new TokenUtil();
+		//new TokenUtil();
 		//TokenUtil.genToken();
 		TokenUtil.verificationToken(TokenUtil.genToken());
 	}
