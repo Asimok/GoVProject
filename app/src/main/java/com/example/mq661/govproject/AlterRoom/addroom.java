@@ -230,6 +230,9 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
                 else if (status.equals("-1")) {
                     Toast.makeText(addroom.this, "增加失败！", Toast.LENGTH_SHORT).show();
                 }
+                else if (status.equals("-4")) {
+                    Toast.makeText(addroom.this, "增加失败,房间信息重复！", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -239,6 +242,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         intent = new Intent(this, Login.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 
     public void insert(String token){

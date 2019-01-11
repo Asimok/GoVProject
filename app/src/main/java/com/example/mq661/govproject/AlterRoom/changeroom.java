@@ -237,6 +237,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         Intent intent;
         intent = new Intent(this, Login.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 
     public void insert(String token){

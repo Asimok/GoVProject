@@ -188,6 +188,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         Intent intent;
         intent = new Intent(this, Login.class);
         startActivityForResult(intent, 0);
+        finish();
     }
     public void searchroom1(View v) {
         Intent intent;

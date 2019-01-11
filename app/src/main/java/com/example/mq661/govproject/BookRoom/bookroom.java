@@ -194,6 +194,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         Intent intent;
         intent = new Intent(this, Login.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 
 
