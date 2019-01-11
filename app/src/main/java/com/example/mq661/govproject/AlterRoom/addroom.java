@@ -1,5 +1,9 @@
 package com.example.mq661.govproject.AlterRoom;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -13,10 +17,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
@@ -41,11 +47,14 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
     Button commit;
     Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
+    private tokenDBHelper helper;
     private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1,level=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addroom_layout);
+        helper=new tokenDBHelper(this);
+
         initView();
 
     }
@@ -65,7 +74,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
 
         commit.setOnClickListener(this);
         // 提交修改
-        usertoken = savetoken.getUsertoken(this);//用作读取本地token
+      //  usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
         MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -102,8 +111,8 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         Size1 = Size.getText().toString().trim();
         Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
         MeetingRomeLevel1 = tounicode.gbEncoding(level);
-        Token1=usertoken.get("Token");//读本地
-       // Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+        Token1=select();//读本地
+
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
             return;
@@ -147,7 +156,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Size1,
                              String Function1,String MeetingRoomLevel1 ,String Token1) {
         Map map = new HashMap();
-        map.put("BuildNumber", BuildNumber1);
+        map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Size", Size1);
@@ -209,14 +218,91 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if (status.equals("-1")) {
-                    Toast.makeText(addroom.this, "增加失败！", Toast.LENGTH_SHORT).show();
+                if (status.equals("-2")) {
+                    Toast.makeText(addroom.this, "增加房间信息不合法!请重新输入！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
                     Toast.makeText(addroom.this, "增加成功！", Toast.LENGTH_SHORT).show();
+                }
+                else if (status.equals("-3")) {
+                    Toast.makeText(addroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
+                    relog();
+                }
+                else if (status.equals("-1")) {
+                    Toast.makeText(addroom.this, "增加失败！", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+    }
+
+    public void relog() {
+        Intent intent;
+        intent = new Intent(this, Login.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void insert(String token){
+
+
+        //自定义增加数据
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //String token =mytoken.getMytoken();
+
+        values.put("token", token);
+        long l = db.insert("token", null, values);
+
+        if(l==-1){
+            Toast.makeText(this, "插入不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "插入成功"+l,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void update(String token){
+
+
+        //自定义更新
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //     String oldtoken=mytoken.getMytoken();
+        values.put("token", token);
+//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
+        int i = db.update("token", values, null,null);
+        if(i==0){
+            Toast.makeText(this, "更新不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "更新成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void delete(String token){
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+
+
+        int i = db.delete("token", "token=?",new String[]{token});
+        if(i==0){
+            Toast.makeText(this, "删除不成功",Toast.LENGTH_SHORT).show();
+        }else{  Toast.makeText(this, "删除成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+
+    }
+
+    //查找
+    public String select(){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from token", null);
+        String token1=null;
+        while(cursor.moveToNext()){
+//            mytoken token= new mytoken();
+//            token.setMytoken(cursor.getString(0));
+            token1=cursor.getString(0);
+        }
+        db.close();
+        return token1;
     }
 }
 

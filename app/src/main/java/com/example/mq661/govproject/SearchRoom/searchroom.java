@@ -1,5 +1,11 @@
 package com.example.mq661.govproject.SearchRoom;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -7,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.changeroom;
+import com.example.mq661.govproject.AlterRoom.deleteroom;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONArray;
@@ -37,22 +46,22 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class searchroom extends AppCompatActivity implements View.OnClickListener {
-    TextView BuildingNumber,RoomNumber,Time,Size,Function,IsMeeting;
+public class searchroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting;
     private List<roomAdapterInfo>  data;
     Button commit;
-
+    Intent ssdata=new Intent();
     private OkHttpClient okhttpClient;
-    Map<String, String> usertoken;
+   // Map<String, String> usertoken;
+   private tokenDBHelper helper;
     private String Token1;
     private ListView searchroomlv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchroom_lv_layout);
+        helper=new tokenDBHelper(this);
         initView();
-
-
 
     }
 
@@ -61,16 +70,23 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
        // searchroomlv.setAdapter(new searchroom.MyAdapter());
         // 提交修改
         searchroomlv=findViewById(R.id.searchroomlv);
+
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
-        usertoken = savetoken.getUsertoken(this);//用作读取本地token
+    //    usertoken = savetoken.getUsertoken(this);//用作读取本地token
+
+        searchroomlv.setOnItemClickListener(this);       //设置短按事件
+        searchroomlv.setOnItemLongClickListener(this);   //设置长按事件
+
+
     }
 
     @Override
     public void onClick(View v) {
         data=new ArrayList<roomAdapterInfo>();
 
-        Token1=usertoken.get("Token");//读本地
+        //Token1=usertoken.get("Token");//读本地
+        Token1=select();
         Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
         new Thread(new Runnable() {
             @Override
@@ -80,6 +96,41 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             }
         }).start();
     }
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        ssBuildingNumber=data.get(position).getBuildingNumber();
+        ssSize=data.get(position).getSize();
+        ssRoomNumber=data.get(position).getRoomNumber();
+        ssTime=data.get(position).getTime();
+        ssFunction=data.get(position).getFunction();
+        ssIsMeeting=data.get(position).getIsMeeting();
+        Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
+        //showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
+        ssdata.putExtra("BuildingNumber", ssBuildingNumber);
+        ssdata.putExtra("Size", ssSize);
+        ssdata.putExtra("RoomNumber", ssRoomNumber);
+        ssdata.putExtra("Time", ssTime);
+        ssdata.putExtra("Function", ssFunction);
+        ssdata.putExtra("IsMeeting", ssIsMeeting);
+        setResult(1, ssdata);
+        finish();
+    }
+
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+         ssBuildingNumber=data.get(position).getBuildingNumber();
+         ssSize=data.get(position).getSize();
+         ssRoomNumber=data.get(position).getRoomNumber();
+         ssTime=data.get(position).getTime();
+         ssFunction=data.get(position).getFunction();
+         ssIsMeeting=data.get(position).getIsMeeting();
+        Toast.makeText(this, "长按显示"
+                , Toast.LENGTH_LONG).show();
+        showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
+        return true;      //返回true时可以解除长按与短按的冲突。
+
+
+    }
+
 
     private void sendRequest(String Token1) {
         Map map = new HashMap();
@@ -173,6 +224,12 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         });
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
     private class MyAdapter extends BaseAdapter
     {
 
@@ -184,7 +241,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return position;
         }
 
         @Override
@@ -216,6 +273,118 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             IsMeeting.setText(data.get(position).getIsMeeting());
             return view;
         }
+    }
+
+    /* @setNeutralButton 设置中间的按钮
+     * 若只需一个按钮，仅设置 setPositiveButton 即可
+     */
+    public void showMultiBtnDialog(String BuildingNumber,String Size,String RoomNumber,
+                                   String Time,String Function,String IsMeeting){
+
+
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(searchroom.this);
+        normalDialog.setIcon(R.drawable.app);
+        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" 功能："+Function+" 是否开会："+IsMeeting
+        );
+
+        normalDialog.setPositiveButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+//        normalDialog.setNeutralButton("删除",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        deleteroom();
+//                    }
+//                });
+        normalDialog.setNegativeButton("删除", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteroom();
+            }
+        });
+
+        // 创建实例并显示
+        normalDialog.show();
+    }
+    public void deleteroom()
+    {
+        Intent intent;
+        intent = new Intent(this, deleteroom.class);
+        startActivityForResult(intent, 0);
+
+       // finish();
+    }
+
+
+    public void insert(String token){
+
+
+        //自定义增加数据
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //String token =mytoken.getMytoken();
+
+        values.put("token", token);
+        long l = db.insert("token", null, values);
+
+        if(l==-1){
+            Toast.makeText(this, "插入不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "插入成功"+l,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void update(String token){
+
+
+        //自定义更新
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //     String oldtoken=mytoken.getMytoken();
+        values.put("token", token);
+//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
+        int i = db.update("token", values, null,null);
+        if(i==0){
+            Toast.makeText(this, "更新不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "更新成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void delete(String token){
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+
+
+        int i = db.delete("token", "token=?",new String[]{token});
+        if(i==0){
+            Toast.makeText(this, "删除不成功",Toast.LENGTH_SHORT).show();
+        }else{  Toast.makeText(this, "删除成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+
+    }
+
+    //查找
+    public String select(){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from token", null);
+        String token1=null;
+        while(cursor.moveToNext()){
+//            mytoken token= new mytoken();
+//            token.setMytoken(cursor.getString(0));
+            token1=cursor.getString(0);
+        }
+        db.close();
+        return token1;
     }
 }
 

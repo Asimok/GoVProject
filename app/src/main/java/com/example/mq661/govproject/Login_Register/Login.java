@@ -2,7 +2,10 @@ package com.example.mq661.govproject.Login_Register;
 
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 import com.example.mq661.govproject.AlterRoom.addroom;
 import com.example.mq661.govproject.AlterRoom.alterroom;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.mytoken.sqltoken;
+import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.TokenUtil;
 import com.example.mq661.govproject.tools.tomd5;
 
@@ -24,7 +29,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,12 +40,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     CheckBox CK;
     Button login;
     private OkHttpClient okhttpClient;
-    Map<String, String> userInfo,usertoken;
+    Map<String, String> userInfo;
     private String zhanghu1,mima1,Token;
+    private tokenDBHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yuangong_login);
+        helper=new tokenDBHelper(this);
         initView();
 
     }
@@ -54,8 +60,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login=findViewById(R.id.login);
         login.setOnClickListener(this);
         // 记住密码功能
-      userInfo = saveinfo.getUserInfo(this);
-        usertoken = savetoken.getUsertoken(this);
+        userInfo = saveinfo.getUserInfo(this);
+       // usertoken = savetoken.getUsertoken(this);
         try {
             if (userInfo != null) {
                 // 显示在界面上
@@ -121,26 +127,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
-        String Token1=usertoken.get("Token");//读本地
+       // String Token1=usertoken.get("Token");//读本地
+        //   TokenUtil.verificationToken(TokenUtil.genToken());
+
+        String Token1=select();
         Toast.makeText(Login.this,"查出来的"+Token1,Toast.LENGTH_SHORT).show();
-     //   TokenUtil.verificationToken(TokenUtil.genToken());
+
         if(Token1==null)
         {
             Token =TokenUtil.genToken();
-            //savetoken.saveUsertoken(this, Token);//存本地
+           // savetoken.saveUsertoken(this, Token);//存本地
+            insert(Token);
             Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
         }
         else Token =Token1;
-//        else if(!TokenUtil.verificationToken(Token1).equals("成功"))
-//        {
-//            Token =TokenUtil.genToken();
-//            Toast.makeText(Login.this,"已经替换无效token"+Token,Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Token=userInfo.get("Token");
-//            Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
-//        }
-
 
         try {
             if (CK.isChecked()) {
@@ -164,16 +164,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sendRequest(zhanghu.getText().toString(),mima.getText().toString());
+                sendRequest(zhanghu.getText().toString(),mima.getText().toString(),Token);
             }
         }).start();
     }
 
-    private void sendRequest(String zhanghu1,String mima1) {
+    private void sendRequest(String zhanghu1,String mima1,final String Token2) {
         Map map = new HashMap();
         map.put("zhanghu", zhanghu1);
         map.put("mima", mima1);
-        map.put("Token",Token);
+        map.put("Token",Token2);
 
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
@@ -231,8 +231,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
                     Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                   // savetoken.saveUsertoken(Login.this, Token);
+                    update(Token);
+                }
+                else if (status.equals("-2")) {
+                    Toast.makeText(Login.this, "账户名非法！请重新登录", Toast.LENGTH_SHORT).show();
                     savetoken.saveUsertoken(Login.this, Token);
-
+                    relog();
+                }
+                else if (status.equals("-3")) {
+                    Toast.makeText(Login.this, "token为空，请重新登录！", Toast.LENGTH_SHORT).show();
+                    relog();
                 }
 
             }
@@ -250,6 +259,77 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         intent = new Intent(this, alterroom.class);
         startActivityForResult(intent, 0);
     }
+    public void relog() {
+        Intent intent;
+        intent = new Intent(this, Login.class);
+        startActivityForResult(intent, 0);
+    }
 
+
+
+    public void insert(String token){
+
+
+        //自定义增加数据
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //String token =mytoken.getMytoken();
+
+        values.put("token", token);
+        long l = db.insert("token", null, values);
+
+        if(l==-1){
+            Toast.makeText(this, "插入不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "插入成功"+l,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void update(String token){
+
+
+        //自定义更新
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        //     String oldtoken=mytoken.getMytoken();
+        values.put("token", token);
+//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
+        int i = db.update("token", values, null,null);
+        if(i==0){
+            Toast.makeText(this, "更新不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "更新成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+
+    public void delete(String token){
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+
+
+        int i = db.delete("token", "token=?",new String[]{token});
+        if(i==0){
+            Toast.makeText(this, "删除不成功",Toast.LENGTH_SHORT).show();
+        }else{  Toast.makeText(this, "删除成功"+i,Toast.LENGTH_SHORT).show();}
+        db.close();
+
+    }
+
+    //查找
+    public String select(){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from token", null);
+        String token1=null;
+        while(cursor.moveToNext()){
+//            mytoken token= new mytoken();
+//            token.setMytoken(cursor.getString(0));
+            token1=cursor.getString(0);
+        }
+        db.close();
+        return token1;
+    }
 }
+
 

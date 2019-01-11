@@ -214,11 +214,14 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
                 } else if (status.equals("-1")) {
                     Toast.makeText(zhuce.this, "信息不存在，注册失败！", Toast.LENGTH_SHORT).show();
                 }
-                else if (status.equals("2")) {
+                else if (status.equals("-4")) {
                     Toast.makeText(zhuce.this, "该员工号已注册！请重新输入！", Toast.LENGTH_SHORT).show();
                 }
-                else if (status.equals("3")) {
-                    Toast.makeText(zhuce.this, "执行SQL语句出错！", Toast.LENGTH_SHORT).show();
+                else if (status.equals("-3")) {
+                    Toast.makeText(zhuce.this, "您不是该公司员工！", Toast.LENGTH_SHORT).show();
+                }
+                else if (status.equals("-2")) {
+                    Toast.makeText(zhuce.this, "账户名非法！请重新登录", Toast.LENGTH_SHORT).show();
                 }
             }
         });
