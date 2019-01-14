@@ -3,7 +3,14 @@ package com.example.mq661.govproject.SearchRoom;
 import android.widget.TextView;
 
 public class roomAdapterInfo {
-    private String  BuildingNumber,RoomNumber,Time,Size,Function,IsMeeting;
+    private String  BuildingNumber;
+    private String RoomNumber;
+    private String Time;
+    private String Size;
+    private String Function;
+    private String IsMeeting;
+
+    private String Days;
 
     @Override
     public String toString() {
@@ -14,8 +21,11 @@ public class roomAdapterInfo {
                 ", Size='" + Size + '\'' +
                 ", Function='" + Function + '\'' +
                 ", IsMeeting='" + IsMeeting + '\'' +
+                ", Days='" + Days + '\'' +
                 '}';
     }
+
+
 
     public String getBuildingNumber() {
         return BuildingNumber;
@@ -64,4 +74,13 @@ public class roomAdapterInfo {
     public void setIsMeeting(String isMeeting) {
         IsMeeting = isMeeting;
     }
+    public String getDays() {
+        return Days;
+    }
+
+    public void setDays(String days) {
+        Days = days;
+    }
+
+
 }

@@ -96,7 +96,19 @@
             android:hint="开会否"
             android:textSize="20sp"
             />
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 日期："
+                android:textSize="20sp"
+                android:textColor="#ff0000"/>
+            <TextView
+                android:id="@+id/Days3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="  日期"
+                android:textSize="20sp"
+                />
     </LinearLayout>
 
 </LinearLayout>

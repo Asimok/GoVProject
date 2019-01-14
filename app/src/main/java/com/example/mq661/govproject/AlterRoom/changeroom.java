@@ -55,6 +55,8 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         initView();
 
     }
+//TODO 判断信息不重复待做
+    //和删除整合在一起
 
     private void initView() {
 
@@ -156,7 +158,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Size1,
                              String Function1,String MettingRomeLevel1 ,String Token1) {
         Map map = new HashMap();
-        map.put("BuildNumber", BuildNumber1);
+        map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Size", Size1);
@@ -225,9 +227,12 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
                 } else if (status.equals("0")) {
                     Toast.makeText(changeroom.this, "修改成功！", Toast.LENGTH_SHORT).show();
                 }
-                else if (status.equals("-2")) {
+                else if (status.equals("-3")) {
                     Toast.makeText(changeroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     relog();
+                }
+                else if (status.equals("-2")) {
+                    Toast.makeText(changeroom.this, "容量非法，只能填入数字！", Toast.LENGTH_SHORT).show();
                 }
 
             }

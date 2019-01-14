@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.changeroom;
 import com.example.mq661.govproject.AlterRoom.deleteroom;
+import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
@@ -47,7 +48,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class searchroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting;
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays;
     private List<roomAdapterInfo>  data;
     Button commit;
     Intent ssdata=new Intent();
@@ -104,6 +105,8 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         ssTime=data.get(position).getTime();
         ssFunction=data.get(position).getFunction();
         ssIsMeeting=data.get(position).getIsMeeting();
+        ssDays=data.get(position).getDays();
+
         Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
         //showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
         ssdata.putExtra("BuildingNumber", ssBuildingNumber);
@@ -112,6 +115,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         ssdata.putExtra("Time", ssTime);
         ssdata.putExtra("Function", ssFunction);
         ssdata.putExtra("IsMeeting", ssIsMeeting);
+        ssdata.putExtra("IsMeeting", ssDays);
         setResult(1, ssdata);
         finish();
     }
@@ -123,9 +127,10 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
          ssTime=data.get(position).getTime();
          ssFunction=data.get(position).getFunction();
          ssIsMeeting=data.get(position).getIsMeeting();
+        ssDays=data.get(position).getDays();
         Toast.makeText(this, "长按显示"
                 , Toast.LENGTH_LONG).show();
-        showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
+        showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting,ssDays);
         return true;      //返回true时可以解除长按与短按的冲突。
 
 
@@ -185,8 +190,14 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                                 String  Size1 = jsonObj.getString("size");
                                 String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
                                 String  IsMeeting = jsonObj.getString("isMeeting");
+                                String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
                                 String mapx="map"+i;
-                                showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,mapx);
+                                if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
+                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+
+                               break; }
+
+                               else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
                                }
 
 
@@ -201,25 +212,31 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void showRequestResult(final String BuildNumber1,final String RoomNumber1,final String Time1,final String Size1,final String Function1,final String IsMeeting1,final String mapx) {
+    private void showRequestResult(final String BuildNumber1,final String RoomNumber1,final String Time1,final String Size1,final String Function1,final String IsMeeting1,final String Days1,final String mapx) {
         runOnUiThread(new Runnable() {
             @Override
             /**
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-//                data=new ArrayList<roomAdapterInfo>();
-                roomAdapterInfo  mapx=new roomAdapterInfo();
-                mapx.setBuildingNumber(BuildNumber1);
-                mapx.setRoomNumber(RoomNumber1);
-                mapx.setFunction(Function1);
-                mapx.setSize(Size1);
-                mapx.setTime(Time1);
-                mapx.setIsMeeting(IsMeeting1);
-                data.add(mapx);
 
-                searchroomlv.setAdapter(new searchroom.MyAdapter());
+                if(BuildNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
+                    Toast.makeText(searchroom.this, "查询不成功！请重新登录", Toast.LENGTH_SHORT).show();
+                    relog();
+                }
+                else {
+                    roomAdapterInfo mapx = new roomAdapterInfo();
+                    mapx.setBuildingNumber(BuildNumber1);
+                    mapx.setRoomNumber(RoomNumber1);
+                    mapx.setFunction(Function1);
+                    mapx.setSize(Size1);
+                    mapx.setTime(Time1);
+                    mapx.setIsMeeting(IsMeeting1);
+                    mapx.setDays(Days1);
+                    data.add(mapx);
 
+                    searchroomlv.setAdapter(new searchroom.MyAdapter());
+                }
             }
         });
     }
@@ -261,6 +278,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             TextView Size = view.findViewById(R.id.Size);
             TextView Function=view.findViewById(R.id.Function);
             TextView IsMeeting=view.findViewById(R.id.IsMeeting);
+            TextView Days=view.findViewById(R.id.Days3);
 //           Button select=view.findViewById(R.id.select);
 //
 //            select.setOnClickListener((View.OnClickListener) this);
@@ -271,6 +289,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             Time.setText(data.get(position).getTime());
             Function.setText(data.get(position).getFunction());
             IsMeeting.setText(data.get(position).getIsMeeting());
+            Days.setText(data.get(position).getDays());
             return view;
         }
     }
@@ -279,13 +298,14 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
      * 若只需一个按钮，仅设置 setPositiveButton 即可
      */
     public void showMultiBtnDialog(String BuildingNumber,String Size,String RoomNumber,
-                                   String Time,String Function,String IsMeeting){
+                                   String Time,String Function,String IsMeeting,String Days){
 
 
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(searchroom.this);
         normalDialog.setIcon(R.drawable.app);
         normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" 功能："+Function+" 是否开会："+IsMeeting
+                +" 日期： "+Days
         );
 
         normalDialog.setPositiveButton("取消",
@@ -385,6 +405,12 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         }
         db.close();
         return token1;
+    }
+    public void relog() {
+        Intent intent;
+        intent = new Intent(this, Login.class);
+        startActivityForResult(intent, 0);
+        finish();
     }
 }
 

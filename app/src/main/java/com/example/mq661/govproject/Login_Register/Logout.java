@@ -153,12 +153,14 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
              * 实时更新，数据库信息改变时，客户端内容发生改变
              */
             public void run() {
-                if (status.equals("notquit")) {
-                    Toast.makeText(Logout.this, "注销失败！", Toast.LENGTH_SHORT).show();
+                if (status.equals("-3")) {
+                    Toast.makeText(Logout.this, "token出错！返回重新登陆", Toast.LENGTH_SHORT).show();
+                    relog();
                 } else if (status.equals("quit")) {
                     Toast.makeText(Logout.this, "注销成功！", Toast.LENGTH_SHORT).show();
                     //savetoken.saveUsertoken(Logout.this, null);
                     delete(Token);
+                    relog();
 
                 }
 
@@ -230,6 +232,12 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
         }
         db.close();
         return token1;
+    }
+    public void relog() {
+        Intent intent;
+        intent = new Intent(this, Login.class);
+        startActivityForResult(intent, 0);
+        finish();
     }
 }
 

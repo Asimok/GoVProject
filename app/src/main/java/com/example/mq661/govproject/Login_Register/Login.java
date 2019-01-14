@@ -9,19 +9,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.AlterRoom.addroom;
 import com.example.mq661.govproject.AlterRoom.alterroom;
+import com.example.mq661.govproject.Main.MainInterfaceNow;
+import com.example.mq661.govproject.Main.MainInterfaceToday;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.mytoken.sqltoken;
+import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.TokenUtil;
-import com.example.mq661.govproject.tools.tomd5;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -230,8 +235,39 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 if (status.equals("-1")) {
                     Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
-                    Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_LONG).show();
                    // savetoken.saveUsertoken(Login.this, Token);
+
+
+
+
+                    Toast toast=new Toast(getApplicationContext());
+
+//创建一个填充物,用于填充Toast
+                    LayoutInflater inflater = LayoutInflater.from(Login.this);
+
+//填充物来自的xml文件,在这个改成一个view
+//实现xml到view的转变哦
+                    View view =inflater.inflate(R.layout.toast,null);
+
+//不一定需要，找到xml里面的组件，设置组件里面的具体内容
+                    ImageView imageView1=view.findViewById(R.id.iv_toast);
+                    TextView textView1=view.findViewById(R.id.tv_toast);
+                    imageView1.setImageResource(R.drawable.icon3);
+                    textView1.setText("登录成功！");
+
+//把填充物放进toast
+                    toast.setView(view);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.setDuration(Toast.LENGTH_LONG);
+
+//展示toast
+                    //toast.show();
+
+                    ToastUtil.makeText(Login.this,"登录成功！",ToastUtil.LENGTH_SHORT).show();
+
+
+
                     update(Token);
                 }
                 else if (status.equals("-2")) {
@@ -330,6 +366,26 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
         db.close();
         return token1;
+    }
+
+    public void forgetmima(View view) {
+        Intent intent;
+        intent = new Intent(this, inputmail.class);
+        startActivityForResult(intent, 0);
+        finish();
+    }
+
+    public void mainintrefaceNow(View view) {
+        Intent intent;
+        intent = new Intent(this, MainInterfaceNow.class);
+        startActivityForResult(intent, 0);
+        //finish();
+    }
+
+    public void mainintrefaceToday(View view) {
+        Intent intent;
+        intent = new Intent(this, MainInterfaceToday.class);
+        startActivityForResult(intent, 0);
     }
 }
 

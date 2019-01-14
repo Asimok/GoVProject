@@ -79,6 +79,7 @@
             />
 
         <TextView
+            android:onClick="forgetmima"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -114,6 +115,16 @@
             />
         <Button
             android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="当日"
+            android:background="#ffc55c"
+            android:onClick="mainintrefaceToday"
+            />
+        <Button
+            android:layout_marginTop="10dp"
             android:layout_gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,6 +132,16 @@
             android:text="会议室"
             android:background="#ffc55c"
             android:onClick="room"
+            />
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="当时"
+            android:background="#ffc55c"
+            android:onClick="mainintrefaceNow"
             />
     </LinearLayout>
 

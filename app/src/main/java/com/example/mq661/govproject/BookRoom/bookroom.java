@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +24,16 @@ import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.tools.Dateadd;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +52,9 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     private tokenDBHelper helper;
     private OkHttpClient okhttpClient;
     private String BuildNumber1,RoomNumber1,Time1,Token1;
+    RadioGroup Days;
+    RadioButton today1,today2,today3;
+    private String days,days2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +71,60 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         Time = findViewById(R.id.Time);
         commit=findViewById(R.id.commit);
         bookinfo=findViewById(R.id.bookinfo);
+        Days=findViewById(R.id.Days);
+        today1=findViewById(R.id.today1);
+        today2=findViewById(R.id.today2);
+        today3=findViewById(R.id.today3);
+
         commit.setOnClickListener(this);
         // 提交修改
 
       //  usertoken = savetoken.getUsertoken(this);//用作读取本地token
+
+        Days.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                // 获取用户选中的性别
+                //String sex = "";
+                switch (checkedId) {
+                    case R.id.today1:
+                        try {
+                            days = Dateadd.mydays( dateToString.nowdateToString(), 0);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case R.id.today2:
+                        try {
+                            days = Dateadd.mydays( dateToString.nowdateToString(), 1);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case R.id.today3:
+                        try {
+                            days = Dateadd.mydays( dateToString.nowdateToString(), 2);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                    default:break;
+                }
+
+                // 消息提示
+                Toast.makeText(bookroom.this,
+                        "选择的日期是：" + days, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 
     @Override
     public void onClick(View v) {
         // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
-
+        days2=tounicode.gbEncoding(days);
         BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
@@ -102,17 +155,18 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void run() {
 
-                sendRequest(BuildNumber1, RoomNumber1, Time1, Token1);
+                sendRequest(BuildNumber1, RoomNumber1, Time1, Token1,days2);
             }
         }).start();
     }
 
-    private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1) {
+    private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1,String days1) {
         Map map = new HashMap();
         map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Token", Token1);
+        map.put("Days", days1);
 
 
         JSONObject jsonObject = new JSONObject(map);
@@ -181,9 +235,21 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                     Toast.makeText(bookroom.this, "预定成功！", Toast.LENGTH_LONG).show();
                     bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 }
-                else if (Status.equals("-2")) {
+                else if (Status.equals("-3")) {
                     Toast.makeText(bookroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     relog();
+                }
+                else if (Status.equals("-5")) {
+                    Toast.makeText(bookroom.this, "您不具有预定此房间的权限！", Toast.LENGTH_SHORT).show();
+
+                }
+                else if (Status.equals("-6")) {
+                    Toast.makeText(bookroom.this, "该会议室已被预订！", Toast.LENGTH_SHORT).show();
+
+                }
+                else if (Status.equals("-7")) {
+                    Toast.makeText(bookroom.this, "该会议室正在维修！", Toast.LENGTH_SHORT).show();
+
                 }
 
             }

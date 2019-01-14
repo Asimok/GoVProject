@@ -83,6 +83,40 @@
         android:orientation="horizontal">
 
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:paddingLeft="50dp"
+            android:paddingTop="5dp"
+            android:text="日期:"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/Days">
+            <RadioButton
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/today1"
+                android:text="今天"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/today2"
+                android:text="明天"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/today3"
+                android:text="后天"/>
+        </RadioGroup>
+    </LinearLayout>
+
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -109,4 +143,3 @@
 
 
     </LinearLayout>
-</LinearLayout>

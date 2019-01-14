@@ -111,7 +111,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1) {
         Map map = new HashMap();
-        map.put("BuildNumber", BuildNumber1);
+        map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Token", Token1);
@@ -175,7 +175,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_LONG).show();
 
                 }
-                else if (status.equals("-2")) {
+                else if (status.equals("-3")) {
                     Toast.makeText(deleteroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     relog();
                 }
