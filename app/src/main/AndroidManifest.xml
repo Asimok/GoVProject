@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BookRoom.tosmartroom"></activity>
         <activity android:name=".Login_Register.zhuce"></activity>
         <activity android:name=".AlterRoom.alterroom"></activity>
         <activity android:name=".AlterRoom.addroom"></activity>
@@ -31,6 +32,9 @@
         <activity android:name=".repassword.inputmail"></activity>
         <activity android:name=".Main.MainInterfaceNow"></activity>
         <activity android:name=".Main.MainInterfaceToday"></activity>
+        <activity android:name=".BookRoom.smartbook"
+            android:windowSoftInputMode="adjustPan"
+            ></activity>
     </application>
 
 </manifest>

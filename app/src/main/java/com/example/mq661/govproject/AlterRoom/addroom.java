@@ -176,7 +176,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
 //                .url("http://192.168.43.174:8080/SmartRoom/AddServlet") //马琦IP
-                .url("http://192.168.43.174:8080/SmartRoom/AddServlet") //马琦IP2
+                .url("http://39.96.68.13:8080/SmartRoom/AddServlet") //马琦IP2
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();

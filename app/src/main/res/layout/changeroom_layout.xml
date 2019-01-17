@@ -162,6 +162,12 @@
                 android:id="@+id/bmjl"
                 android:text="部门经理"/>
         </RadioGroup>
+        <CheckBox
+            android:layout_marginLeft="150dp"
+            android:id="@+id/weixiu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设为维修"/>
     </LinearLayout>
 
     <LinearLayout

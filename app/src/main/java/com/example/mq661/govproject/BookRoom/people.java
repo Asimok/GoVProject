@@ -1,6 +1,15 @@
 package com.example.mq661.govproject.BookRoom;
 
 public class people {
+    public boolean getBo() {
+        return bo;
+    }
+
+    public void setBo(boolean bo) {
+        this.bo = bo;
+    }
+
+    private boolean bo;
     private String EmployeeNumber,Name,Ministry;
 
     public String getEmployeeNumber() {

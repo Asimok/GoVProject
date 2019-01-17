@@ -123,7 +123,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         String password = mima.getText().toString();
 
 
-
         if (TextUtils.isEmpty(number)) {
             Toast.makeText(this, "请输入员工号", Toast.LENGTH_SHORT).show();
             return;
@@ -190,7 +189,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
               //  .url("http://192.168.2.176:8080/LoginProject/login")
               // .url("http://192.168.43.174:8080/LoginProject/login")
                // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
-                .url("http://192.168.43.174:8080/SmartRoom/LoginServlet")//MQ
+                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")//MQ
                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -272,8 +271,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
                 else if (status.equals("-2")) {
                     Toast.makeText(Login.this, "账户名非法！请重新登录", Toast.LENGTH_SHORT).show();
-                    savetoken.saveUsertoken(Login.this, Token);
                     relog();
+                }
+
+                else if (status.equals("-5")) {
+                    Toast.makeText(Login.this, "账户名不存在！请注册", Toast.LENGTH_SHORT).show();
                 }
                 else if (status.equals("-3")) {
                     Toast.makeText(Login.this, "token为空，请重新登录！", Toast.LENGTH_SHORT).show();

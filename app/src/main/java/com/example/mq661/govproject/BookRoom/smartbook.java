@@ -1,4 +1,4 @@
-package com.example.mq661.govproject.SearchRoom;
+package com.example.mq661.govproject.BookRoom;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -27,6 +27,8 @@ import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.SearchRoom.roomAdapterInfo;
+import com.example.mq661.govproject.SearchRoom.searchroom;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -47,20 +49,21 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class searchroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays;
+public class smartbook extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,size1,functions1;
     private List<roomAdapterInfo>  data;
+    EditText size,functions;
     Button commit;
     Intent ssdata=new Intent();
     private OkHttpClient okhttpClient;
-   // Map<String, String> usertoken;
-   private tokenDBHelper helper;
+    // Map<String, String> usertoken;
+    private tokenDBHelper helper;
     private String Token1;
     private ListView searchroomlv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchroom_layout);
+        setContentView(R.layout.smartbook_lv_layout);
         helper=new tokenDBHelper(this);
         initView();
 
@@ -68,13 +71,13 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
     private void initView() {
 
-       // searchroomlv.setAdapter(new searchroom.MyAdapter());
-        // 提交修改
+        size=findViewById(R.id.size);
+        functions=findViewById(R.id.functions);
         searchroomlv=findViewById(R.id.searchroomlv);
 
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
-    //    usertoken = savetoken.getUsertoken(this);//用作读取本地token
+        //    usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
         searchroomlv.setOnItemClickListener(this);       //设置短按事件
         searchroomlv.setOnItemLongClickListener(this);   //设置长按事件
@@ -84,18 +87,36 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        data=new ArrayList<roomAdapterInfo>();
+        if(TextUtils.isEmpty(size.getText())&&TextUtils.isEmpty(functions.getText()))
+        {
+            Toast.makeText(this, "请输入容量或功能", Toast.LENGTH_SHORT).show();
+        }
+//        else if(TextUtils.isEmpty(size.getText())&&!(TextUtils.isEmpty(functions.getText())))
+//        {
+//            size1=null;
+//            functions1=functions.getText().toString();
+//        }
+//        else if(TextUtils.isEmpty(functions.getText())&&!(TextUtils.isEmpty(size.getText())))
+//        {
+//            functions1=null;
+//            size1=size.getText().toString();
+//        }
+       else {
+            size1 = size.getText().toString();
+            functions1 = functions.getText().toString();
 
-        //Token1=usertoken.get("Token");//读本地
-        Token1=select();
-        Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-                sendRequest(Token1);
-            }
-        }).start();
+            data = new ArrayList<roomAdapterInfo>();
+            Token1 = select();
+            //  Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    sendRequest(Token1);
+                }
+            }).start();
+        }
     }
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -121,12 +142,12 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     }
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-         ssBuildingNumber=data.get(position).getBuildingNumber();
-         ssSize=data.get(position).getSize();
-         ssRoomNumber=data.get(position).getRoomNumber();
-         ssTime=data.get(position).getTime();
-         ssFunction=data.get(position).getFunction();
-         ssIsMeeting=data.get(position).getIsMeeting();
+        ssBuildingNumber=data.get(position).getBuildingNumber();
+        ssSize=data.get(position).getSize();
+        ssRoomNumber=data.get(position).getRoomNumber();
+        ssTime=data.get(position).getTime();
+        ssFunction=data.get(position).getFunction();
+        ssIsMeeting=data.get(position).getIsMeeting();
         ssDays=data.get(position).getDays();
         Toast.makeText(this, "长按显示"
                 , Toast.LENGTH_LONG).show();
@@ -140,11 +161,11 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     private void sendRequest(String Token1) {
         Map map = new HashMap();
         map.put("Token", Token1);
+        map.put("Size", size1);
+        map.put("Functions", tounicode.gbEncoding(functions1));
 
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
-
-//        Log.d("这将JSON对象转换为json字符串", jsonString);
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
@@ -152,8 +173,8 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 //  .url("http://192.168.2.176:8080/LoginProject/login")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-             //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
+                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+                .url("http://39.96.68.13:8080/SmartRoom/SmartBookServlet")
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -165,7 +186,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(searchroom.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(smartbook.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -177,34 +198,32 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 String res = response.body().string();//获取到传过来的字符串
                 try {
 
-                   // JSONObject jsonObj = new JSONObject(res);
-                  //  JSONObject json = new JSONObject(res);
+                    // JSONObject jsonObj = new JSONObject(res);
+                    //  JSONObject json = new JSONObject(res);
                     JSONArray jsonArray = new JSONArray(res);
-                            for (int i=0; i < jsonArray.length(); i++)    {
-                                JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    for (int i=0; i < jsonArray.length(); i++)    {
+                        JSONObject jsonObj = jsonArray.getJSONObject(i);
 
 
-                                String BuildingNumber1 = tounicode.decodeUnicode(jsonObj.getString("buildingNumber"));
-                                String RoomNumber1 = jsonObj.getString("roomNumber");
-                                String Time1 = tounicode.decodeUnicode( jsonObj.getString("time"));
-                                String  Size1 = jsonObj.getString("size");
-                                String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
-                                String  IsMeeting = jsonObj.getString("isMeeting");
-                                String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
-                                String mapx="map"+i;
-                                if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                        String BuildingNumber1 = tounicode.decodeUnicode(jsonObj.getString("buildingNumber"));
+                        String RoomNumber1 = jsonObj.getString("roomNumber");
+                        String Time1 = tounicode.decodeUnicode( jsonObj.getString("time"));
+                        String  Size1 = jsonObj.getString("size");
+                        String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
+                        String  IsMeeting = jsonObj.getString("isMeeting");
+                        String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
+                        String mapx="map"+i;
+                        if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
 
-                               break; }
+                            break; }
+                        else if(BuildingNumber1.equals("-2")&&RoomNumber1.equals("-2")&&Time1.equals("-2")) {
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
 
-                               else if(BuildingNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
-                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            break; }
 
-                                    break; }
-
-
-                               else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
-                               }
+                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                    }
 
 
 
@@ -227,11 +246,13 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             public void run() {
 
                 if(BuildNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-                    Toast.makeText(searchroom.this, "查询不成功！", Toast.LENGTH_SHORT).show();
-                    relog();
+                    Toast.makeText(smartbook.this, "查询不成功！", Toast.LENGTH_SHORT).show();
+                }
+                else if(BuildNumber1.equals("-2")&&RoomNumber1.equals("-2")&&Time1.equals("-2")) {
+                    Toast.makeText(smartbook.this, "容量不合法！", Toast.LENGTH_SHORT).show();
                 }
                 else if(BuildNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
-                    Toast.makeText(searchroom.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(smartbook.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
                     relog();
                 }
                 else {
@@ -245,7 +266,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                     mapx.setDays(Days1);
                     data.add(mapx);
 
-                    searchroomlv.setAdapter(new searchroom.MyAdapter());
+                    searchroomlv.setAdapter(new smartbook.MyAdapter());
                 }
             }
         });
@@ -253,6 +274,12 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public void select(View view) {
+        Intent intent=new Intent(this,tosmartroom.class);
+        startActivityForResult(intent,1);
 
     }
 
@@ -279,7 +306,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view =View.inflate(searchroom.this,R.layout.searchroom_adp_layout,null);
+            View view =View.inflate(smartbook.this,R.layout.searchroom_adp_layout,null);
 
 
             TextView BuildingNumber = view.findViewById(R.id.BuildNumber);
@@ -312,7 +339,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
 
         AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(searchroom.this);
+                new AlertDialog.Builder(smartbook.this);
         normalDialog.setIcon(R.drawable.app);
         normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" 功能："+Function+" 是否开会："+IsMeeting
                 +" 日期： "+Days
@@ -349,7 +376,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         intent = new Intent(this, deleteroom.class);
         startActivityForResult(intent, 0);
 
-       // finish();
+        // finish();
     }
 
 
@@ -421,6 +448,11 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         intent = new Intent(this, Login.class);
         startActivityForResult(intent, 0);
         finish();
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        size1=data.getStringExtra("Size");
+        functions1=data.getStringExtra("Functions");
     }
 }
 

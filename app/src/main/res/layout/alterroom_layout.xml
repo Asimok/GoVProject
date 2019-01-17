@@ -42,6 +42,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="智能预约会议室"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="smartbookroom"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="退出登录"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"

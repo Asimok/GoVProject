@@ -44,10 +44,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-    public class Participants extends AppCompatActivity implements View.OnClickListener{
+    public class Participants extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
         private String Token1,EmployeeNumber1,Name1,Ministry1;
+        private  int num=0;
         private List<people> data;
-        Button commit;
+        Button button1,button2,button3,button4;
+        ListView listView;
         private OkHttpClient okhttpClient;
         private tokenDBHelper helper;
         private LinearLayout linear;
@@ -61,13 +63,16 @@ import okhttp3.Response;
         }
 
         private void initView() {
+           // participantslv=findViewById(R.id.participantslv);
+            button1 = (Button) findViewById(R.id.button1);// 全选
+            button2 = (Button) findViewById(R.id.button2);// 反选
+            button3 = (Button) findViewById(R.id.button3);// 全不选
+            button4 = (Button) findViewById(R.id.button4);// 删除
+            button1.setOnClickListener(this);
+            listView = (ListView) findViewById(R.id.listveiw);//
+            listView.setOnItemClickListener(this);       //设置短按事件
 
-            // searchroomlv.setAdapter(new searchroom.MyAdapter());
-            // 提交修改
-            //linear=findViewById(R.id.linear);
-            participantslv=findViewById(R.id.participantslv);
-            commit=findViewById(R.id.commit);
-            commit.setOnClickListener(this);
+
         }
 
         @Override
@@ -100,7 +105,7 @@ import okhttp3.Response;
                     // .url("http://192.168.43.174:8080/LoginProject/login")
                     // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
                     //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                    .url("http://192.168.43.174:8080/SmartRoom/MainInterfaceServlet")
+                    .url("http://39.96.68.13:8080/SmartRoom/MainInterfaceServlet")
                     // .url("http://192.168.2.176:8080/SmartRoom/login")
                     .post(body)
                     .build();
@@ -164,7 +169,7 @@ import okhttp3.Response;
                         mapx.setEmployeeNumber(EmployeeNumber);
                         mapx.setMinistry(Ministry);
                         data.add(mapx);
-                    participantslv.setAdapter(new Participants.MyAdapter());
+                        listView.setAdapter(new Participants.MyAdapter());
 
                     }
 
@@ -243,8 +248,10 @@ import okhttp3.Response;
             finish();
         }
 
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+        }
 
 
         private class MyAdapter extends BaseAdapter
