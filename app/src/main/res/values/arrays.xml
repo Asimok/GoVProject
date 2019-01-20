@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="zhiwei">
+        <item>董事长</item>
+        <item>总经理</item>
+        <item>部门经理</item>
+
+    </string-array>
+    <string-array name="functions">
+        <item>多媒体房间</item>
+        <item>普通房间</item>
+
+    </string-array>
+</resources>

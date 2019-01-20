@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:background="@drawable/icon3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账 号："
+            android:textColor="#4A4A48"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/zhanghao1"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密 码："
+            android:textSize="17sp"
+            android:textColor="#4A4A48" />
+
+        <EditText
+            android:id="@+id/mima1"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:background="#2B2B28"
+        android:onClick="login"
+        android:text="登录"
+        android:textColor="#EBEBE3" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:text="记住密码"
+            android:textSize="15sp"
+            android:textColor="#2B2B28"
+            android:layout_marginLeft="60dp"
+            />
+        <TextView
+            android:id="@+id/wangji"
+            android:onClick="forgetmima"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            android:textColor="#4A4A48"
+            android:layout_marginLeft="85dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:gravity="center_horizontal">
+
+        <view
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="1dp"
+            android:background="#aa000000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="15dp"
+            android:text="还没有账户？"
+            android:textColor="#2B2B28"
+            android:layout_marginLeft="100dp"
+            />
+        <Button
+            android:id="@+id/zhuce"
+            android:onClick="zhuce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="注册"
+            android:textColor="#2B2B28"/>
+
+    </LinearLayout>
+
+</LinearLayout>

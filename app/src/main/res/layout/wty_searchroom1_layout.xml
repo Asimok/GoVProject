@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="135dp"
+        android:background="@drawable/biankuangda"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="7dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="楼 号："
+                android:textSize="20sp"/>
+            <EditText
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#00000000" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房间号："
+                android:textSize="20sp"/>
+            <EditText
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#00000000"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="容 量："
+                android:textSize="20sp"/>
+            <EditText
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#00000000"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="功 能："
+                android:textSize="20sp"/>
+            <EditText
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开放时间："
+                android:textSize="20sp"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="是否开会："
+                android:textSize="20sp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="是"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textColor="#4b4b48"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="否"
+                android:layout_marginLeft="25dp"
+                android:textSize="20sp"
+                android:textColor="#4b4b48"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginRight="5dp">
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="#2b2b28"
+            android:textColor="#ebebe3"
+            android:text="确 认"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

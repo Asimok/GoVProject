@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dete2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/biankuang2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:text="楼 号："
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/BuildNumber"
+            android:hint="请输入楼号"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="75dp"
+            android:background="#00000000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/biankuang2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:text="房间号："
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/RoomNumber"
+            android:hint="请输入房间号"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="55dp"
+            android:background="#00000000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/biankuang2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:text="开放时间："
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/Time"
+
+            android:layout_marginLeft="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:hint="输入格式: 08:00-08:45"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/biankuang2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        >
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_horizontal"
+            android:text="日期:"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/Days">
+            <RadioButton
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/today1"
+                android:text="今天"/>
+            <RadioButton
+                android:layout_width="80dp"
+
+                android:layout_height="wrap_content"
+                android:id="@+id/today2"
+                android:text="明天"/>
+            <RadioButton
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/today3"
+                android:text="后天"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:onClick="searchroom1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#2b2b28"
+            android:text="选 择 房 间"
+            android:textSize="18sp"
+            android:textColor="#ebebe3"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/commit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#2b2b28"
+            android:text="预 约 房 间"
+            android:textSize="18sp"
+            android:textColor="#ebebe3"/>
+    </LinearLayout>
+
+
+
+
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/bookinfo"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="即将显示预定信息"
+            android:gravity="center"
+            />
+    </LinearLayout>
+</LinearLayout>
