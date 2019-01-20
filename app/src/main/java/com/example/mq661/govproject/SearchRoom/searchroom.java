@@ -60,7 +60,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchroom_layout);
+        setContentView(R.layout.searchroom_lv_layout);
         helper=new tokenDBHelper(this);
         initView();
 
@@ -115,7 +115,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         ssdata.putExtra("Time", ssTime);
         ssdata.putExtra("Function", ssFunction);
         ssdata.putExtra("IsMeeting", ssIsMeeting);
-        ssdata.putExtra("IsMeeting", ssDays);
+        ssdata.putExtra("Days", ssDays);
         setResult(1, ssdata);
         finish();
     }
@@ -153,7 +153,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
              //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
+                .url("http://192.168.43.174:8080/SmartRoom/SearchServlet")
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();

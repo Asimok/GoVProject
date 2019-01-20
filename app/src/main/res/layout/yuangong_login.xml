@@ -8,13 +8,17 @@
     android:orientation="vertical"
     android:paddingTop="30dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="员工登录"
-        android:textSize="25sp"
-        android:paddingTop="40dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:background="@drawable/icon3" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,25 +98,15 @@
 
         <Button
             android:id="@+id/login"
-            android:layout_width="366dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="#5893d4"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#2B2B28"
+            android:onClick="login"
             android:text="登录"
-            android:textSize="20sp"
-            android:onClick="login"/>
-        <Button
-            android:layout_marginTop="50dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/zhuce"
-            android:text="注册账号"
-            android:background="#ffc55c"
-            android:onClick="zhuce"
-            />
+            android:textColor="#EBEBE3" />
+
         <Button
             android:layout_marginTop="10dp"
             android:layout_gravity="right"
@@ -144,6 +138,35 @@
             android:onClick="mainintrefaceNow"
             />
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:paddingLeft="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:text="还没有账户？"
+            android:textColor="#2B2B28"
+            android:layout_marginLeft="100dp"
+            android:id="@+id/n1"
+            />
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/n1"
+            android:id="@+id/zhuce"
+            android:onClick="zhuce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="注册"
+            android:textColor="#2B2B28"/>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

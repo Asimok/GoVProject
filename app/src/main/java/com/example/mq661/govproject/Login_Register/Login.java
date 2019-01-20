@@ -189,7 +189,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
               //  .url("http://192.168.2.176:8080/LoginProject/login")
               // .url("http://192.168.43.174:8080/LoginProject/login")
                // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
-                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")//MQ
+                .url("http://192.168.43.174:8080/SmartRoom/LoginServlet")//MQ
                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -268,6 +268,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
                     update(Token);
+                    main();
                 }
                 else if (status.equals("-2")) {
                     Toast.makeText(Login.this, "账户名非法！请重新登录", Toast.LENGTH_SHORT).show();
@@ -387,6 +388,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void mainintrefaceToday(View view) {
         Intent intent;
         intent = new Intent(this, MainInterfaceToday.class);
+        startActivityForResult(intent, 0);
+    }
+    public void main()
+    {
+        Intent intent;
+        intent = new Intent(this, alterroom.class);
         startActivityForResult(intent, 0);
     }
 }

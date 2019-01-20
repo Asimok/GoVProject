@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login;
@@ -40,19 +42,21 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 
-public class addroom extends AppCompatActivity implements View.OnClickListener {
-    EditText BuildNumber,RoomNumber,Time,Size,Function;
-    RadioGroup MeetingRoomLevel;
-    RadioButton dsz,zjl,bmjl;
+public class addroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    EditText BuildNumber,RoomNumber,Time,Size;
+    Spinner Function,MeetingRoomLevel;
+//    RadioGroup MeetingRoomLevel;
+//    RadioButton dsz,zjl,bmjl;
     Button commit;
     Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private tokenDBHelper helper;
-    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1,level=null;
+    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRomeLevel1,Token1,level=null
+            ,Function2,MeetingRomeLevel2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addroom_layout);
+        setContentView(R.layout.wty_addroom_layout);
         helper=new tokenDBHelper(this);
 
         initView();
@@ -65,93 +69,113 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         RoomNumber = findViewById(R.id.RoomNumber);
         Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
-        Function = findViewById(R.id.Function);
+        Function = findViewById(R.id.function);
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
-        zjl = findViewById(R.id.zjl);
-        bmjl = findViewById(R.id.bmjl);
-        dsz = findViewById(R.id.dsz);
+//        zjl = findViewById(R.id.zjl);
+//        bmjl = findViewById(R.id.bmjl);
+//        dsz = findViewById(R.id.dsz);
         commit = findViewById(R.id.commit);
-
+        Function.setOnItemSelectedListener(this);
+        MeetingRoomLevel.setOnItemSelectedListener(this);
         commit.setOnClickListener(this);
         // 提交修改
       //  usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
-        MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                // 获取用户选中的性别
-                //String sex = "";
-                switch (checkedId) {
-                    case R.id.dsz:
-                        level = "董事长";
-                        break;
-                    case R.id.zjl:
-                        level = "总经理";
-                        break;
-                    case R.id.bmjl:
-                        level = "部门经理";
-                        break;
-                    default:
-                        break;
-                }
-
-                // 消息提示
-                Toast.makeText(addroom.this,
-                        "最低使用权限是：" + level, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+//                // 获取用户选中的性别
+//                //String sex = "";
+//                switch (checkedId) {
+//                    case R.id.dsz:
+//                        level = "董事长";
+//                        break;
+//                    case R.id.zjl:
+//                        level = "总经理";
+//                        break;
+//                    case R.id.bmjl:
+//                        level = "部门经理";
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//                // 消息提示
+//                Toast.makeText(addroom.this,
+//                        "最低使用权限是：" + level, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
     @Override
     public void onClick(View v) {
-        // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
+String time=Time.getText().toString().trim();
+        if((time.length()==11)) {
+            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
+                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+            }
+        else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
 
-        BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
-        RoomNumber1 = RoomNumber.getText().toString().trim();
-        Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
-        Size1 = Size.getText().toString().trim();
-        Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
-        MeetingRomeLevel1 = tounicode.gbEncoding(level);
-        Token1=select();//读本地
+        else {
+            BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
+            RoomNumber1 = RoomNumber.getText().toString().trim();
+            Time1 = tounicode.gbEncoding(Time.getText().toString().trim());
+            Size1 = Size.getText().toString().trim();
+            //Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
+            Function2 = tounicode.gbEncoding(Function1);
 
-        if (TextUtils.isEmpty(BuildNumber1)) {
-            Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(RoomNumber1)) {
-            Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(Time1)) {
-            Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            MeetingRomeLevel2 = tounicode.gbEncoding(level);
+            Token1 = select();//读本地
 
-        if (TextUtils.isEmpty(Size1)) {
-            Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(Function1)) {
-            Toast.makeText(this, "请输入功能", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(MeetingRomeLevel1)) {
-            Toast.makeText(this, "请填写会议室等级", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(Token1)) {
-            Toast.makeText(this, "未获取到Token", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            if (TextUtils.isEmpty(BuildNumber1)) {
+                Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(RoomNumber1)) {
+                Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(Time1)) {
+                Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(Size1)) {
+                Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(Function2)) {
+                Toast.makeText(this, "请输入功能", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(MeetingRomeLevel2)) {
+                Toast.makeText(this, "请填写会议室等级", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(Token1)) {
+                Toast.makeText(this, "未获取到Token", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
 
 
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function1, MeetingRomeLevel1, Token1);
+                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function2, MeetingRomeLevel2, Token1);
             }
+
         }).start();
+
+    }}
+    else {
+            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+
+        }
+
+
     }
+
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Size1,
                              String Function1,String MeetingRoomLevel1 ,String Token1) {
@@ -176,7 +200,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
 //                .url("http://192.168.43.174:8080/SmartRoom/AddServlet") //马琦IP
-                .url("http://39.96.68.13:8080/SmartRoom/AddServlet") //马琦IP2
+                .url("http://192.168.43.174:8080/SmartRoom/AddServlet") //马琦IP2
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -307,6 +331,45 @@ public class addroom extends AppCompatActivity implements View.OnClickListener {
         }
         db.close();
         return token1;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String content = parent.getItemAtPosition(position).toString();
+        switch (parent.getId()) {
+            case R.id.function:
+                if (content.equals("多媒体房间")) {
+                    Toast.makeText(addroom.this, "选择的功能是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                } else if (content.equals("普通房间")) {
+                    Toast.makeText(addroom.this, "选择的功能是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                Function1 = content;
+                break;
+            case R.id.MeetingRomeLevel:
+                if(content.equals("董事长")){
+                Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+                        Toast.LENGTH_SHORT).show();}
+                        else if(content.equals("总经理")){
+                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(content.equals("部门经理")){
+                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                level=content;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
 

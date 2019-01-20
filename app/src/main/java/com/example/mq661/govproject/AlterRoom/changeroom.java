@@ -10,17 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.SearchRoom.searchroom;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -38,20 +41,19 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class changeroom extends AppCompatActivity implements View.OnClickListener {
-    EditText BuildNumber,RoomNumber,Time,Size,Function;
+public class changeroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    EditText BuildNumber,RoomNumber,Time,Size;
     Button commit;
     CheckBox weixiu;
     //Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
-    RadioGroup MeetingRoomLevel;
-    RadioButton dsz,zjl,bmjl;
+    Spinner  MeetingRoomLevel,Function;
     private tokenDBHelper helper;
-    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,MeetingRoomLevel1,Token1,weixiu1,level="0";
+    private String BuildNumber1,RoomNumber1,Time1,Size1,Function1,Function2,MeetingRomeLevel2,Token1,weixiu1,level="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.changeroom_layout);
+        setContentView(R.layout.wty_changeroom_layout);
         helper=new tokenDBHelper(this);
 
         initView();
@@ -68,40 +70,14 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         Size = findViewById(R.id.Size);
         Function=findViewById(R.id.Function);
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
-        zjl = findViewById(R.id.zjl);
-        bmjl = findViewById(R.id.bmjl);
-        dsz = findViewById(R.id.dsz);
         weixiu= findViewById(R.id.weixiu);
         commit=findViewById(R.id.commit);
-
+        Function.setOnItemSelectedListener(this);
+        MeetingRoomLevel.setOnItemSelectedListener(this);
         commit.setOnClickListener(this);
         // 提交修改
 
-     //   usertoken = savetoken.getUsertoken(this);//用作读取本地token
-        MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                // 获取用户选中的性别
-                //String sex = "";
-                switch (checkedId) {
-                    case R.id.dsz:
-                        level = "董事长";
-                        break;
-                    case R.id.zjl:
-                        level = "总经理";
-                        break;
-                    case R.id.bmjl:
-                        level = "部门经理";
-                        break;
-                    default:
-                        break;
-                }
 
-                // 消息提示
-                Toast.makeText(changeroom.this,
-                        "最低使用权限是：" + level, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
@@ -113,10 +89,8 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 = tounicode.gbEncoding(Time.getText().toString().trim());
         Size1 = Size.getText().toString().trim();
-        Function1 = tounicode.gbEncoding(Function.getText().toString().trim());
-        MeetingRoomLevel1 = tounicode.gbEncoding(level);
-     //   Token1=usertoken.get("Token");//读本地
-        //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
+        Function2 = tounicode.gbEncoding(Function1.trim().toString());
+        MeetingRomeLevel2 = tounicode.gbEncoding(level);
         Token1=select();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -135,11 +109,11 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(Function1)) {
+        if (TextUtils.isEmpty(Function2)) {
             Toast.makeText(this, "请输入功能", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(MeetingRoomLevel1)) {
+        if (TextUtils.isEmpty(level)) {
             Toast.makeText(this, "请填写会议室等级", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -158,7 +132,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             @Override
             public void run() {
 
-                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function1, MeetingRoomLevel1, Token1,weixiu1);
+                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function2, MeetingRomeLevel2, Token1,weixiu1);
             }
         }).start();
     }
@@ -171,7 +145,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         map.put("Time", Time1);
         map.put("Size", Size1);
         map.put("Function", Function1);
-        map.put("MeetingRoomLevel", MeetingRoomLevel1);
+        map.put("MeetingRoomLevel", MettingRomeLevel1);
         map.put("Token", Token1);
         map.put("IsMeeting", weixiu2);
 
@@ -187,7 +161,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
                  .url("http://192.168.2.176:8080/SmartRoom/ChangeServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/ChangeServlet") //马琦IP
+                .url("http://192.168.43.174:8080/SmartRoom/ChangeServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -316,6 +290,60 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         }
         db.close();
         return token1;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String content = parent.getItemAtPosition(position).toString();
+        switch (parent.getId()) {
+            case R.id.Function:
+                if (content.equals("多媒体房间")) {
+                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                } else if (content.equals("普通房间")) {
+                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                Function1 = content;
+                break;
+            case R.id.MeetingRomeLevel:
+                if(content.equals("董事长")){
+                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+                            Toast.LENGTH_SHORT).show();}
+                else if(content.equals("总经理")){
+                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(content.equals("部门经理")){
+                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+                            Toast.LENGTH_SHORT).show();
+                }
+                level=content;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void searchroom2(View v) {
+        Intent intent;
+        intent = new Intent(this, searchroom.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        BuildNumber.setText(data.getStringExtra("BuildingNumber"));
+        RoomNumber.setText(data.getStringExtra("RoomNumber"));
+        Time.setText(data.getStringExtra("Time"));
+        //Size.setText(data.getStringExtra("Size"));
+
     }
 }
 

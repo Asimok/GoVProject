@@ -18,9 +18,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mq661.govproject.AlterRoom.addroom;
 import com.example.mq661.govproject.AlterRoom.changeroom;
 import com.example.mq661.govproject.AlterRoom.deleteroom;
 import com.example.mq661.govproject.Login_Register.Login;
@@ -49,10 +51,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class smartbook extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,size1,functions1;
+public class smartbook extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener {
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,size1,functions1,Functions;
     private List<roomAdapterInfo>  data;
-    EditText size,functions;
+    EditText size;
+    Spinner functions;
     Button commit;
     Intent ssdata=new Intent();
     private OkHttpClient okhttpClient;
@@ -71,13 +74,12 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 
     private void initView() {
 
-        size=findViewById(R.id.size);
+        size=findViewById(R.id.Size);
         functions=findViewById(R.id.functions);
         searchroomlv=findViewById(R.id.searchroomlv);
-
+        functions.setOnItemSelectedListener(this);
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
-        //    usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
         searchroomlv.setOnItemClickListener(this);       //设置短按事件
         searchroomlv.setOnItemLongClickListener(this);   //设置长按事件
@@ -87,23 +89,14 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if(TextUtils.isEmpty(size.getText())&&TextUtils.isEmpty(functions.getText()))
+        if(TextUtils.isEmpty(size.getText()))
         {
-            Toast.makeText(this, "请输入容量或功能", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入预期容量", Toast.LENGTH_SHORT).show();
         }
-//        else if(TextUtils.isEmpty(size.getText())&&!(TextUtils.isEmpty(functions.getText())))
-//        {
-//            size1=null;
-//            functions1=functions.getText().toString();
-//        }
-//        else if(TextUtils.isEmpty(functions.getText())&&!(TextUtils.isEmpty(size.getText())))
-//        {
-//            functions1=null;
-//            size1=size.getText().toString();
-//        }
+
        else {
             size1 = size.getText().toString();
-            functions1 = functions.getText().toString();
+            functions1 = Functions;
 
 
             data = new ArrayList<roomAdapterInfo>();
@@ -120,25 +113,24 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
     }
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        ssBuildingNumber=data.get(position).getBuildingNumber();
-        ssSize=data.get(position).getSize();
-        ssRoomNumber=data.get(position).getRoomNumber();
-        ssTime=data.get(position).getTime();
-        ssFunction=data.get(position).getFunction();
-        ssIsMeeting=data.get(position).getIsMeeting();
-        ssDays=data.get(position).getDays();
-
-        Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
-        //showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
-        ssdata.putExtra("BuildingNumber", ssBuildingNumber);
-        ssdata.putExtra("Size", ssSize);
-        ssdata.putExtra("RoomNumber", ssRoomNumber);
-        ssdata.putExtra("Time", ssTime);
-        ssdata.putExtra("Function", ssFunction);
-        ssdata.putExtra("IsMeeting", ssIsMeeting);
-        ssdata.putExtra("IsMeeting", ssDays);
-        setResult(1, ssdata);
-        finish();
+//        ssBuildingNumber=data.get(position).getBuildingNumber();
+//        ssSize=data.get(position).getSize();
+//        ssRoomNumber=data.get(position).getRoomNumber();
+//        ssTime=data.get(position).getTime();
+//        ssFunction=data.get(position).getFunction();
+//        ssIsMeeting=data.get(position).getIsMeeting();
+//        ssDays=data.get(position).getDays();
+//
+//        Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
+//        ssdata.putExtra("BuildingNumber", ssBuildingNumber);
+//        ssdata.putExtra("Size", ssSize);
+//        ssdata.putExtra("RoomNumber", ssRoomNumber);
+//        ssdata.putExtra("Time", ssTime);
+//        ssdata.putExtra("Function", ssFunction);
+//        ssdata.putExtra("IsMeeting", ssIsMeeting);
+//        ssdata.putExtra("IsMeeting", ssDays);
+//        setResult(1, ssdata);
+//        finish();
     }
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,7 +166,7 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
                 //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                .url("http://39.96.68.13:8080/SmartRoom/SmartBookServlet")
+                .url("http://192.168.43.174:8080/SmartRoom/SmartBookServlet")
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -283,6 +275,24 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String content = parent.getItemAtPosition(position).toString();
+        if (content.equals("多媒体房间")) {
+            Toast.makeText(smartbook.this, "选择的功能是：" + content,
+                    Toast.LENGTH_SHORT).show();
+        } else if (content.equals("普通房间")) {
+            Toast.makeText(smartbook.this, "选择的功能是：" + content,
+                    Toast.LENGTH_SHORT).show();
+        }
+        Functions = content;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 
     private class MyAdapter extends BaseAdapter
     {
@@ -334,8 +344,8 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
     /* @setNeutralButton 设置中间的按钮
      * 若只需一个按钮，仅设置 setPositiveButton 即可
      */
-    public void showMultiBtnDialog(String BuildingNumber,String Size,String RoomNumber,
-                                   String Time,String Function,String IsMeeting,String Days){
+    public void showMultiBtnDialog(final String BuildingNumber, String Size, final String RoomNumber,
+                                   final String Time, String Function, String IsMeeting, final String Days){
 
 
         AlertDialog.Builder normalDialog =
@@ -360,20 +370,29 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 //                        deleteroom();
 //                    }
 //                });
-        normalDialog.setNegativeButton("删除", new DialogInterface.OnClickListener() {
+        normalDialog.setNegativeButton("预约", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteroom();
+//                bookroom();
+                bookroomserver book=new bookroomserver();
+                book.setContent(smartbook.this);
+                try {
+                    book.startbookroom(BuildingNumber,RoomNumber,Time,Token1,Days);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         // 创建实例并显示
         normalDialog.show();
     }
-    public void deleteroom()
+    public void bookroom()
     {
         Intent intent;
-        intent = new Intent(this, deleteroom.class);
+        intent = new Intent(this, bookroom.class);
         startActivityForResult(intent, 0);
 
         // finish();

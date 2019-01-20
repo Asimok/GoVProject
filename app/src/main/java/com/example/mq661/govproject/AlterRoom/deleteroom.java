@@ -49,7 +49,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.deleteroom_layout);
+        setContentView(R.layout.wty_deleteroom_layout);
         helper=new tokenDBHelper(this);
 
         initView();
@@ -72,13 +72,18 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
+        String time=Time.getText().toString().trim();
+        if((time.length()==11)) {
+            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
+                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+            }
+            else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
+
+            else {
 
         BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
-       // Token1=usertoken.get("Token");//读本地
-        //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         Token1=select();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -107,6 +112,11 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 sendRequest(BuildNumber1, RoomNumber1, Time1, Token1);
             }
         }).start();
+    }}
+        else {
+            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1) {
@@ -127,7 +137,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-               .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet") //马琦IP
+               .url("http://192.168.43.174:8080/SmartRoom/DeleteServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -190,7 +200,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         startActivityForResult(intent, 0);
         finish();
     }
-    public void searchroom1(View v) {
+    public void searchroom3(View v) {
         Intent intent;
         intent = new Intent(this, searchroom.class);
         startActivityForResult(intent, 0);
@@ -267,6 +277,8 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         db.close();
         return token1;
     }
+
+
     }
 
 

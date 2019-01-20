@@ -23,6 +23,7 @@ import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.SearchRoom.searchroom;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.Dateadd;
 import com.example.mq661.govproject.tools.dateToString;
@@ -58,7 +59,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bookroom_layout);
+        setContentView(R.layout.wty_bookroom_layout);
         helper=new tokenDBHelper(this);
         initView();
 
@@ -123,8 +124,16 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
-        days2=tounicode.gbEncoding(days);
+        String time=Time.getText().toString().trim();
+        if((time.length()==11)) {
+            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
+                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+            }
+            else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
+
+            else {
+                days2=tounicode.gbEncoding(days);
+
         BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
@@ -158,6 +167,11 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 sendRequest(BuildNumber1, RoomNumber1, Time1, Token1,days2);
             }
         }).start();
+    }}
+        else {
+            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1,String days1) {
@@ -180,7 +194,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet") //马琦IP
+                .url("http://192.168.43.174:8080/SmartRoom/BookRoomServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -207,7 +221,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                     String Status = jsonObj.getString("Status");
 
                     String EmployeeNumber =jsonObj.getString("EmployeeNumber");
-                    String Name = jsonObj.getString("Name");
+                    String Name =jsonObj.getString("Name");
     showRequestResult(Status,EmployeeNumber,Name);
 
 
@@ -230,10 +244,10 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(bookroom.this, "进入判断！", Toast.LENGTH_LONG).show();
                 if (Status.equals("-1")) {
                     Toast.makeText(bookroom.this, "预定失败！", Toast.LENGTH_LONG).show();
-                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
+                  //  bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 } else if (Status.equals("0")) {
                     Toast.makeText(bookroom.this, "预定成功！", Toast.LENGTH_LONG).show();
-                    bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
+                   bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 }
                 else if (Status.equals("-3")) {
                     Toast.makeText(bookroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
@@ -327,6 +341,18 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         }
         db.close();
         return token1;
+    }
+    public void searchroom1(View v) {
+        Intent intent;
+        intent = new Intent(this, searchroom.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        BuildNumber.setText(data.getStringExtra("BuildingNumber"));
+        RoomNumber.setText(data.getStringExtra("RoomNumber"));
+        Time.setText(data.getStringExtra("Time"));
     }
 }
 

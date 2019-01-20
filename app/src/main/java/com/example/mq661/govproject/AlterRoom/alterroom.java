@@ -19,7 +19,7 @@ public class alterroom extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alterroom_layout);
+        setContentView(R.layout.wty_main_layout);
     }
 
     public void addroom(View v)
