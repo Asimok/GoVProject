@@ -14,6 +14,7 @@ import com.example.mq661.govproject.BookRoom.smartbook;
 import com.example.mq661.govproject.Login_Register.Logout;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler;
 
 public class alterroom extends AppCompatActivity {
     @Override
@@ -43,7 +44,7 @@ public class alterroom extends AppCompatActivity {
 
     public void searchroom(View view) {
         Intent intent;
-        intent = new Intent(this, searchroom.class);
+        intent = new Intent(this, searchroom_handler.class);
         startActivityForResult(intent, 0);
     }
     public void bookroom(View view) {

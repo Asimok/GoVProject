@@ -52,7 +52,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class smartbook extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,size1,functions1,Functions;
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,size1,functions1,Functions,IsMeeting2;
     private List<roomAdapterInfo>  data;
     EditText size;
     Spinner functions;
@@ -141,8 +141,8 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         ssFunction=data.get(position).getFunction();
         ssIsMeeting=data.get(position).getIsMeeting();
         ssDays=data.get(position).getDays();
-        Toast.makeText(this, "长按显示"
-                , Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "长按显示"
+//                , Toast.LENGTH_LONG).show();
         showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting,ssDays);
         return true;      //返回true时可以解除长按与短按的冲突。
 
@@ -166,7 +166,7 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
                 //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                .url("http://192.168.43.174:8080/SmartRoom/SmartBookServlet")
+                .url("http://39.96.68.13:8080/SmartRoom/SmartBookServlet")
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -203,18 +203,26 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                         String  Size1 = jsonObj.getString("size");
                         String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
                         String  IsMeeting = jsonObj.getString("isMeeting");
+                        if(IsMeeting.equals("0"))
+                        {
+                            IsMeeting2="空闲";
+                        }
+                        else{
+                            IsMeeting2="未知";
+                        }
+
                         String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
                         String mapx="map"+i;
                         if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
                         else if(BuildingNumber1.equals("-2")&&RoomNumber1.equals("-2")&&Time1.equals("-2")) {
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
 
-                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
                     }
 
 

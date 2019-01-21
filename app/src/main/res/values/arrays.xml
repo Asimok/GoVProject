@@ -11,4 +11,9 @@
         <item>普通房间</item>
 
     </string-array>
+    <string-array name="tab_texts">
+        <item>消息</item>
+        <item>联系人</item>
+        <item>动态</item>
+    </string-array>
 </resources>

@@ -137,6 +137,33 @@
             android:background="#ffc55c"
             android:onClick="mainintrefaceNow"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="0dp">
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="主界面"
+            android:background="#ffc55c"
+            android:onClick="main"
+            />
+            <Button
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="TAB"
+                android:background="#ffc55c"
+                android:onClick="QQ"
+                />
+        </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -165,6 +192,7 @@ android:gravity="center_vertical"
             android:background="#00000000"
             android:text="注册"
             android:textColor="#2B2B28"/>
+
 
     </RelativeLayout>
 

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +22,17 @@ import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.tools.Dateadd;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,13 +43,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class deleteroom extends AppCompatActivity implements View.OnClickListener {
-    EditText BuildNumber,RoomNumber,Time;
-
+public class deleteroom extends AppCompatActivity implements View.OnClickListener, NumberPicker.OnValueChangeListener {
+    EditText BuildNumber,RoomNumber,Time,Days;
+    private NumberPicker mNumberPickerYear,mNumberPickerMonth,mNumberPickerDay;
+    private  String year="2019",month="01",day="01",ssDays="2019-01-01";
     Button commit;
    // Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
-    private String BuildNumber1,RoomNumber1,Time1,Token1;
+    private String BuildNumber1,RoomNumber1,Time1,Token1,days;
     private tokenDBHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +67,27 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
         Time = findViewById(R.id.Time);
+        Days = findViewById(R.id.Days);
+        mNumberPickerYear= findViewById(R.id.numberPickerYear);
+        mNumberPickerMonth= findViewById(R.id.numberPickerMonth);
+        mNumberPickerDay= findViewById(R.id.numberPickerDay);
 
+        mNumberPickerYear.setMinValue(2019);
+        mNumberPickerYear.setMaxValue(2025);
+//        mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0,4)));
+
+        mNumberPickerMonth.setMinValue(01);
+        mNumberPickerMonth.setMaxValue(12);
+//        mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5,7)));
+
+        mNumberPickerDay.setMinValue(01);
+        mNumberPickerDay.setMaxValue(31);
+//        mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8,10)));
+
+        mNumberPickerYear.setOnValueChangedListener(this);
+        mNumberPickerMonth.setOnValueChangedListener(this);
+        mNumberPickerDay.setOnValueChangedListener(this);
         commit=findViewById(R.id.commit);
-
         commit.setOnClickListener(this);
         // 提交修改
 
@@ -81,7 +105,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
             else {
 
-        BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
+                BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
         RoomNumber1 = RoomNumber.getText().toString().trim();
         Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
         Token1=select();
@@ -125,6 +149,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         map.put("RoomNumber", RoomNumber1);
         map.put("Time", Time1);
         map.put("Token", Token1);
+        map.put("Days", tounicode.gbEncoding(days));
 
 
         JSONObject jsonObject = new JSONObject(map);
@@ -137,7 +162,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-               .url("http://192.168.43.174:8080/SmartRoom/DeleteServlet") //马琦IP
+               .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -181,7 +206,15 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
             public void run() {
                 if (status.equals("-1")) {
                     Toast.makeText(deleteroom.this, "删除失败！", Toast.LENGTH_LONG).show();
-                } else if (status.equals("0")) {
+                }
+                else if (status.equals("-8")) {
+                    Toast.makeText(deleteroom.this, "删除失败，房间占用！", Toast.LENGTH_LONG).show();
+
+                }
+                else if (status.equals("-9")) {
+                    Toast.makeText(deleteroom.this, "删除失败，房间不存在！", Toast.LENGTH_LONG).show();
+
+                }else if (status.equals("0")) {
                     Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_LONG).show();
 
                 }
@@ -202,7 +235,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     }
     public void searchroom3(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom.class);
+        intent = new Intent(this, searchroom_handler.class);
         startActivityForResult(intent, 0);
     }
 
@@ -211,6 +244,12 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         BuildNumber.setText(data.getStringExtra("BuildingNumber"));
         RoomNumber.setText(data.getStringExtra("RoomNumber"));
         Time.setText(data.getStringExtra("Time"));
+        Days.setText(data.getStringExtra("Days"));
+        ssDays=data.getStringExtra("Days");
+        days=ssDays;
+        mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0,4)));
+        mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5,7)));
+        mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8,10)));
 
     }
 
@@ -279,7 +318,35 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     }
 
 
+    public void datecheck(View view) {
+        Intent intent;
+        intent = new Intent(this, DatePickerActivity.class);
+        startActivityForResult(intent, 0);
     }
+
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+        switch (picker.getId()) {
+            case R.id.numberPickerYear:
+                year= String.valueOf(newVal);
+                break;
+            case R.id.numberPickerMonth:
+                month= String.valueOf(String.format("%02d",newVal));
+                break;
+            case R.id.numberPickerDay:
+                day= String.valueOf(String.format("%02d",newVal));
+                break;
+            default:
+                break;
+        }
+        days=year+"-"+month+"-"+day;
+        Days.setText(days);
+        Toast.makeText(deleteroom.this, "选择的日期是：" + days,
+                Toast.LENGTH_SHORT).show();
+
+    }
+}
 
 
 

@@ -35,6 +35,12 @@
         <activity android:name=".BookRoom.smartbook"
             android:windowSoftInputMode="adjustPan"
             ></activity>
+        <activity android:name=".AlterRoom.DatePickerActivity"></activity>
+        <activity android:name=".SearchRoom.searchroom_handler"></activity>
+        <activity android:name=".Main.MainInterfaceNow_handler"></activity>
+        <activity android:name=".Main.MainInterfaceToday_handler"></activity>
+        <activity android:name=".MainInterface.ViewPagerCustomActivity"></activity>
+        <activity android:name=".qqnavigationdemo.MainActivity"></activity>
     </application>
 
 </manifest>

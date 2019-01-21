@@ -48,7 +48,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class searchroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays;
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,IsMeeting2;
     private List<roomAdapterInfo>  data;
     Button commit;
     Intent ssdata=new Intent();
@@ -72,8 +72,8 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         // 提交修改
         searchroomlv=findViewById(R.id.searchroomlv);
 
-        commit=findViewById(R.id.commit);
-        commit.setOnClickListener(this);
+//        commit=findViewById(R.id.commit);
+//        commit.setOnClickListener(this);
     //    usertoken = savetoken.getUsertoken(this);//用作读取本地token
 
         searchroomlv.setOnItemClickListener(this);       //设置短按事件
@@ -153,7 +153,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
              //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                .url("http://192.168.43.174:8080/SmartRoom/SearchServlet")
+                .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -190,25 +190,37 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                                 String  Size1 = jsonObj.getString("size");
                                 String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
                                 String  IsMeeting = jsonObj.getString("isMeeting");
+                                if(IsMeeting.equals("0"))
+                                {
+                                    IsMeeting2="空闲";
+                                }
+                                else if(IsMeeting.equals("1"))
+                                {
+                                    IsMeeting2="占用中";
+                                }
+                                else if(IsMeeting.equals("2"))
+                                {
+                                    IsMeeting2="维修中";
+                                }
+                                else{
+                                    IsMeeting2="未知";
+                                }
+
                                 String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
                                 String mapx="map"+i;
                                 if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                                break; }
 
                                else if(BuildingNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
-                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                                    showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                                     break; }
 
 
-                               else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                               else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
                                }
-
-
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();

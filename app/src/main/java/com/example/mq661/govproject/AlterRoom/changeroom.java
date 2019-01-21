@@ -24,6 +24,7 @@ import com.example.mq661.govproject.Login_Register.saveinfo;
 import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.tounicode;
 
@@ -161,7 +162,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
                  .url("http://192.168.2.176:8080/SmartRoom/ChangeServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://192.168.43.174:8080/SmartRoom/ChangeServlet") //马琦IP
+                .url("http://39.96.68.13:8080/SmartRoom/ChangeServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -333,7 +334,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
     public void searchroom2(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom.class);
+        intent = new Intent(this, searchroom_handler.class);
         startActivityForResult(intent, 0);
     }
 

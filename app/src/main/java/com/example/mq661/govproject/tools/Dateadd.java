@@ -28,9 +28,5 @@ public class Dateadd {
 
     }
 
-//    public static void main(String args[]) throws ParseException {
-//        System.out.println(DateDemo.mydays("2019-11-2"));
-//
-//
-//    }
+
 }

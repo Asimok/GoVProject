@@ -4,51 +4,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/biankuang2">
+    <LinearLayout
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="楼号："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textColor="#393e46"/>
         <TextView
             android:id="@+id/BuildNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="楼号"
             android:textSize="20sp"
+            android:textColor="#15f64a"
             />
         <TextView
+            android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="房间号："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textColor="#393e46"/>
         <TextView
             android:id="@+id/RoomNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="房间号"
+            android:hint="房间"
             android:textSize="20sp"
+            android:textColor="#15f64a"
+
             />
         <TextView
+            android:layout_marginLeft="15dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="容量："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textColor="#393e46"/>
         <TextView
             android:id="@+id/Size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="容量"
             android:textSize="20sp"
+            android:textColor="#15f64a"
+
             />
 
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -57,29 +76,37 @@
             android:layout_height="wrap_content"
             android:text="开放时间："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textColor="#393e46"/>
         <TextView
             android:id="@+id/Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="开放时间"
+            android:hint="时间"
             android:textSize="20sp"
+            android:textColor="#15f64a"
+
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="功能："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:layout_marginLeft="5dp"
+            android:textColor="#393e46"/>
         <TextView
+
             android:id="@+id/Function"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="功能"
             android:textSize="20sp"
+            android:textColor="#15f64a"
+
             />
     </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -88,27 +115,32 @@
             android:layout_height="wrap_content"
             android:text="是否开会："
             android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textColor="#393e46"/>
         <TextView
             android:id="@+id/IsMeeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="开会否"
+            android:hint="开会"
             android:textSize="20sp"
+            android:textColor="#15f64a"
+
             />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 日期："
+                android:text="日期："
                 android:textSize="20sp"
-                android:textColor="#ff0000"/>
+
+                android:layout_marginLeft="25dp"
+                android:textColor="#393e46"/>
             <TextView
                 android:id="@+id/Days3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="  日期"
+                android:hint="日期"
+                android:textColor="#15f64a"
                 android:textSize="20sp"
                 />
     </LinearLayout>
-
+    </LinearLayout>
 </LinearLayout>

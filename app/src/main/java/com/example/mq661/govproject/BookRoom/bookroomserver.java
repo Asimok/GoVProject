@@ -57,7 +57,7 @@ public class bookroomserver extends AppCompatActivity {
                 //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
                 // .url("http://192.168.43.174:8080/LoginProject/login")
                 // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://192.168.43.174:8080/SmartRoom/BookRoomServlet") //马琦IP
+                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet") //马琦IP
                 // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -101,31 +101,31 @@ public class bookroomserver extends AppCompatActivity {
 //                Toast.makeText(content, "进入判断！", Toast.LENGTH_LONG).show();
 //                Looper.loop();
                 if (Status.equals("-1")) {
-                    Toast.makeText(bookroomserver.this, "预定失败！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(content, "预定失败！", Toast.LENGTH_LONG).show();
                     Looper.loop();
                     //  bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 } else if (Status.equals("0")) {
-                    Toast.makeText(bookroomserver.this, "预定成功！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(content, "预定成功！", Toast.LENGTH_LONG).show();
                     Looper.loop();
                   //  bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 }
                 else if (Status.equals("-3")) {
-                    Toast.makeText(bookroomserver.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(content, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                     relog();
                 }
                 else if (Status.equals("-5")) {
-                    Toast.makeText(bookroomserver.this, "您不具有预定此房间的权限！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(content, "您不具有预定此房间的权限！", Toast.LENGTH_SHORT).show();
                     Looper.loop();
 
                 }
                 else if (Status.equals("-6")) {
-                    Toast.makeText(bookroomserver.this, "该会议室已被预订！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(content, "该会议室已被预订！", Toast.LENGTH_SHORT).show();
                     Looper.loop();
 
                 }
                 else if (Status.equals("-7")) {
-                    Toast.makeText(bookroomserver.this, "该会议室正在维修！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(content, "该会议室正在维修！", Toast.LENGTH_SHORT).show();
                     Looper.loop();
 
                 }

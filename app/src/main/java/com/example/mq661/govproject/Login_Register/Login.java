@@ -21,10 +21,14 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.alterroom;
 import com.example.mq661.govproject.Main.MainInterfaceNow;
+import com.example.mq661.govproject.Main.MainInterfaceNow_handler;
 import com.example.mq661.govproject.Main.MainInterfaceToday;
+import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
+import com.example.mq661.govproject.MainInterface.ViewPagerCustomActivity;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.qqnavigationdemo.MainActivity;
 import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.TokenUtil;
 
@@ -189,7 +193,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
               //  .url("http://192.168.2.176:8080/LoginProject/login")
               // .url("http://192.168.43.174:8080/LoginProject/login")
                // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
-                .url("http://192.168.43.174:8080/SmartRoom/LoginServlet")//MQ
+                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")//MQ
                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
@@ -380,20 +384,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public void mainintrefaceNow(View view) {
         Intent intent;
-        intent = new Intent(this, MainInterfaceNow.class);
+        intent = new Intent(this, MainInterfaceNow_handler.class);
         startActivityForResult(intent, 0);
         //finish();
     }
 
     public void mainintrefaceToday(View view) {
         Intent intent;
-        intent = new Intent(this, MainInterfaceToday.class);
+        intent = new Intent(this, MainInterfaceToday_handler.class);
         startActivityForResult(intent, 0);
     }
     public void main()
     {
         Intent intent;
         intent = new Intent(this, alterroom.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void main(View view) {
+        Intent intent;
+        intent = new Intent(this, ViewPagerCustomActivity.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void QQ(View view) {
+        Intent intent;
+        intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 0);
     }
 }

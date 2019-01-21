@@ -105,7 +105,7 @@ import okhttp3.Response;
                     // .url("http://192.168.43.174:8080/LoginProject/login")
                     // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
                     //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
-                    .url("http://192.168.43.174:8080/SmartRoom/MainInterfaceServlet")
+                    .url("http://39.96.68.13:8080/SmartRoom/MainInterfaceServlet")
                     // .url("http://192.168.2.176:8080/SmartRoom/login")
                     .post(body)
                     .build();
