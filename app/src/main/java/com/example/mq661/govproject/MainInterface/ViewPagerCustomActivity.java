@@ -20,10 +20,6 @@ import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
 import com.example.mq661.govproject.R;
 import java.util.ArrayList;
 
-/**
- * @创建者 鑫鱻
- * @描述 Android零基础入门到精通系列教程，欢迎关注微信公众号ShareExpert
- */
 public class ViewPagerCustomActivity extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, View.OnClickListener {
     private ViewPager mViewPager = null;

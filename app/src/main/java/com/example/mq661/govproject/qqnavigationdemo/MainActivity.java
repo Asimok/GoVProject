@@ -1,5 +1,7 @@
 package com.example.mq661.govproject.qqnavigationdemo;
 
+import android.app.LocalActivityManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -14,12 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
+import com.example.mq661.govproject.MainInterface.ViewPagerAdapter;
+import com.example.mq661.govproject.MainInterface.ViewPagerCustomActivity;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.qqnavigationdemo.fragment.ContactsFragment;
 import com.example.mq661.govproject.qqnavigationdemo.fragment.MessageFragment;
 import com.example.mq661.govproject.qqnavigationdemo.fragment.StarFragment;
 import com.example.mq661.govproject.qqnavigationdemo.view.CircleImageView;
 import com.example.mq661.govproject.qqnavigationdemo.view.FragmentTabHost;
+
+import java.util.ArrayList;
 
 //import android.support.v4.app.FragmentTabHost;
 
@@ -30,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private FrameLayout mTabContent;
     private View mTabView;
-
+    private Intent intentMain,intentCircle,intentMy;
     private String[] mTabTexts;
 
     private int[] mTabIcons = new int[]{
@@ -50,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTvMessgeCount;
     private TextView mTvContactsCount;
     private TextView mTvStarCount;
-
-    @Override
+    private ViewPagerAdapter mAdapter = null;
+    private ArrayList<View> mPageList = null;
+    private LocalActivityManager manager;    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -104,6 +112,14 @@ public class MainActivity extends AppCompatActivity {
                     mTvMessgeCount = (TextView) mTabView.findViewById(R.id.tv_message_count);
                     mTvMessgeCount.setText("99");
                     mTabHost.addTab(messageTabSpec, MessageFragment.class, bundle);
+
+//                    Intent intent=new Intent(this, ViewPagerCustomActivity.class);
+//                    startActivity(intent);
+//                    manager=new LocalActivityManager(this,true);
+//                    //manager.dispatchCreate(savedInstanceState);
+//                    intentMain=new Intent(this,MainInterfaceToday_handler.class);
+//                    View tab02=manager.startActivity("viewID", intentMain).getDecorView();
+//                    mTabHost.addTab(messageTabSpec, MainInterfaceToday_handler.class, bundle);
                     break;
                 case 1:
                     mTvContactsCount = (TextView) mTabView.findViewById(R.id.tv_message_count);
@@ -112,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     mTvStarCount = (TextView) mTabView.findViewById(R.id.tv_message_count);
-                    mTvStarCount.setText("");
+                    mTvStarCount.setText("20");
                     mTabHost.addTab(messageTabSpec, StarFragment.class, bundle);
                     break;
             }

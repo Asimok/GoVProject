@@ -48,7 +48,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainInterfaceNow_handler extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,ssssTime;
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,IsMeeting2,ssssTime;
     private List<roomAdapterInfo> data;
     Button commit;
     Intent ssdata=new Intent();
@@ -63,6 +63,10 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         new Thread(runnable).start();  //启动子线程
         helper=new tokenDBHelper(this);
         initView();
+    }
+    protected void onResume() {
+        super.onResume();
+        onCreate(null);
     }
     private void initView() {
         ssTime= dateToString.nowdateToString2();//获取当前时间
@@ -158,26 +162,37 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
                         String  Size1 = jsonObj.getString("size");
                         String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
                         String  IsMeeting = jsonObj.getString("isMeeting");
+                        if(IsMeeting.equals("0"))
+                        {
+                            IsMeeting2="空闲";
+                        }
+                        else if(IsMeeting.equals("1"))
+                        {
+                            IsMeeting2="占用中";
+                        }
+                        else if(IsMeeting.equals("2"))
+                        {
+                            IsMeeting2="维修中";
+                        }
+                        else{
+                            IsMeeting2="未知";
+                        }
                         String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
                         String mapx="map"+i;
 
                         if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
 
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
                         else if(BuildingNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
 
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
 
-                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
                     }
-
-
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -194,8 +209,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
             public void run() {
 
                 if(BuildNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-                    Toast.makeText(MainInterfaceNow_handler.this, "查询不成功！", Toast.LENGTH_SHORT).show();
-                    relog();
+                    Toast.makeText(MainInterfaceNow_handler.this, "当前没有空闲的会议室！", Toast.LENGTH_SHORT).show();
                 }
                 else if(BuildNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
                     Toast.makeText(MainInterfaceNow_handler.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
@@ -282,7 +296,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view =View.inflate(MainInterfaceNow_handler.this,R.layout.searchroom_adp_layout,null);
+            View view =View.inflate(MainInterfaceNow_handler.this,R.layout.wty_searchroom_adp_layout,null);
 
 
             TextView BuildingNumber = view.findViewById(R.id.BuildNumber);

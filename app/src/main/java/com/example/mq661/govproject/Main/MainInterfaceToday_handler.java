@@ -48,7 +48,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainInterfaceToday_handler extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,ssDays,ssssTime;
+    private String ssBuildingNumber,ssRoomNumber,ssTime,ssSize,ssFunction,ssIsMeeting,IsMeeting2,ssDays,ssssTime;
     private List<roomAdapterInfo> data;
     Button commit;
     Intent ssdata=new Intent();
@@ -153,21 +153,37 @@ public class MainInterfaceToday_handler extends AppCompatActivity implements Ada
                         String  Size1 = jsonObj.getString("size");
                         String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
                         String  IsMeeting = jsonObj.getString("isMeeting");
+                        if(IsMeeting.equals("0"))
+                        {
+                            IsMeeting2="空闲";
+                        }
+                        else if(IsMeeting.equals("1"))
+                        {
+                            IsMeeting2="占用中";
+                        }
+                        else if(IsMeeting.equals("2"))
+                        {
+                            IsMeeting2="维修中";
+                        }
+                        else{
+                            IsMeeting2="未知";
+                        }
                         String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
                         String mapx="map"+i;
 
                         if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
 
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
                         else if(BuildingNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
 
-                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
 
                             break; }
 
-                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting,Days, mapx);
+                        else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
+
                     }
 
 
@@ -277,7 +293,7 @@ public class MainInterfaceToday_handler extends AppCompatActivity implements Ada
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view =View.inflate(MainInterfaceToday_handler.this,R.layout.searchroom_adp_layout,null);
+            View view =View.inflate(MainInterfaceToday_handler.this,R.layout.wty_searchroom_adp_layout,null);
 
 
             TextView BuildingNumber = view.findViewById(R.id.BuildNumber);

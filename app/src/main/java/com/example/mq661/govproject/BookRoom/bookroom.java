@@ -24,6 +24,7 @@ import com.example.mq661.govproject.Login_Register.savetoken;
 import com.example.mq661.govproject.Login_Register.zhuce;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
 import com.example.mq661.govproject.tools.Dateadd;
 import com.example.mq661.govproject.tools.dateToString;
@@ -344,7 +345,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     }
     public void searchroom1(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom.class);
+        intent = new Intent(this, searchroom_handler.class);
         startActivityForResult(intent, 0);
     }
 

@@ -40,7 +40,7 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.zhuce_layout);
+        setContentView(R.layout.wty_zhuce_layout);
         initView();
 
     }
@@ -74,12 +74,17 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
                     case R.id.woman:
                         Sex1 = 0;
                         break;
-                    default:break;
+                    default:
+                        break;
                 }
 
-                // 消息提示
-                Toast.makeText(zhuce.this,
-                        "选择的性别是：" + Sex1, Toast.LENGTH_SHORT).show();
+                // 消息提示.
+                if (Sex1 == 1) {
+                    Toast.makeText(zhuce.this,
+                            "选择的性别是：男", Toast.LENGTH_SHORT).show();
+                }
+                else Toast.makeText(zhuce.this,
+                        "选择的性别是：女", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,10 +107,7 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "请输入员工号", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(mima1)) {
-            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         if (TextUtils.isEmpty(Name1)) {
             Toast.makeText(this, "请输入姓名", Toast.LENGTH_SHORT).show();
             return;
@@ -124,6 +126,10 @@ public class zhuce extends AppCompatActivity implements View.OnClickListener {
         }
         if (TextUtils.isEmpty(Ministry1)) {
             Toast.makeText(this, "请填写部门", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(mima1)) {
+            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!remima1.equals(mima1)) {

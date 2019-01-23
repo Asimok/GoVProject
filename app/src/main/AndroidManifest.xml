@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mq661.govproject">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
-
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Login_Register.Login"
-            android:icon="@drawable/icon3"
-            >
+        <activity
+            android:name=".Login_Register.Login"
+            android:icon="@drawable/icon3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BookRoom.tosmartroom"></activity>
-        <activity android:name=".Login_Register.zhuce"></activity>
-        <activity android:name=".AlterRoom.alterroom"></activity>
-        <activity android:name=".AlterRoom.addroom"></activity>
-        <activity android:name=".AlterRoom.deleteroom"></activity>
-        <activity android:name=".AlterRoom.changeroom"></activity>
-        <activity android:name=".SearchRoom.searchroom"></activity>
-        <activity android:name=".BookRoom.bookroom"></activity>
-        <activity android:name=".Login_Register.Logout"></activity>
-        <activity android:name=".repassword.repassword"></activity>
-        <activity android:name=".repassword.inputmail"></activity>
-        <activity android:name=".Main.MainInterfaceNow"></activity>
-        <activity android:name=".Main.MainInterfaceToday"></activity>
-        <activity android:name=".BookRoom.smartbook"
-            android:windowSoftInputMode="adjustPan"
-            ></activity>
-        <activity android:name=".AlterRoom.DatePickerActivity"></activity>
-        <activity android:name=".SearchRoom.searchroom_handler"></activity>
-        <activity android:name=".Main.MainInterfaceNow_handler"></activity>
-        <activity android:name=".Main.MainInterfaceToday_handler"></activity>
-        <activity android:name=".MainInterface.ViewPagerCustomActivity"></activity>
-        <activity android:name=".qqnavigationdemo.MainActivity"></activity>
+        <activity android:name=".BookRoom.tosmartroom" />
+        <activity android:name=".Login_Register.zhuce" />
+        <activity android:name=".AlterRoom.alterroom" />
+        <activity android:name=".AlterRoom.addroom" />
+        <activity android:name=".AlterRoom.deleteroom" />
+        <activity android:name=".AlterRoom.changeroom" />
+        <activity android:name=".SearchRoom.searchroom" />
+        <activity android:name=".BookRoom.bookroom" />
+        <activity android:name=".Login_Register.Logout" />
+        <activity android:name=".repassword.repassword" />
+        <activity android:name=".repassword.inputmail" />
+        <activity android:name=".Main.MainInterfaceNow" />
+        <activity android:name=".Main.MainInterfaceToday" />
+        <activity
+            android:name=".BookRoom.smartbook"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".AlterRoom.DatePickerActivity" />
+        <activity android:name=".SearchRoom.searchroom_handler" />
+        <activity android:name=".Main.MainInterfaceNow_handler" />
+        <activity android:name=".Main.MainInterfaceToday_handler" />
+        <activity android:name=".MainInterface.ViewPagerCustomActivity" />
+        <activity android:name=".qqnavigationdemo.MainActivity" />
+        <activity android:name=".MainInterface.tab" />
     </application>
 
 </manifest>

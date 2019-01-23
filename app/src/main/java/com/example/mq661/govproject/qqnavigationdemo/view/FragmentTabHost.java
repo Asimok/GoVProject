@@ -206,7 +206,7 @@ public class FragmentTabHost extends TabHost
             mRealTabContent = (FrameLayout)findViewById(mContainerId);
             if (mRealTabContent == null) {
                 throw new IllegalStateException(
-                        "No tab content FrameLayout found for id " + mContainerId);
+                        "No com.example.mq661.govproject.MainInterface.tab content FrameLayout found for id " + mContainerId);
             }
         }
     }
@@ -225,7 +225,7 @@ public class FragmentTabHost extends TabHost
 
         if (mAttached) {
             // If we are already attached to the window, then check to make
-            // sure this tab's fragment is inactive if it exists.  This shouldn't
+            // sure this com.example.mq661.govproject.MainInterface.tab's fragment is inactive if it exists.  This shouldn't
             // normally happen.
             info.fragment = mFragmentManager.findFragmentByTag(tag);
             if (info.fragment != null && !info.fragment.isDetached()) {
@@ -254,24 +254,24 @@ public class FragmentTabHost extends TabHost
             tab.fragment = mFragmentManager.findFragmentByTag(tab.tag);
             if (tab.fragment != null && !tab.fragment.isDetached()) {
                 if (tab.tag.equals(currentTag)) {
-                    // The fragment for this tab is already there and
+                    // The fragment for this com.example.mq661.govproject.MainInterface.tab is already there and
                     // active, and it is what we really want to have
-                    // as the current tab.  Nothing to do.
+                    // as the current com.example.mq661.govproject.MainInterface.tab.  Nothing to do.
                     mLastTab = tab;
                 } else {
                     // This fragment was restored in the active state,
-                    // but is not the current tab.  Deactivate it.
+                    // but is not the current com.example.mq661.govproject.MainInterface.tab.  Deactivate it.
                     if (ft == null) {
                         ft = mFragmentManager.beginTransaction();
                     }
-//                    ft.detach(tab.fragment);
+//                    ft.detach(com.example.mq661.govproject.MainInterface.tab.fragment);
                     ft.hide(tab.fragment);
                 }
             }
         }
 
         // We are now ready to go.  Make sure we are switched to the
-        // correct tab.
+        // correct com.example.mq661.govproject.MainInterface.tab.
         mAttached = true;
         ft = doTabChanged(currentTag, ft);
         if (ft != null) {

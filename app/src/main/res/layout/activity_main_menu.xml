@@ -27,7 +27,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.ben.qqnavigationdemo.view.CircleImageView
+            <com.example.mq661.govproject.qqnavigationdemo.view.CircleImageView
                 android:layout_width="48dip"
                 android:layout_height="48dip"
                 android:layout_centerVertical="true"
@@ -62,7 +62,7 @@
         android:layout_below="@id/ll_head"
         android:orientation="vertical">
 
-        <com.ben.qqnavigationdemo.view.MenuItemView
+        <com.example.mq661.govproject.qqnavigationdemo.view.MenuItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_menu_item"
@@ -70,7 +70,7 @@
             app:itemSrc="@drawable/menu_item_crown"
             app:itemText="@string/get_more_about_member"/>
 
-        <com.ben.qqnavigationdemo.view.MenuItemView
+        <com.example.mq661.govproject.qqnavigationdemo.view.MenuItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_menu_item"
@@ -78,7 +78,7 @@
             app:itemSrc="@drawable/menu_item_wallet"
             app:itemText="@string/my_wallet"/>
 
-        <com.ben.qqnavigationdemo.view.MenuItemView
+        <com.example.mq661.govproject.qqnavigationdemo.view.MenuItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_menu_item"
@@ -86,7 +86,7 @@
             app:itemSrc="@drawable/menu_item_favourite"
             app:itemText="@string/my_favourite"/>
 
-        <com.ben.qqnavigationdemo.view.MenuItemView
+        <com.example.mq661.govproject.qqnavigationdemo.view.MenuItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_menu_item"
@@ -94,7 +94,7 @@
             app:itemSrc="@drawable/menu_item_photo"
             app:itemText="@string/my_photo"/>
 
-        <com.ben.qqnavigationdemo.view.MenuItemView
+        <com.example.mq661.govproject.qqnavigationdemo.view.MenuItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_menu_item"

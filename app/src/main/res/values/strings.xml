@@ -17,4 +17,8 @@
     <string name="get_more_about_member">了解会员特权</string>
     <string name="user_name">Ben</string>
     <string name="email">shib90@qq.com</string>
+    <string name="title_activity_chouti">GoV</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>

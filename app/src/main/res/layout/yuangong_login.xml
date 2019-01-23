@@ -107,59 +107,23 @@
             android:text="登录"
             android:textColor="#EBEBE3" />
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="当日"
-            android:background="#ffc55c"
-            android:onClick="mainintrefaceToday"
-            />
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/room"
-            android:text="会议室"
-            android:background="#ffc55c"
-            android:onClick="room"
-            />
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="当时"
-            android:background="#ffc55c"
-            android:onClick="mainintrefaceNow"
-            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="0dp">
+            android:paddingTop="10dp">
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="主界面"
-            android:background="#ffc55c"
-            android:onClick="main"
-            />
             <Button
                 android:layout_marginLeft="50dp"
                 android:layout_gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="TAB"
+                android:text="测试tab"
                 android:background="#ffc55c"
                 android:onClick="QQ"
                 />
@@ -171,6 +135,7 @@
         >
 
         <TextView
+            android:onClick="zhuce"
             android:paddingLeft="30dp"
             android:layout_alignParentBottom="true"
             android:layout_width="130dp"

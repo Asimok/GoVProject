@@ -25,6 +25,7 @@ import com.example.mq661.govproject.Main.MainInterfaceNow_handler;
 import com.example.mq661.govproject.Main.MainInterfaceToday;
 import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
 import com.example.mq661.govproject.MainInterface.ViewPagerCustomActivity;
+import com.example.mq661.govproject.MainInterface.tab;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
@@ -239,8 +240,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
                     //Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_LONG).show();
-                   // savetoken.saveUsertoken(Login.this, Token);
-
 
 
 
@@ -397,7 +396,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void main()
     {
         Intent intent;
-        intent = new Intent(this, alterroom.class);
+        intent = new Intent(this, tab.class);
         startActivityForResult(intent, 0);
     }
 
@@ -409,7 +408,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public void QQ(View view) {
         Intent intent;
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, tab.class);
         startActivityForResult(intent, 0);
     }
 }

@@ -324,7 +324,7 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view =View.inflate(smartbook.this,R.layout.searchroom_adp_layout,null);
+            View view =View.inflate(smartbook.this,R.layout.wty_searchroom_adp_layout,null);
 
 
             TextView BuildingNumber = view.findViewById(R.id.BuildNumber);
