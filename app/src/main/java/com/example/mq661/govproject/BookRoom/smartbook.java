@@ -359,7 +359,7 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(smartbook.this);
         normalDialog.setIcon(R.drawable.app);
-        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" 功能："+Function+" 是否开会："+IsMeeting
+        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" functions："+Function+" 是否开会："+IsMeeting
                 +" 日期： "+Days
         );
 

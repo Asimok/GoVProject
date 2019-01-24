@@ -27,9 +27,9 @@ import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
 import com.example.mq661.govproject.MainInterface.ViewPagerCustomActivity;
 import com.example.mq661.govproject.MainInterface.tab;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.chouti;
 import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.qqnavigationdemo.MainActivity;
 import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.TokenUtil;
 
@@ -381,18 +381,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         finish();
     }
 
-    public void mainintrefaceNow(View view) {
-        Intent intent;
-        intent = new Intent(this, MainInterfaceNow_handler.class);
-        startActivityForResult(intent, 0);
-        //finish();
-    }
-
-    public void mainintrefaceToday(View view) {
-        Intent intent;
-        intent = new Intent(this, MainInterfaceToday_handler.class);
-        startActivityForResult(intent, 0);
-    }
     public void main()
     {
         Intent intent;
@@ -400,15 +388,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         startActivityForResult(intent, 0);
     }
 
-    public void main(View view) {
-        Intent intent;
-        intent = new Intent(this, ViewPagerCustomActivity.class);
-        startActivityForResult(intent, 0);
-    }
 
     public void QQ(View view) {
         Intent intent;
         intent = new Intent(this, tab.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void chouti(View view) {
+        Intent intent;
+        intent = new Intent(this, chouti.class);
         startActivityForResult(intent, 0);
     }
 }

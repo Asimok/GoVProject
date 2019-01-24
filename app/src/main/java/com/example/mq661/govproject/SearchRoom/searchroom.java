@@ -85,8 +85,6 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         data=new ArrayList<roomAdapterInfo>();
-
-        //Token1=usertoken.get("Token");//读本地
         Token1=select();
         Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
         new Thread(new Runnable() {
@@ -327,7 +325,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(searchroom.this);
         normalDialog.setIcon(R.drawable.app);
-        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" 功能："+Function+" 是否开会："+IsMeeting
+        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" functions："+Function+" 是否开会："+IsMeeting
                 +" 日期： "+Days
         );
 

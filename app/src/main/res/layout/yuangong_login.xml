@@ -127,6 +127,16 @@
                 android:background="#ffc55c"
                 android:onClick="QQ"
                 />
+            <Button
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="抽屉"
+                android:background="#ffc55c"
+                android:onClick="chouti"
+                />
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
