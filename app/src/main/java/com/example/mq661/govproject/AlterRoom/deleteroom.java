@@ -2,37 +2,32 @@ package com.example.mq661.govproject.AlterRoom;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login;
-import com.example.mq661.govproject.Login_Register.saveinfo;
-import com.example.mq661.govproject.Login_Register.savetoken;
-import com.example.mq661.govproject.Login_Register.zhuce;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.SearchRoom.searchroom;
-import com.example.mq661.govproject.SearchRoom.searchroom_handler;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.tools.Dateadd;
-import com.example.mq661.govproject.tools.dateToString;
-import com.example.mq661.govproject.tools.tounicode;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler_forbook;
+import com.example.mq661.govproject.tools.DatePickerActivity;
+import com.example.mq661.govproject.tools.MyNotification;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,27 +61,27 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
-        Time = findViewById(R.id.Time);
-        Days = findViewById(R.id.Days);
-        mNumberPickerYear= findViewById(R.id.numberPickerYear);
-        mNumberPickerMonth= findViewById(R.id.numberPickerMonth);
-        mNumberPickerDay= findViewById(R.id.numberPickerDay);
-
-        mNumberPickerYear.setMinValue(2019);
-        mNumberPickerYear.setMaxValue(2025);
-//        mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0,4)));
-
-        mNumberPickerMonth.setMinValue(01);
-        mNumberPickerMonth.setMaxValue(12);
-//        mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5,7)));
-
-        mNumberPickerDay.setMinValue(01);
-        mNumberPickerDay.setMaxValue(31);
-//        mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8,10)));
-
-        mNumberPickerYear.setOnValueChangedListener(this);
-        mNumberPickerMonth.setOnValueChangedListener(this);
-        mNumberPickerDay.setOnValueChangedListener(this);
+        //Time = findViewById(R.id.Time);
+        //Days = findViewById(R.id.Days);
+//        mNumberPickerYear= findViewById(R.id.numberPickerYear);
+//        mNumberPickerMonth= findViewById(R.id.numberPickerMonth);
+//        mNumberPickerDay= findViewById(R.id.numberPickerDay);
+//
+//        mNumberPickerYear.setMinValue(2019);
+//        mNumberPickerYear.setMaxValue(2025);
+////        mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0,4)));
+//
+//        mNumberPickerMonth.setMinValue(01);
+//        mNumberPickerMonth.setMaxValue(12);
+////        mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5,7)));
+//
+//        mNumberPickerDay.setMinValue(01);
+//        mNumberPickerDay.setMaxValue(31);
+////        mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8,10)));
+//
+//        mNumberPickerYear.setOnValueChangedListener(this);
+//        mNumberPickerMonth.setOnValueChangedListener(this);
+//        mNumberPickerDay.setOnValueChangedListener(this);
         commit=findViewById(R.id.commit);
         commit.setOnClickListener(this);
         // 提交修改
@@ -96,18 +91,18 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        String time=Time.getText().toString().trim();
-        if((time.length()==11)) {
-            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
-                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
-            }
-            else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
+//        String time=Time.getText().toString().trim();
+//        if((time.length()==11)) {
+//            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
+//                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+//            }
+//            else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
+//
+//            else {
 
-            else {
-
-                BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
+                BuildNumber1 =   BuildNumber.getText().toString().trim();
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
+       // Time1 =   Time.getText().toString().trim();
         Token1=select();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -117,10 +112,10 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
             Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(Time1)) {
-            Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (TextUtils.isEmpty(Time1)) {
+//            Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
 
         if (TextUtils.isEmpty(Token1)) {
@@ -136,20 +131,20 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                 sendRequest(BuildNumber1, RoomNumber1, Time1, Token1);
             }
         }).start();
-    }}
-        else {
-            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
-
-        }
     }
+//        else {
+//            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+//
+//        }
+//    }
 
     private void sendRequest(String BuildNumber1,String RoomNumber1,String Time1,String Token1) {
         Map map = new HashMap();
         map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
-        map.put("Time", Time1);
+      //  map.put("Time", Time1);
         map.put("Token", Token1);
-        map.put("Days", tounicode.gbEncoding(days));
+       // map.put("Days",   days);
 
 
         JSONObject jsonObject = new JSONObject(map);
@@ -215,12 +210,19 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(deleteroom.this, "删除失败，房间不存在！", Toast.LENGTH_LONG).show();
 
                 }else if (status.equals("0")) {
+                    MyNotification notify=new MyNotification(getApplicationContext());
+                    notify.MyNotification("智能会议室","删除房间成功",R.drawable.dete2,"deleteroom","删除房间",7,"删除");
                     Toast.makeText(deleteroom.this, "删除成功！", Toast.LENGTH_LONG).show();
 
                 }
                 else if (status.equals("-3")) {
                     Toast.makeText(deleteroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
+                    delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
+                }
+                else if (status.equals("-5")) {
+                    Toast.makeText(deleteroom.this, "您没有进行此项操作的权限！", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -229,28 +231,28 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     }
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
     }
     public void searchroom3(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom_handler.class);
+        intent = new Intent(this, searchroom_handler_forbook.class);
         startActivityForResult(intent, 0);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        BuildNumber.setText(data.getStringExtra("BuildingNumber"));
-        RoomNumber.setText(data.getStringExtra("RoomNumber"));
-        Time.setText(data.getStringExtra("Time"));
-        Days.setText(data.getStringExtra("Days"));
-        ssDays=data.getStringExtra("Days");
-        days=ssDays;
-        mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0,4)));
-        mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5,7)));
-        mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8,10)));
-
+        if(!(data.getStringExtra("BuildingNumber").equals("空的"))) {
+            BuildNumber.setText(data.getStringExtra("BuildingNumber"));
+            RoomNumber.setText(data.getStringExtra("RoomNumber"));
+//            Time.setText(data.getStringExtra("Time"));
+//            Days.setText(data.getStringExtra("Days"));
+            ssDays = data.getStringExtra("Days");
+            days = ssDays;
+//            mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0, 4)));
+//            mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5, 7)));
+//            mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8, 10)));
+        }
     }
 
     public void insert(String token){
@@ -327,24 +329,44 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 
-        switch (picker.getId()) {
-            case R.id.numberPickerYear:
-                year= String.valueOf(newVal);
-                break;
-            case R.id.numberPickerMonth:
-                month= String.valueOf(String.format("%02d",newVal));
-                break;
-            case R.id.numberPickerDay:
-                day= String.valueOf(String.format("%02d",newVal));
-                break;
-            default:
-                break;
-        }
-        days=year+"-"+month+"-"+day;
-        Days.setText(days);
-        Toast.makeText(deleteroom.this, "选择的日期是：" + days,
-                Toast.LENGTH_SHORT).show();
+//        switch (picker.getId()) {
+//            case R.id.numberPickerYear:
+//                year= String.valueOf(newVal);
+//                break;
+//            case R.id.numberPickerMonth:
+//                month= String.valueOf(String.format("%02d",newVal));
+//                break;
+//            case R.id.numberPickerDay:
+//                day= String.valueOf(String.format("%02d",newVal));
+//                break;
+//            default:
+//                break;
+//        }
+//        days=year+"-"+month+"-"+day;
+//        Days.setText(days);
+//        Toast.makeText(deleteroom.this, "选择的日期是：" + days,
+//                Toast.LENGTH_SHORT).show();
 
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 }
 

@@ -1,36 +1,21 @@
 package com.example.mq661.govproject.repassword;
 
 
-
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.AlterRoom.addroom;
-import com.example.mq661.govproject.AlterRoom.alterroom;
 import com.example.mq661.govproject.Login_Register.Login;
-import com.example.mq661.govproject.Login_Register.saveinfo;
-import com.example.mq661.govproject.Login_Register.savetoken;
-import com.example.mq661.govproject.Login_Register.zhuce;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.mytoast.ToastUtil;
-import com.example.mq661.govproject.mytoken.sqltoken;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.tools.TokenUtil;
-import com.example.mq661.govproject.tools.tomd5;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +23,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -145,7 +131,7 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
                                   Toast.makeText(inputmail.this, "邮箱不存在，查找失败！", Toast.LENGTH_SHORT).show();
                               } else if (status.equals("0")) {
                                   Toast.makeText(inputmail.this, "查找成功，请查收邮件！", Toast.LENGTH_LONG).show();
-                                  //remima5();
+                                  saveDeviceInfo.savelogin(getApplicationContext(),"0");
                                   relog();
 
                               }
@@ -167,9 +153,29 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
 
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 }
 

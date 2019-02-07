@@ -21,5 +21,12 @@ public class dateToString {
         System.out.println(reStr);
         return reStr;
     }
+    public static String nowdateToString3() {
+        Date date = new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("HH");
+        String reStr = sdf.format(date);
+        System.out.println(reStr);
+        return reStr;
+    }
 
 }

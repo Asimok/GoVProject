@@ -1,23 +1,31 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'gov'
+            keyPassword '12398qq'
+            storeFile file('G:/mqjks.jks')
+            storePassword '12398qq'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.mq661.govproject"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "GoV 2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
-
     }
-
     packagingOptions {
         exclude 'org/apache/commons/codec/language/*'
         exclude 'org/apache/commons/codec/language/bm/ash_approx_russian.txt'
@@ -51,14 +59,18 @@ android {
         exclude 'overview-tree.html'
         //exclude 'org.apache.commons.codec.binary.Base64'
     }
+    productFlavors {
+    }
 }
 
 
+
 dependencies {
+    implementation 'com.zyao89:zloading:1.2.0'
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+   // implementation 'com.android.support.constraint:constraint-tabhost_layout:1.1.3'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.android.support:design:28.0.0'
@@ -81,4 +93,6 @@ dependencies {
     implementation files('libs/commons-codec-1.6.jar')
     implementation files('libs/commons-codec-1.6.jar')
     implementation files('libs/commons-codec-1.11-javadoc.jar')
+    implementation files('libs/autolayout.jar')
+
 }

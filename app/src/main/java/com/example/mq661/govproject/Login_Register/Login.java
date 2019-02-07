@@ -1,14 +1,16 @@
 package com.example.mq661.govproject.Login_Register;
 
 
-
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.alterroom;
-import com.example.mq661.govproject.Main.MainInterfaceNow;
-import com.example.mq661.govproject.Main.MainInterfaceNow_handler;
-import com.example.mq661.govproject.Main.MainInterfaceToday;
-import com.example.mq661.govproject.Main.MainInterfaceToday_handler;
-import com.example.mq661.govproject.MainInterface.ViewPagerCustomActivity;
+import com.example.mq661.govproject.BookRoom.getBookInfo_handler;
+import com.example.mq661.govproject.MainInterface.FirstStartActivity;
 import com.example.mq661.govproject.MainInterface.tab;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.chouti;
 import com.example.mq661.govproject.mytoast.ToastUtil;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.repassword.inputmail;
+import com.example.mq661.govproject.tools.MyNotification;
 import com.example.mq661.govproject.tools.TokenUtil;
+import com.example.mq661.govproject.tools.userDBHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +41,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,14 +53,42 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     CheckBox CK;
     Button login;
     private OkHttpClient okhttpClient;
-    Map<String, String> userInfo;
-    private String zhanghu1,mima1,Token;
+    Map<String, String> userInfo,countInfo,countlogin;
+    private String zhanghu2,mima2,Token;
     private tokenDBHelper helper;
+    private userDBHelper helper1;
+    String count="0",logincount="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.yuangong_login);
+        setContentView(R.layout.login);
         helper=new tokenDBHelper(this);
+        helper1=new userDBHelper(this);
+
+        countInfo = saveDeviceInfo.getcount(this);
+        count= countInfo.get("count");
+        //判断程序是第几次运行，如果是第一次运行则跳转到引导页面
+        if (count.equals("0")){
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), FirstStartActivity.class);
+            startActivity(intent);
+            saveDeviceInfo.savelogin(this,"0");
+            Log.d("ddd", "logincount重置   "+logincount);
+            this.finish();
+        }
+        saveDeviceInfo.savecount(this);
+
+        countlogin= saveDeviceInfo.getlogin(this);
+        logincount=countlogin.get("logincount");
+        Log.d("ddd", "logincount   "+logincount);
+        //判断程序是否已经登录，如果未注销第一次运行则跳转到主页面
+        if (!logincount.equals("0")){
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), tab.class);
+            startActivity(intent);
+            this.finish();
+        }
         initView();
 
     }
@@ -70,8 +101,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login=findViewById(R.id.login);
         login.setOnClickListener(this);
         // 记住密码功能
-        userInfo = saveinfo.getUserInfo(this);
-       // usertoken = savetoken.getUsertoken(this);
+        userInfo = saveDeviceInfo.getUserInfo(this);
         try {
             if (userInfo != null) {
                 // 显示在界面上
@@ -88,24 +118,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     mima.setText(userInfo.get("password"));
                 }
 
-//                if(userInfo.get("Token").toString().isEmpty())
-//                {
-//                    Token =TokenUtil.genToken();
-//                    Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
-//                }
-//                else if(!TokenUtil.verificationToken(TokenUtil.genToken()).equals("成功"))
-//                {
-//                    Token =TokenUtil.genToken();
-//                    Toast.makeText(Login.this,"已经替换无效token"+Token,Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Token=userInfo.get("Token");
-//                    Toast.makeText(Login.this,"旧的"+Token,Toast.LENGTH_SHORT).show();
-//                }
-
 
             }
-            //CK.setChecked(true);
         }
         catch (Exception e)
         {}
@@ -125,7 +139,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
 
         String number = zhanghu.getText().toString().trim();
+        zhanghu2=number;
         String password = mima.getText().toString();
+        mima2=password;
 
 
         if (TextUtils.isEmpty(number)) {
@@ -136,16 +152,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
-       // String Token1=usertoken.get("Token");//读本地
-        //   TokenUtil.verificationToken(TokenUtil.genToken());
-
         String Token1=select();
         Toast.makeText(Login.this,"查出来的"+Token1,Toast.LENGTH_SHORT).show();
 
         if(Token1==null)
         {
             Token =TokenUtil.genToken();
-           // savetoken.saveUsertoken(this, Token);//存本地
             insert(Token);
             Toast.makeText(Login.this,"新的"+Token,Toast.LENGTH_SHORT).show();
         }
@@ -154,7 +166,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         try {
             if (CK.isChecked()) {
 
-                boolean isSaveSuccess = saveinfo.saveUserInfo(this, number, password);
+                boolean isSaveSuccess = saveDeviceInfo.saveUserInfo(this, number, password);
                 if (isSaveSuccess) {
                     Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
                 } else {
@@ -164,7 +176,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 number = "请输入员工号";
                 password = "请输入密码";
 
-                saveinfo.saveUserInfo(this, number, password);
+                saveDeviceInfo.saveUserInfo(this, number, password);
             }
         }
         catch (Exception e)
@@ -219,8 +231,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 try {
                     JSONObject jsonObj = new JSONObject(res);
                     String status = jsonObj.getString("status");
+                    String Name =jsonObj.getString("Name");
 
-                    showRequestResult(status);
+                    showRequestResult(status,Name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -229,7 +242,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void showRequestResult(final String status) {
+    private void showRequestResult(final String status,final String name) {
         runOnUiThread(new Runnable() {
             @Override
             /**
@@ -240,7 +253,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
                     //Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_LONG).show();
-
 
 
                     Toast toast=new Toast(getApplicationContext());
@@ -268,13 +280,25 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                     ToastUtil.makeText(Login.this,"登录成功！",ToastUtil.LENGTH_SHORT).show();
 
-
-
                     update(Token);
+
+                    if( userselect()[0]==null)
+                    {
+                        insertUser(zhanghu2, name);
+                    }
+                    else
+                        userupdate(zhanghu2,name);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"1");
                     main();
+                    MyNotification notify=new MyNotification(getApplicationContext());
+                    notify.MyNotification("智能会议室","登录成功",R.drawable.book2,"登录1","登录",5,"登录");
+
+                    finish();
                 }
                 else if (status.equals("-2")) {
                     Toast.makeText(Login.this, "账户名非法！请重新登录", Toast.LENGTH_SHORT).show();
+                    delete(Token);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
                 }
 
@@ -283,6 +307,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
                 else if (status.equals("-3")) {
                     Toast.makeText(Login.this, "token为空，请重新登录！", Toast.LENGTH_SHORT).show();
+                    delete(Token);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
                 }
 
@@ -292,7 +318,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public void zhuce(View view) {
         Intent intent;
-        intent = new Intent(this, zhuce.class);
+        intent = new Intent(this, Regist.class);
         startActivityForResult(intent, 0);
     }
 
@@ -303,7 +329,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
     }
@@ -334,23 +360,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //自定义更新
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values=new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
         values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null,null);
         if(i==0){
             Toast.makeText(this, "更新不成功",Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "更新成功"+i,Toast.LENGTH_SHORT).show();}
+            Toast.makeText(this, "更新成功",Toast.LENGTH_SHORT).show();}
         db.close();
     }
 
     public void delete(String token){
 
         SQLiteDatabase db = helper.getWritableDatabase();
-
-
-
         int i = db.delete("token", "token=?",new String[]{token});
         if(i==0){
             Toast.makeText(this, "删除不成功",Toast.LENGTH_SHORT).show();
@@ -366,12 +387,68 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Cursor cursor = db.rawQuery("select * from token", null);
         String token1=null;
         while(cursor.moveToNext()){
-//            mytoken token= new mytoken();
-//            token.setMytoken(cursor.getString(0));
             token1=cursor.getString(0);
         }
         db.close();
         return token1;
+    }
+
+    public void insertUser(String zhanghu3,String name3){
+        //自定义增加数据
+        SQLiteDatabase db1 = helper1.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put("zhanghao", zhanghu3);
+        values.put("name", name3);
+        long l = db1.insert("user", null, values);
+
+        if(l==-1){
+            Toast.makeText(this, "插入用户信息不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "插入用户信息成功"+l,Toast.LENGTH_SHORT).show();}
+        db1.close();
+    }
+    public void userupdate(String zhanghu3,String name3){
+
+
+        //自定义更新
+        SQLiteDatabase db = helper1.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        Log.d("ddd","更新的账户   "+zhanghu3 );
+        values.put("zhanghao", zhanghu3);
+        values.put("name", name3);
+        int i = db.update("user", values, null,null);
+        if(i==0){
+            Toast.makeText(this, "更新用户信息不成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "更新用户信息成功",Toast.LENGTH_SHORT).show();}
+        db.close();
+    }
+    public String []  userselect(){
+
+        SQLiteDatabase db = helper1.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from user", null);
+        String zhanghao=null;
+        String name=null;
+        while(cursor.moveToNext()){
+            zhanghao=cursor.getString(cursor.getColumnIndex("zhanghao"));
+            name=cursor.getString(cursor.getColumnIndex("name"));
+        }
+        String [] user={zhanghao,name};
+        Log.d("ddd", "查出来的  账户"+user[0]+"  姓名   "+user[1]);
+        db.close();
+        return user;
+    }
+
+    public void userdelete(String zhanghu3){
+
+        SQLiteDatabase db = helper1.getWritableDatabase();
+        Log.d("ddd","删除账户   "+ zhanghu3);
+        int i = db.delete("user", "zhanghao=?",new String[]{zhanghu3});
+        if(i==0){
+            Toast.makeText(this, "删除用户信息不成功",Toast.LENGTH_SHORT).show();
+        }else{  Toast.makeText(this, "删除用户信息成功",Toast.LENGTH_SHORT).show();}
+        db.close();
+
     }
 
     public void forgetmima(View view) {
@@ -386,6 +463,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         intent = new Intent(this, tab.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 
 
@@ -393,6 +471,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         intent = new Intent(this, tab.class);
         startActivityForResult(intent, 0);
+
     }
 
     public void chouti(View view) {
@@ -400,6 +479,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         intent = new Intent(this, chouti.class);
         startActivityForResult(intent, 0);
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
+    }
+
+
+
+
+    public void sendSubscribeMsg(View view) {
+
+        MyNotification notify=new MyNotification(getApplicationContext());
+        notify.MyNotification("1","2",R.drawable.icon3,"ct2","sub",3,"测试");
+    }
+
 }
 
 

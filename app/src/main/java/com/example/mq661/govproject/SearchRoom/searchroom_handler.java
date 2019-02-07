@@ -24,10 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.deleteroom;
+import com.example.mq661.govproject.AlterRoom.deleteroomServer;
+import com.example.mq661.govproject.BookRoom.bookroomServer;
+import com.example.mq661.govproject.HomePage.MainInterfaceToday_handler;
 import com.example.mq661.govproject.Login_Register.Login;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.tools.tounicode;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,7 +66,6 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
         new Thread(runnable).start();  //启动子线程
         helper=new tokenDBHelper(this);
         initView();
-
     }
     private void initView() {
 
@@ -149,11 +152,11 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
                         JSONObject jsonObj = jsonArray.getJSONObject(i);
 
 
-                        String BuildingNumber1 = tounicode.decodeUnicode(jsonObj.getString("buildingNumber"));
+                        String BuildingNumber1 =   jsonObj.getString("buildingNumber");
                         String RoomNumber1 = jsonObj.getString("roomNumber");
-                        String Time1 = tounicode.decodeUnicode( jsonObj.getString("time"));
+                        String Time1 =    jsonObj.getString("time");
                         String Size1 = jsonObj.getString("size");
-                        String Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
+                        String Function1 =  jsonObj.getString("functions");
                         String  IsMeeting = jsonObj.getString("isMeeting");
                         if(IsMeeting.equals("0"))
                         {
@@ -161,7 +164,7 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
                         }
                         else if(IsMeeting.equals("1"))
                         {
-                            IsMeeting2="占用中";
+                            IsMeeting2="占用";
                         }
                         else if(IsMeeting.equals("2"))
                         {
@@ -171,7 +174,7 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
                             IsMeeting2="未知";
                         }
 
-                        String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
+                        String  Days =   jsonObj.getString("days");
                         String mapx="map"+i;
                         if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
                             showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
@@ -185,6 +188,7 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
 
 
                         else  showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
+                       // insertAllRoom(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days);
                     }
 
                 } catch (Exception e) {
@@ -205,10 +209,14 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
 
                 if(BuildNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
                     Toast.makeText(searchroom_handler.this, "查询不成功！", Toast.LENGTH_SHORT).show();
-                    relog();
+                    //delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
+                   // relog();
                 }
                 else if(BuildNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
                     Toast.makeText(searchroom_handler.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
                 }
                 else {
@@ -241,19 +249,7 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
         ssFunction=data.get(position).getFunction();
         ssIsMeeting=data.get(position).getIsMeeting();
         ssDays=data.get(position).getDays();
-
-        Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
-        //showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting);
-        ssdata.putExtra("BuildingNumber", ssBuildingNumber);
-        ssdata.putExtra("Size", ssSize);
-        ssdata.putExtra("RoomNumber", ssRoomNumber);
-        ssdata.putExtra("Time", ssTime);
-        ssdata.putExtra("Function", ssFunction);
-        ssdata.putExtra("IsMeeting", ssIsMeeting);
-        ssdata.putExtra("Days", ssDays);
-        setResult(1, ssdata);
-        finish();
-    }
+        showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting,ssDays);    }
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         ssBuildingNumber=data.get(position).getBuildingNumber();
@@ -263,12 +259,8 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
         ssFunction=data.get(position).getFunction();
         ssIsMeeting=data.get(position).getIsMeeting();
         ssDays=data.get(position).getDays();
-        Toast.makeText(this, "长按显示"
-                , Toast.LENGTH_LONG).show();
         showMultiBtnDialog(ssBuildingNumber,ssSize,ssRoomNumber,ssTime,ssFunction,ssIsMeeting,ssDays);
         return true;      //返回true时可以解除长按与短按的冲突。
-
-
     }
 
     private class MyAdapter extends BaseAdapter
@@ -303,9 +295,6 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
             TextView Function=view.findViewById(R.id.Function);
             TextView IsMeeting=view.findViewById(R.id.IsMeeting);
             TextView Days=view.findViewById(R.id.Days3);
-//           Button select=view.findViewById(R.id.select);
-//
-//            select.setOnClickListener((View.OnClickListener) this);
 
             BuildingNumber.setText(data.get(position).getBuildingNumber());
             Size.setText(data.get(position).getSize());
@@ -321,17 +310,16 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
     /* @setNeutralButton 设置中间的按钮
      * 若只需一个按钮，仅设置 setPositiveButton 即可
      */
-    public void showMultiBtnDialog(String BuildingNumber,String Size,String RoomNumber,
-                                   String Time,String Function,String IsMeeting,String Days){
+    public void showMultiBtnDialog(final String BuildingNumber1, String Size, final String RoomNumber,
+                                   final String Time, String Function, String IsMeeting, final String Days){
 
 
         AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(searchroom_handler.this);
+                new AlertDialog.Builder(this);
         normalDialog.setIcon(R.drawable.app);
-        normalDialog.setTitle("GoV").setMessage("房间信息：\n"+"楼号："+BuildingNumber+" 房间号："+RoomNumber+" 容量："+Size+" 时间段："+Time+" functions："+Function+" 是否开会："+IsMeeting
-                +" 日期： "+Days
+        normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼号：" + BuildingNumber1 + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
+                + "       日期： " + Days
         );
-
         normalDialog.setPositiveButton("取消",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -340,17 +328,33 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
                     }
                 });
 
-//        normalDialog.setNeutralButton("删除",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        deleteroom();
-//                    }
-//                });
-        normalDialog.setNegativeButton("删除", new DialogInterface.OnClickListener() {
+        normalDialog.setNeutralButton("删除",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteroomServer deleteroom =new deleteroomServer();
+                        deleteroom.setContent(searchroom_handler.this);
+                        try {
+                            deleteroom.startdeleteroom(BuildingNumber1,RoomNumber,Token1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        normalDialog.setNegativeButton("预约", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteroom();
+                bookroomServer book = new bookroomServer();
+                book.setContent(searchroom_handler.this);
+                try {
+                    book.startbookroom(BuildingNumber1, RoomNumber, Time, Token1, Days);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -359,14 +363,11 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
     }
     public void deleteroom()
     {
-        Intent intent;
-        intent = new Intent(this, deleteroom.class);
-        startActivityForResult(intent, 0);
 
-        // finish();
+
     }
-
-
+    public void bookroom() {
+    }
     public void insert(String token){
 
 
@@ -432,7 +433,7 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
     }
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
     }
@@ -456,4 +457,5 @@ public class searchroom_handler extends AppCompatActivity implements View.OnClic
         }
         return res;
     }
+
 }

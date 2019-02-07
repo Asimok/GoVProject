@@ -6,45 +6,94 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
+        android:screenOrientation="portrait"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/iconsmall"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".Login_Register.Login"
-            android:icon="@drawable/icon3">
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:launchMode="singleTask"
+            android:name=".Login_Register.Login_noToken"
+            android:icon="@drawable/iconsmall">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BookRoom.tosmartroom" />
-        <activity android:name=".Login_Register.zhuce" />
-        <activity android:name=".AlterRoom.alterroom" />
-        <activity android:name=".AlterRoom.addroom" />
-        <activity android:name=".AlterRoom.deleteroom" />
-        <activity android:name=".AlterRoom.changeroom" />
-        <activity android:name=".SearchRoom.searchroom" />
-        <activity android:name=".BookRoom.bookroom" />
-        <activity android:name=".Login_Register.Logout" />
-        <activity android:name=".repassword.repassword" />
-        <activity android:name=".repassword.inputmail" />
-        <activity android:name=".Main.MainInterfaceNow" />
-        <activity android:name=".Main.MainInterfaceToday" />
+        <activity android:name=".Login_Register.Regist"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AlterRoom.alterroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AlterRoom.addroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AlterRoom.deleteroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AlterRoom.changeroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AlterRoom.manageroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchRoom.searchroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BookRoom.bookroom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BookRoom.getBookInfo_handler"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login_Register.Logout"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".repassword.repassword"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".repassword.inputmail"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomePage.MainInterfaceNow"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomePage.MainInterfaceToday"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".BookRoom.smartbook"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".AlterRoom.DatePickerActivity" />
-        <activity android:name=".SearchRoom.searchroom_handler" />
-        <activity android:name=".Main.MainInterfaceNow_handler" />
-        <activity android:name=".Main.MainInterfaceToday_handler" />
-        <activity android:name=".MainInterface.ViewPagerCustomActivity" />
-        <activity android:name=".MainInterface.tab" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tools.DatePickerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchRoom.searchroom_handler"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchRoom.searchroom_handler_forbook"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomePage.MainInterfaceNow_handler"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomePage.MainInterfaceToday_handler"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainInterface.mainViewPager"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainInterface.smartGroupViewPager"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainInterface.tab"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SmartGroup.groupByFounction"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".SmartGroup.groupBySize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SmartGroup.groupByDays"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SmartGroup.groupByTime"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SmartGroup.groupByBulidAndRoom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainInterface.FirstStartActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chouti"
             android:label="@string/title_activity_chouti"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 

@@ -9,11 +9,19 @@
     <string-array name="functions">
         <item>多媒体房间</item>
         <item>普通房间</item>
+        <item>无特殊要求</item>
 
     </string-array>
-    <string-array name="tab_texts">
-        <item>消息</item>
-        <item>联系人</item>
-        <item>动态</item>
+    <string-array name="functions1">
+        <item>多媒体房间</item>
+        <item>普通房间</item>
     </string-array>
+    <string-array name="length">
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>3小时</item>
+        <item>4小时</item>
+        <item>无特殊要求</item>
+    </string-array>
+
 </resources>

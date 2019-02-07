@@ -1,7 +1,5 @@
 package com.example.mq661.govproject.SearchRoom;
 
-import android.widget.TextView;
-
 public class roomAdapterInfo {
     private String  BuildingNumber;
     private String RoomNumber;

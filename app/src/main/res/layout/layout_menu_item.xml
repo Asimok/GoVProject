@@ -16,5 +16,5 @@
         android:gravity="center_vertical"
         android:text="@string/my_folder"
         android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        android:textSize="@dimen/sp_20"/>
 </LinearLayout>

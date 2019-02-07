@@ -7,21 +7,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="增加会议室"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/dp_100"
         android:layout_gravity="center_horizontal"
         android:onClick="addroom"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="删除会议室"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="deleteroom"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="修改会议室"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="changeroom"/>
 
@@ -29,28 +29,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="查询会议室"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="searchroom"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="预约会议室"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="bookroom"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="智能预约会议室"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="smartbookroom"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="退出登录"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
         android:onClick="quit"/>
 

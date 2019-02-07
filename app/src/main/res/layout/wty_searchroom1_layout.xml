@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="@dimen/dp_130"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -22,17 +20,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="楼 号："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <EditText
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="#00000000" />
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="房间号："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <EditText
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
@@ -48,23 +46,23 @@
             android:orientation="horizontal"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="@dimen/dp_5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="容 量："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <EditText
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="#00000000"/>
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="功 能："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <EditText
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
@@ -77,13 +75,13 @@
             android:orientation="horizontal"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="@dimen/dp_5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开放时间："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -96,26 +94,26 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="@dimen/dp_5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="是否开会："
-                android:textSize="20sp"/>
+                android:textSize="@dimen/sp_20"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="是"
-                android:layout_marginLeft="10dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:textSize="@dimen/sp_20"
                 android:textColor="#4b4b48"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="否"
-                android:layout_marginLeft="25dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="@dimen/dp_25"
+                android:textSize="@dimen/sp_20"
                 android:textColor="#4b4b48"/>
         </LinearLayout>
 
@@ -124,16 +122,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginRight="5dp">
+        android:layout_height="@dimen/dp_130"
+        android:layout_marginRight="@dimen/dp_5">
         <Button
-            android:layout_width="75dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_40"
             android:layout_gravity="center"
             android:background="#2b2b28"
             android:textColor="#ebebe3"
             android:text="确 认"
-            android:textSize="15sp"/>
+            android:textSize="@dimen/sp_15"/>
 
     </LinearLayout>
 

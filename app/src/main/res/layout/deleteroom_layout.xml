@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/dp_50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -13,23 +12,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:paddingLeft="50dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="@dimen/dp_50"
+            android:paddingTop="@dimen/dp_10"
             android:text="楼号:"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/BuildNumber"
-            android:layout_width="254dp"
+            android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
             android:hint="请输入楼号"
-            android:paddingLeft="40dp"
-            android:paddingTop="10dp"
-            android:paddingRight="40dp"
+            android:paddingLeft="@dimen/dp_40"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_40"
             android:gravity="center_horizontal"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -37,23 +36,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:paddingLeft="50dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="@dimen/dp_50"
+            android:paddingTop="@dimen/dp_10"
             android:text="房间号:"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/RoomNumber"
-            android:layout_width="254dp"
+            android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
             android:hint="请输入房间号"
-            android:paddingLeft="40dp"
-            android:paddingTop="10dp"
-            android:paddingRight="40dp"
+            android:paddingLeft="@dimen/dp_40"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_40"
             android:gravity="center_horizontal"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -61,30 +60,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:paddingLeft="50dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="@dimen/dp_50"
+            android:paddingTop="@dimen/dp_10"
             android:text="开放时间:"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/Time"
-            android:layout_width="254dp"
+            android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
             android:hint="请输入开放时间"
-            android:paddingLeft="40dp"
-            android:paddingTop="10dp"
-            android:paddingRight="40dp"
+            android:paddingLeft="@dimen/dp_40"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_40"
             android:gravity="center_horizontal"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

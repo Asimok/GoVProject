@@ -1,11 +1,9 @@
 package com.example.mq661.govproject.tools;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
-
-
-import org.apache.commons.lang.StringUtils;
 
 
 public class TokenUtil {

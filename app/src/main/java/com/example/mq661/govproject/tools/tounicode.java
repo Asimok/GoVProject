@@ -1,8 +1,6 @@
 package com.example.mq661.govproject.tools;
 
 
-import java.io.UnsupportedEncodingException;
-
 public class tounicode {
 
 

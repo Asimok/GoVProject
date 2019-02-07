@@ -3,35 +3,30 @@ package com.example.mq661.govproject.SearchRoom;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-
-
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.AlterRoom.changeroom;
 import com.example.mq661.govproject.AlterRoom.deleteroom;
 import com.example.mq661.govproject.Login_Register.Login;
-import com.example.mq661.govproject.Login_Register.saveinfo;
-import com.example.mq661.govproject.Login_Register.savetoken;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.tools.tounicode;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -182,11 +177,11 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                                 JSONObject jsonObj = jsonArray.getJSONObject(i);
 
 
-                                String BuildingNumber1 = tounicode.decodeUnicode(jsonObj.getString("buildingNumber"));
+                                String BuildingNumber1 =   jsonObj.getString("buildingNumber");
                                 String RoomNumber1 = jsonObj.getString("roomNumber");
-                                String Time1 = tounicode.decodeUnicode( jsonObj.getString("time"));
+                                String Time1 =    jsonObj.getString("time");
                                 String  Size1 = jsonObj.getString("size");
-                                String  Function1 =tounicode.decodeUnicode(jsonObj.getString("functions"));
+                                String  Function1 =  jsonObj.getString("functions");
                                 String  IsMeeting = jsonObj.getString("isMeeting");
                                 if(IsMeeting.equals("0"))
                                 {
@@ -194,7 +189,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                                 }
                                 else if(IsMeeting.equals("1"))
                                 {
-                                    IsMeeting2="占用中";
+                                    IsMeeting2="占用";
                                 }
                                 else if(IsMeeting.equals("2"))
                                 {
@@ -204,7 +199,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                                     IsMeeting2="未知";
                                 }
 
-                                String  Days = tounicode.decodeUnicode(jsonObj.getString("days"));
+                                String  Days =   jsonObj.getString("days");
                                 String mapx="map"+i;
                                 if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
                                     showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2,Days, mapx);
@@ -238,10 +233,14 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
                 if(BuildNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
                     Toast.makeText(searchroom.this, "查询不成功！", Toast.LENGTH_SHORT).show();
-                    relog();
+                    delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
+                    //relog();
                 }
                 else if(BuildNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
                     Toast.makeText(searchroom.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
                 }
                 else {
@@ -429,9 +428,29 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
     }
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 }
 

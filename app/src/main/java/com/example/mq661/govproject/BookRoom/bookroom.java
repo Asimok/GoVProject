@@ -3,13 +3,14 @@ package com.example.mq661.govproject.BookRoom;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,22 +20,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login;
-import com.example.mq661.govproject.Login_Register.saveinfo;
-import com.example.mq661.govproject.Login_Register.savetoken;
-import com.example.mq661.govproject.Login_Register.zhuce;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.SearchRoom.searchroom;
-import com.example.mq661.govproject.SearchRoom.searchroom_handler;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler_forbook;
+import com.example.mq661.govproject.tools.MyNotification;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.tools.Dateadd;
 import com.example.mq661.govproject.tools.dateToString;
-import com.example.mq661.govproject.tools.tounicode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +51,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     //Map<String, String> usertoken;
     private tokenDBHelper helper;
     private OkHttpClient okhttpClient;
-    private String BuildNumber1,RoomNumber1,Time1,Token1,IsMeeting2;
+    private String BuildNumber1,RoomNumber1,Time1,Token1,IsMeeting2,today,tomorrow,afterTomorrow;
     RadioGroup Days;
     RadioButton today1,today2,today3;
     private String days,days2;
@@ -133,11 +131,11 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
             else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
 
             else {
-                days2=tounicode.gbEncoding(days);
+                days2=  days;
 
-        BuildNumber1 = tounicode.gbEncoding(BuildNumber.getText().toString().trim());
+        BuildNumber1 =   BuildNumber.getText().toString().trim();
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        Time1 =tounicode.gbEncoding( Time.getText().toString().trim());
+        Time1 =   Time.getText().toString().trim();
       //  Token1=usertoken.get("Token");//读本地
         //Toast.makeText(this, Token1, Toast.LENGTH_SHORT).show();
         Token1=select();
@@ -245,13 +243,16 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(bookroom.this, "进入判断！", Toast.LENGTH_LONG).show();
                 if (Status.equals("-1")) {
                     Toast.makeText(bookroom.this, "预定失败！", Toast.LENGTH_LONG).show();
-                  //  bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
                 } else if (Status.equals("0")) {
                     Toast.makeText(bookroom.this, "预定成功！", Toast.LENGTH_LONG).show();
-                   bookinfo.setText("预定者姓名:"+Name+" 员工号:"+EmployeeNumber);
+                    bookinfo.setText("姓名:"+Name+   " 员工号:"+EmployeeNumber);
+                    MyNotification notify=new MyNotification(getApplicationContext());
+                    notify.MyNotification("智能会议室","房间预定成功",R.drawable.book,"bookroom","预定房间",7,"预定");
                 }
                 else if (Status.equals("-3")) {
                     Toast.makeText(bookroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
+                    delete(Token1);
+                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
                     relog();
                 }
                 else if (Status.equals("-5")) {
@@ -273,7 +274,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     }
     public void relog() {
         Intent intent;
-        intent = new Intent(this, Login.class);
+        intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
     }
@@ -345,15 +346,63 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     }
     public void searchroom1(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom_handler.class);
+        intent = new Intent(this, searchroom_handler_forbook.class);
         startActivityForResult(intent, 0);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+if((data.getStringExtra("BuildingNumber").equals("空的"))) {
+    BuildNumber.setHint("请输入楼号");
+    RoomNumber.setHint("请输入房间号");
+    Time.setHint("输入格式:08:00-08:45");
 
-        BuildNumber.setText(data.getStringExtra("BuildingNumber"));
-        RoomNumber.setText(data.getStringExtra("RoomNumber"));
-        Time.setText(data.getStringExtra("Time"));
+}
+else
+{
+    BuildNumber.setText(data.getStringExtra("BuildingNumber"));
+    RoomNumber.setText(data.getStringExtra("RoomNumber"));
+    Time.setText(data.getStringExtra("Time"));
+    today=dateToString.nowdateToString();
+    try {
+         tomorrow=Dateadd.mydays(today, 1);
+         afterTomorrow=Dateadd.mydays(today, 2);
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+
+    if(today.equals(data.getStringExtra("Days"))) {
+        Days.check(R.id.today1);
+        Log.d("aaa", "设置选中已执行");
+    }
+    else if(tomorrow.equals(data.getStringExtra("Days"))) {
+        Days.check(R.id.today2);
+        Log.d("aaa", "设置选中已执行");
+    }
+    else if(afterTomorrow.equals(data.getStringExtra("Days"))) {
+        Days.check(R.id.today3);
+        Log.d("aaa", "设置选中已执行");
+    }
+}
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 }
 

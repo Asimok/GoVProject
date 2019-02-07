@@ -11,40 +11,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="员工号："
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             android:textColor="#ff0000"/>
         <TextView
             android:id="@+id/EmployeeNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="员工号"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="姓名："
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             android:textColor="#ff0000"/>
         <TextView
             android:id="@+id/Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="姓名"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="部门："
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             android:textColor="#ff0000"/>
         <TextView
             android:id="@+id/Ministry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="部门"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_20"
             />
         <CheckBox
             android:id="@+id/checkbox"

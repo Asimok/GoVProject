@@ -22,8 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_chouti" />-->
-    <include layout="@layout/layout" />
+    <!--<include tabhost_layout="@tabhost_layout/content_chouti" />-->
+    <include layout="@layout/tabhost_layout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

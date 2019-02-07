@@ -3,12 +3,12 @@ package com.example.mq661.govproject.BookRoom;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,14 +19,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.AlterRoom.deleteroom;
 import com.example.mq661.govproject.Login_Register.Login;
+import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.SearchRoom.roomAdapterInfo;
-import com.example.mq661.govproject.SearchRoom.searchroom;
-import com.example.mq661.govproject.mytoken.tokenDBHelper;
-import com.example.mq661.govproject.tools.dateToString;
-import com.example.mq661.govproject.tools.tounicode;
+import com.example.mq661.govproject.tools.Participants_people;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,7 +44,7 @@ import okhttp3.Response;
     public class Participants extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
         private String Token1,EmployeeNumber1,Name1,Ministry1;
         private  int num=0;
-        private List<people> data;
+        private List<Participants_people> data;
         Button button1,button2,button3,button4;
         ListView listView;
         private OkHttpClient okhttpClient;
@@ -77,7 +74,7 @@ import okhttp3.Response;
 
         @Override
         public void onClick(View v) {
-            data=new ArrayList<people>();
+            data=new ArrayList<Participants_people>();
 
             Token1=select();
             Toast.makeText(this, "读本地"+Token1, Toast.LENGTH_SHORT).show();
@@ -134,9 +131,9 @@ import okhttp3.Response;
                             JSONObject jsonObj = jsonArray.getJSONObject(i);
 
 
-                            String Name = tounicode.decodeUnicode(jsonObj.getString("Name"));
+                            String Name =   jsonObj.getString("Name");
                             String EmployeeNumber = jsonObj.getString("EmployeeNumber");
-                            String Ministry = tounicode.decodeUnicode( jsonObj.getString("Ministry"));
+                            String Ministry =    jsonObj.getString("Ministry");
                             String mapx="map"+i;
 
                             showRequestResult(Name, EmployeeNumber, Ministry, mapx);
@@ -164,7 +161,7 @@ import okhttp3.Response;
 
 
                         linear.removeAllViews();
-                        people mapx = new people();
+                        Participants_people mapx = new Participants_people();
                         mapx.setName(Name);
                         mapx.setEmployeeNumber(EmployeeNumber);
                         mapx.setMinistry(Ministry);
@@ -243,7 +240,7 @@ import okhttp3.Response;
         }
         public void relog() {
             Intent intent;
-            intent = new Intent(this, Login.class);
+            intent = new Intent(this, Login_noToken.class);
             startActivityForResult(intent, 0);
             finish();
         }
@@ -288,6 +285,26 @@ import okhttp3.Response;
                 Name.setText(data.get(position).getName());
                 return view;
             }
+        }
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+            //非默认值
+            if (newConfig.fontScale != 1){
+                getResources();
+            }
+            super.onConfigurationChanged(newConfig);
+        }
+
+        @Override
+        public Resources getResources() {//还原字体大小
+            Resources res = super.getResources();
+            //非默认值
+            if (res.getConfiguration().fontScale != 1) {
+                Configuration newConfig = new Configuration();
+                newConfig.setToDefaults();//设置默认
+                res.updateConfiguration(newConfig, res.getDisplayMetrics());
+            }
+            return res;
         }
     }
 

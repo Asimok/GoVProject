@@ -4,7 +4,6 @@ package com.example.mq661.govproject.mytoast;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -14,22 +13,8 @@ import android.widget.TextView;
 
 import com.example.mq661.govproject.R;
 
-import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
-
-/**
- * <b>类   名：</b>${TYPE_NAME} <br/>
- * <b>类描述：</b> <br/>
- * <b>创建人：</b>zhangqi<br/>
- * <b>创建时间：</b>2017/6/6<br/>
- * <b>修改人：</b>zhangqi<br/>
- * <b>修改时间：</b>2017/6/6<br/>
- * <b>修改备注：</b><br/>
- *
- * @version 1.0.0<br/>
- */
 public class ToastUtil {
     public static final int LENGTH_SHORT = 0x00;
     public static final int LENGTH_LONG = 0x01;
