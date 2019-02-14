@@ -10,7 +10,6 @@ import android.view.View;
 import com.example.mq661.govproject.BookRoom.bookroom;
 import com.example.mq661.govproject.BookRoom.getBookInfo_handler;
 import com.example.mq661.govproject.BookRoom.smartbook;
-import com.example.mq661.govproject.Login_Register.Logout;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom_handler;
 
@@ -36,6 +35,12 @@ public class alterroom extends AppCompatActivity {
     public void smartbookroom(View view) {
         Intent intent;
         intent = new Intent(this, smartbook.class);
+        startActivityForResult(intent, 0);
+
+    }
+    public void cancelroom(View view) {
+        Intent intent;
+        intent = new Intent(this, getBookInfo_handler.class);
         startActivityForResult(intent, 0);
 
     }

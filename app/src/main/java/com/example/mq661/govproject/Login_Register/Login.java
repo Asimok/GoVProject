@@ -22,17 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.alterroom;
-import com.example.mq661.govproject.BookRoom.getBookInfo_handler;
 import com.example.mq661.govproject.MainInterface.FirstStartActivity;
 import com.example.mq661.govproject.MainInterface.tab;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.chouti;
 import com.example.mq661.govproject.mytoast.ToastUtil;
-import com.example.mq661.govproject.tools.saveDeviceInfo;
-import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.MyNotification;
 import com.example.mq661.govproject.tools.TokenUtil;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
+import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.tools.userDBHelper;
 
 import org.json.JSONException;
@@ -508,6 +507,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         MyNotification notify=new MyNotification(getApplicationContext());
         notify.MyNotification("1","2",R.drawable.icon3,"ct2","sub",3,"测试");
     }
+
 
 }
 

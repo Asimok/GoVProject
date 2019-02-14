@@ -147,17 +147,17 @@
             android:paddingTop="@dimen/dp_10">
 
 
-            <!--<Button-->
-                <!--android:layout_marginLeft="@dimen/dp_50"-->
+            <Button
+                android:layout_marginLeft="@dimen/dp_50"
 
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                <!--android:text="预定信息"-->
-                <!--android:onClick="sendChatMsg"-->
-                <!--android:background="#ffc55c"-->
+                android:text="预定信息"
+                android:onClick="face"
+                android:background="#ffc55c"
 
-                <!--/>-->
+                />
             <!--<Button-->
                 <!--android:layout_marginLeft="@dimen/dp_50"-->
                 <!--android:layout_gravity="left"-->

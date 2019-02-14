@@ -4,10 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:screenOrientation="portrait"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -95,6 +104,45 @@
             android:label="@string/title_activity_chouti"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+
+
+
+
+        <activity
+            android:name=".facelogin.activity.PreviewActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".facelogin.activity.SingleImageActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".facelogin.activity.ChooseFunctionActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".facelogin.activity.MultiImageActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".facelogin.activity.RegisterAndRecognizeActivity"
+            android:launchMode="singleTop"
+            />
+
+        <activity
+            android:name=".facelogin.activity.FaceManageActivity"
+            android:launchMode="singleTop" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>
