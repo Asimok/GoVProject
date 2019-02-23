@@ -8,7 +8,7 @@
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/dete2"/>
+        android:background="@drawable/dete2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +18,7 @@
         android:background="@drawable/biankuang2"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginLeft="@dimen/dp_15"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,14 +26,15 @@
             android:gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_20"
             android:text="楼 号："
-            android:textSize="@dimen/sp_20"/>
+            android:textSize="@dimen/sp_20" />
+
         <EditText
             android:id="@+id/BuildNumber"
             android:hint="请输入楼号"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_70"
-            android:background="#00000000"/>
+            android:background="#00000000" />
 
     </LinearLayout>
 
@@ -46,8 +46,7 @@
         android:background="@drawable/biankuang2"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginLeft="@dimen/dp_15"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,14 +54,15 @@
             android:gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_20"
             android:text="房间号："
-            android:textSize="@dimen/sp_20"/>
+            android:textSize="@dimen/sp_20" />
+
         <EditText
             android:id="@+id/RoomNumber"
             android:hint="请输入房间号"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_55"
-            android:background="#00000000"/>
+            android:background="#00000000" />
 
     </LinearLayout>
 
@@ -74,8 +74,7 @@
         android:background="@drawable/biankuang2"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginLeft="@dimen/dp_15"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +82,8 @@
             android:gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_20"
             android:text="开放时间："
-            android:textSize="@dimen/sp_20"/>
+            android:textSize="@dimen/sp_20" />
+
         <EditText
             android:id="@+id/Time"
 
@@ -91,11 +91,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#00000000"
-            android:hint="输入格式: 08:00-08:45"/>
-
+            android:hint="输入格式: 08:00-08:45" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,11 +104,10 @@
         android:background="@drawable/biankuang2"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginLeft="@dimen/dp_15"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
 
-    <TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_25"
@@ -122,22 +121,25 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:id="@+id/Days">
+
             <RadioButton
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="wrap_content"
                 android:id="@+id/today1"
-                android:text="今天"/>
+                android:text="今天" />
+
             <RadioButton
                 android:layout_width="@dimen/dp_80"
 
                 android:layout_height="wrap_content"
                 android:id="@+id/today2"
-                android:text="明天"/>
+                android:text="明天" />
+
             <RadioButton
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="wrap_content"
                 android:id="@+id/today3"
-                android:text="后天"/>
+                android:text="后天" />
         </RadioGroup>
     </LinearLayout>
 
@@ -148,8 +150,8 @@
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_15"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/dp_20"
-        >
+        android:layout_marginTop="@dimen/dp_20">
+
         <Button
             android:onClick="searchroom1"
             android:layout_width="match_parent"
@@ -157,7 +159,8 @@
             android:background="#2b2b28"
             android:text="选 择 房 间"
             android:textSize="@dimen/sp_18"
-            android:textColor="#ebebe3"/>
+            android:textColor="#ebebe3" />
+
         <Button
             android:layout_marginTop="@dimen/dp_10"
             android:id="@+id/commit"
@@ -166,19 +169,15 @@
             android:background="#2b2b28"
             android:text="预 约 房 间"
             android:textSize="@dimen/sp_18"
-            android:textColor="#ebebe3"/>
+            android:textColor="#ebebe3" />
     </LinearLayout>
 
 
-
-
-
-<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/bookinfo"
@@ -186,7 +185,6 @@
             android:textSize="@dimen/sp_18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            />
+            android:gravity="center" />
     </LinearLayout>
 </LinearLayout>

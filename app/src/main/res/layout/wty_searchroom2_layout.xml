@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
@@ -21,8 +22,9 @@
             android:textColor="#ebebe3"
             android:layout_gravity="center_horizontal"
             android:text="提 交"
-            android:textSize="@dimen/sp_15"/>
+            android:textSize="@dimen/sp_15" />
     </LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

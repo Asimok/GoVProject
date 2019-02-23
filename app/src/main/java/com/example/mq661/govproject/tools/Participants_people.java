@@ -1,15 +1,17 @@
 package com.example.mq661.govproject.tools;
 
 public class Participants_people {
-    public boolean getBo() {
-        return bo;    }
+    private String EmployeeNumber, Name, Ministry;
 
     public void setBo(boolean bo) {
         this.bo = bo;
     }
 
     private boolean bo;
-    private String EmployeeNumber,Name,Ministry;
+
+    public boolean getBo() {
+        return bo;
+    }
 
     public String getEmployeeNumber() {
         return EmployeeNumber;

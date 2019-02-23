@@ -7,6 +7,7 @@ public class XXTEAUtil {
 
     /**
      * 使用密钥加密数据
+     *
      * @param plain
      * @param key
      * @return
@@ -20,6 +21,7 @@ public class XXTEAUtil {
 
     /**
      * 使用密钥解密
+     *
      * @param cipher
      * @param key
      * @return
@@ -33,6 +35,7 @@ public class XXTEAUtil {
 
     /**
      * 使用密钥加密数据
+     *
      * @param v
      * @param k
      * @return
@@ -67,6 +70,7 @@ public class XXTEAUtil {
 
     /**
      * 使用密钥解密数据
+     *
      * @param v
      * @param k
      * @return
@@ -102,6 +106,7 @@ public class XXTEAUtil {
 
     /**
      * 字节数组转换为整型数组
+     *
      * @param data
      * @param includeLength
      * @return
@@ -125,6 +130,7 @@ public class XXTEAUtil {
 
     /**
      * 整型数组转换为字节数组
+     *
      * @param data
      * @param includeLength
      * @return
@@ -150,6 +156,7 @@ public class XXTEAUtil {
 
     /**
      * 先XXXTEA加密，后Base64加密
+     *
      * @param plain
      * @param key
      * @return
@@ -167,6 +174,7 @@ public class XXTEAUtil {
 
     /**
      * 先Base64解密，后XXXTEA解密
+     *
      * @param cipher
      * @param key
      * @return

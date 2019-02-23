@@ -4,7 +4,6 @@ package com.example.mq661.govproject.tools;
 public class tounicode {
 
 
-
     /*
      * 中文转unicode编码
      */
@@ -20,6 +19,7 @@ public class tounicode {
         }
         return unicodeBytes;
     }
+
     /*
      * unicode编码转中文
      */
@@ -31,7 +31,7 @@ public class tounicode {
             end = dataStr.indexOf("\\u", start + 2);
             String charStr = "";
             if (end == -1) {
-                charStr = dataStr.substring(start + 2, dataStr.length());
+                charStr = dataStr.substring(start + 2);
             } else {
                 charStr = dataStr.substring(start + 2, end);
             }

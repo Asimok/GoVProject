@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ExpandableListView
+        android:id="@+id/expendlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/refresh"
+        android:onClick="refresh" />
+
+</android.support.v4.widget.SwipeRefreshLayout>

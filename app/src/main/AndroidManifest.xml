@@ -8,141 +8,150 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
-        android:screenOrientation="portrait"
-        android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/iconsmall"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".AlterRoom.managePerson"></activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".Login_Register.Login_noToken"
             android:hardwareAccelerated="false"
+            android:icon="@drawable/iconsmall"
             android:largeHeap="true"
             android:launchMode="singleTask"
-            android:name=".Login_Register.Login_noToken"
-            android:icon="@drawable/iconsmall">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_Register.Regist"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlterRoom.alterroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlterRoom.addroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlterRoom.deleteroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlterRoom.changeroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlterRoom.manageroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SearchRoom.searchroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BookRoom.bookroom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BookRoom.getBookInfo_handler"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Login_Register.Logout"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".repassword.repassword"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".repassword.inputmail"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomePage.MainInterfaceNow"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomePage.MainInterfaceToday"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Login_Register.Regist"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.after_Payment_Person_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.sub_Person_getRoom_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.manage_person"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Participants.subPerson_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Participants.addPerson_handler_forAfterPayment"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".AlterRoom.gov_Founction"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.addroom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.deleteroom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.changeroom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterRoom.gov_Admin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchRoom.searchroom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BookRoom.bookroom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BookRoom.CancelBook_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login_Register.Logout"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".repassword.repassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".repassword.inputmail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomePage.MainInterfaceNow"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomePage.MainInterfaceToday"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BookRoom.smartbook"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".tools.DatePickerActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SearchRoom.searchroom_handler"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SearchRoom.searchroom_handler_forbook"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomePage.MainInterfaceNow_handler"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomePage.MainInterfaceToday_handler"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainInterface.mainViewPager"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainInterface.smartGroupViewPager"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainInterface.tab"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SmartGroup.groupByFounction"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".SmartGroup.groupBySize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SmartGroup.groupByDays"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SmartGroup.groupByTime"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SmartGroup.groupByBulidAndRoom"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainInterface.FirstStartActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".tools.DatePickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchRoom.searchroom_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchRoom.searchroom_handler_forbook"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomePage.MainInterfaceNow_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomePage.MainInterfaceToday_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainInterface.mainViewPager"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainInterface.smartGroupViewPager"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainInterface.tab"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SmartGroup.groupByFounction"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SmartGroup.groupBySize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SmartGroup.groupByDays"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SmartGroup.groupByTime"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SmartGroup.groupByBulidAndRoom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainInterface.FirstStartActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Participants.addPerson_handler"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".chouti"
             android:label="@string/title_activity_chouti"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-
-
-
-
-
-        <activity
-            android:name=".facelogin.activity.PreviewActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".facelogin.activity.SingleImageActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".facelogin.activity.ChooseFunctionActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name=".facelogin.activity.MultiImageActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".facelogin.activity.RegisterAndRecognizeActivity"
-            android:launchMode="singleTop"
-            />
-
-        <activity
-            android:name=".facelogin.activity.FaceManageActivity"
-            android:launchMode="singleTop" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
-
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

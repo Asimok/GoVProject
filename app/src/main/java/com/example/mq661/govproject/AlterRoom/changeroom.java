@@ -9,20 +9,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
-import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom_handler_forbook;
 import com.example.mq661.govproject.tools.MyNotification;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONException;
@@ -41,13 +42,14 @@ import okhttp3.Response;
 
 public class changeroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     EditText BuildNumber, RoomNumber, Time, Size;
+    TextView zhuangtai;
     Button commit;
     CheckBox weixiu;
     Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     Spinner MeetingRoomLevel, Function;
     private tokenDBHelper helper;
-    private String BuildNumber1, RoomNumber1, Time1, Size1, Function1, Function2, MeetingRomeLevel2, Token1, weixiu1, level = "0";
+    private String BuildNumber1, RoomNumber1, Time1, Size1, Function1, Function2, MeetingRomeLevel2, Token1, weixiu1 = "0", level = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
         weixiu = findViewById(R.id.weixiu);
         commit = findViewById(R.id.commit);
+        zhuangtai = findViewById(R.id.zhuangtai);
         Function.setOnItemSelectedListener(this);
         MeetingRoomLevel.setOnItemSelectedListener(this);
         commit.setOnClickListener(this);
@@ -86,10 +89,11 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
         BuildNumber1 = BuildNumber.getText().toString().trim();
         RoomNumber1 = RoomNumber.getText().toString().trim();
-      //  Time1 = Time.getText().toString().trim();
+        //  Time1 = Time.getText().toString().trim();
         Size1 = Size.getText().toString().trim();
         Function2 = Function1.trim();
         MeetingRomeLevel2 = level;
+
         Token1 = select();
         if (TextUtils.isEmpty(BuildNumber1)) {
             Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
@@ -119,7 +123,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         if (weixiu.isChecked()) {
             weixiu1 = "2";
         } else weixiu1 = "0";
-
+        Log.d("bb", "weixiu1    " + weixiu1);
         if (TextUtils.isEmpty(Token1)) {
             Toast.makeText(this, "未获取到Token", Toast.LENGTH_SHORT).show();
             return;
@@ -205,18 +209,17 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
                 if (status.equals("-1")) {
                     Toast.makeText(changeroom.this, "修改失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
-                    MyNotification notify=new MyNotification(getApplicationContext());
-                    notify.MyNotification("智能会议室","房间修改成功",R.drawable.change,"changeroom","修改房间",6,"修改");
+                    MyNotification notify = new MyNotification(getApplicationContext());
+                    notify.MyNotification("智能会议室", "房间修改成功", R.drawable.change, "changeroom", "修改房间", 6, "修改");
                     Toast.makeText(changeroom.this, "修改成功！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-3")) {
                     Toast.makeText(changeroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     delete(Token1);
-                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
+                    saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
                 } else if (status.equals("-2")) {
                     Toast.makeText(changeroom.this, "容量非法，只能填入数字！", Toast.LENGTH_SHORT).show();
-                }
-                else if (status.equals("-5")) {
+                } else if (status.equals("-5")) {
                     Toast.makeText(changeroom.this, "您没有进行此项操作的权限！", Toast.LENGTH_SHORT).show();
                 }
 
@@ -344,17 +347,26 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            if(!(data.getStringExtra("BuildingNumber").equals("空的"))) {
-                BuildNumber.setText(data.getStringExtra("BuildingNumber"));
-                RoomNumber.setText(data.getStringExtra("RoomNumber"));
-                Time.setText(data.getStringExtra("Time"));
-                //Size.setText(data.getStringExtra("Size"));
+        if (!(data.getStringExtra("BuildingNumber").equals("空的"))) {
+            BuildNumber.setText(data.getStringExtra("BuildingNumber"));
+            RoomNumber.setText(data.getStringExtra("RoomNumber"));
+            Time.setText(data.getStringExtra("Time"));
+
+            if (data.getStringExtra("IsMeeting").equals("空闲")) {
+                weixiu.setChecked(false);
+                zhuangtai.setText("空闲");
+            } else if (data.getStringExtra("IsMeeting").equals("维修")) {
+                weixiu.setChecked(true);
+                zhuangtai.setText("维修");
             }
+
+        }
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

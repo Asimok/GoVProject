@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="账 户："
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/zhanghu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_20" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="昵 称："
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_20" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_13"
+        android:background="@drawable/biankuangda"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:onClick="bookInfo"
+            android:text="预约信息：                                                     详情"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_14" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_20">
+
+            <LinearLayout
+                android:id="@+id/linear3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_marginRight="@dimen/dp_15"
+                android:backgroundTint="#d1c815"
+                android:orientation="vertical"
+                android:outlineSpotShadowColor="#d1c815"
+                android:paddingBottom="@dimen/dp_20">
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_0"
+        android:layout_marginRight="@dimen/dp_13"
+        android:background="@drawable/biankuangda"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:onClick="meetingInfo"
+            android:text="参会信息：                                                     详情"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_14" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_20">
+
+            <LinearLayout
+                android:id="@+id/linear4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_marginRight="@dimen/dp_15"
+                android:backgroundTint="#d1c815"
+                android:orientation="vertical"
+                android:outlineSpotShadowColor="#d1c815"
+                android:paddingBottom="@dimen/dp_20">
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_65"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/logout" />
+    </RelativeLayout>
+</LinearLayout>

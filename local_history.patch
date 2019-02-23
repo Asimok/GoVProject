@@ -1,0 +1,18 @@
+Index: app/src/main/res/layout/layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/layout.xml	(date 1548221135814)
++++ app/src/main/res/layout/layout.xml	(date 1548221135814)
+@@ -6,8 +6,8 @@
+ 
+     <LinearLayout
+         android:orientation="vertical"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content">
++        android:layout_width="fill_parent"
++        android:layout_height="fill_parent">
+ 
+         <FrameLayout
+             android:id="@android:id/tabcontent"

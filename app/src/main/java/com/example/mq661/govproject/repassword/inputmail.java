@@ -12,10 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
-import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +34,7 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
     Button commit;
     private OkHttpClient okhttpClient;
     private String remail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +49,13 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
         commit = findViewById(R.id.commit);
         commit.setOnClickListener(this);
 
-            }
+    }
 
 
     @Override
     public void onClick(View v) {
 
         remail = edremail.getText().toString().trim();
-
 
 
         if (TextUtils.isEmpty(remail)) {
@@ -131,20 +130,19 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
                                   Toast.makeText(inputmail.this, "邮箱不存在，查找失败！", Toast.LENGTH_SHORT).show();
                               } else if (status.equals("0")) {
                                   Toast.makeText(inputmail.this, "查找成功，请查收邮件！", Toast.LENGTH_LONG).show();
-                                  saveDeviceInfo.savelogin(getApplicationContext(),"0");
+                                  saveDeviceInfo.savelogin(getApplicationContext(), "0");
                                   relog();
 
+                              } else if (status.equals("-2")) {
+                                  Toast.makeText(inputmail.this, "邮箱非法！请重新输入", Toast.LENGTH_LONG).show();
                               }
-                              else if (status.equals("-2")) {
-                                  Toast.makeText(inputmail.this, "邮箱非法！请重新输入", Toast.LENGTH_LONG).show();}
                           }
                       }
         );
     }
 
 
-    public void remima5()
-    {
+    public void remima5() {
         Intent intent;
         intent = new Intent(this, repassword.class);
         startActivityForResult(intent, 0);
@@ -157,10 +155,11 @@ public class inputmail extends AppCompatActivity implements View.OnClickListener
         startActivityForResult(intent, 0);
         finish();
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

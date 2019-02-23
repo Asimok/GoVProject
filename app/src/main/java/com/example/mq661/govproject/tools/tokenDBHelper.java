@@ -6,24 +6,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class tokenDBHelper extends SQLiteOpenHelper {
 
-	public tokenDBHelper(Context context) {
-		super(context, "token.db",null, 1);
+    public tokenDBHelper(Context context) {
+        super(context, "token.db", null, 1);
 
-	}
+    }
 
-	@Override
-	public void onCreate(SQLiteDatabase db) {
+    @Override
+    public void onCreate(SQLiteDatabase db) {
 
-		db.execSQL("create table token(token varchar(20) primary key) ");
-       System.out.println("第一次");
-	}
+        db.execSQL("create table token(token varchar(20) primary key) ");
+        System.out.println("第一次");
+    }
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-		System.out.println("第二次");
-	}
-
+        System.out.println("第二次");
+    }
 
 
 }

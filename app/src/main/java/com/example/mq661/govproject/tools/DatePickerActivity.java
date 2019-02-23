@@ -1,4 +1,5 @@
 package com.example.mq661.govproject.tools;
+
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class DatePickerActivity extends AppCompatActivity {
         mDay = mCalendar.get(Calendar.DAY_OF_MONTH);
 
         // 获取DatePicker组件
-        mDatePicker = (DatePicker) findViewById(R.id.datePicker);
+        mDatePicker = findViewById(R.id.datePicker);
         // DatePicker初始化
         mDatePicker.init(mYear, mMonth, mDay, new DatePicker.OnDateChangedListener() {
             @Override
@@ -41,10 +42,11 @@ public class DatePickerActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

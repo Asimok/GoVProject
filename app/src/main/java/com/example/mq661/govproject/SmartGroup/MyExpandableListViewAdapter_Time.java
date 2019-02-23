@@ -20,7 +20,7 @@ public class MyExpandableListViewAdapter_Time extends BaseExpandableListAdapter 
     private Context mContext = null;
     private List<String> mGroupList = null;
     private List<List<RoomMessage>> mItemList = null;
-    private android.os.Handler  handler = new android.os.Handler(){
+    private android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
             notifyDataSetChanged();//更新数据
@@ -41,12 +41,14 @@ public class MyExpandableListViewAdapter_Time extends BaseExpandableListAdapter 
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
+
     public void refresh(ExpandableListView expandableListView, int groupPosition) {
         handler.sendMessage(new Message());
         //必须重新伸缩之后才能更新数据
         expandableListView.collapseGroup(groupPosition);
         expandableListView.expandGroup(groupPosition);
     }
+
     /**
      * 获取组的个数
      *
@@ -138,9 +140,9 @@ public class MyExpandableListViewAdapter_Time extends BaseExpandableListAdapter 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.expendlist_group, null);
             groupHolder = new GroupHolder();
-            groupHolder.groupNameTv = (TextView) convertView.findViewById(R.id.groupname_tv);
-            groupHolder.groupImg = (ImageView) convertView.findViewById(R.id.group_img);
-            groupHolder.sanjiao = (ImageView) convertView.findViewById(R.id.sanjiao);
+            groupHolder.groupNameTv = convertView.findViewById(R.id.groupname_tv);
+            groupHolder.groupImg = convertView.findViewById(R.id.group_img);
+            groupHolder.sanjiao = convertView.findViewById(R.id.sanjiao);
             convertView.setTag(groupHolder);
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
@@ -177,13 +179,13 @@ public class MyExpandableListViewAdapter_Time extends BaseExpandableListAdapter 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.expendlist_item, null);
             itemHolder = new ItemHolder();
-            itemHolder.bulidnumber = (TextView) convertView.findViewById(R.id.bulidnumber);
-            itemHolder.RoomNumber = (TextView) convertView.findViewById(R.id.RoomNumber);
-            itemHolder.Size = (TextView) convertView.findViewById(R.id.Size);
-            itemHolder.Function = (TextView) convertView.findViewById(R.id.Function);
-            itemHolder.Days = (TextView) convertView.findViewById(R.id.Days3);
-            itemHolder.IsMeeting = (TextView) convertView.findViewById(R.id.IsMeeting);
-            itemHolder.Time = (TextView) convertView.findViewById(R.id.Time);
+            itemHolder.bulidnumber = convertView.findViewById(R.id.bulidnumber);
+            itemHolder.RoomNumber = convertView.findViewById(R.id.RoomNumber);
+            itemHolder.Size = convertView.findViewById(R.id.Size);
+            itemHolder.Function = convertView.findViewById(R.id.Function);
+            itemHolder.Days = convertView.findViewById(R.id.Days3);
+            itemHolder.IsMeeting = convertView.findViewById(R.id.IsMeeting);
+            itemHolder.Time = convertView.findViewById(R.id.Time);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ItemHolder) convertView.getTag();
@@ -232,6 +234,6 @@ public class MyExpandableListViewAdapter_Time extends BaseExpandableListAdapter 
 
     class ItemHolder {
         public ImageView iconImg;
-        public TextView bulidnumber,RoomNumber,Size,Function,IsMeeting,Time,Days;
+        public TextView bulidnumber, RoomNumber, Size, Function, IsMeeting, Time, Days;
     }
 }

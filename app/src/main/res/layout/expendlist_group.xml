@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/sanjiao"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/sanjiao" />
+
+    <ImageView
+        android:id="@+id/group_img"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_55"
+        android:src="@drawable/build" />
+
+    <TextView
+        android:id="@+id/groupname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/group_img"
+        android:text="张三"
+        android:textSize="18sp" />
+</RelativeLayout>

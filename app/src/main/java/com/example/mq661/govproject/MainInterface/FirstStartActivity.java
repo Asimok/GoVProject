@@ -3,19 +3,15 @@ package com.example.mq661.govproject.MainInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.example.mq661.govproject.Login_Register.Login;
 
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.R;
@@ -29,7 +25,7 @@ public class FirstStartActivity extends AppCompatActivity implements ViewPager.O
     private MyPagerAdapter myPagerAdapter;
 
     private ArrayList<View> viewArrayList;
-    private  Button btn;
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +36,7 @@ public class FirstStartActivity extends AppCompatActivity implements ViewPager.O
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_first_start);
         vpGuiding = findViewById(R.id.main_vpGuiding);
-        btn=findViewById(R.id.button);
+        btn = findViewById(R.id.button);
         viewPagerNormalLookLike();
         vpGuiding.addOnPageChangeListener(this);
         btn.setOnClickListener(this);
@@ -69,10 +65,9 @@ public class FirstStartActivity extends AppCompatActivity implements ViewPager.O
 
     @Override
     public void onPageSelected(int i) {
-if(i==3)
-{
-        btn.setVisibility(View.VISIBLE);
-}
+        if (i == 3) {
+            btn.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -83,15 +78,16 @@ if(i==3)
     @Override
     public void onClick(View v) {
         Toast.makeText(getApplicationContext(), "00", Toast.LENGTH_SHORT);
-            Intent intent = new Intent();
-            intent.setClass(getApplicationContext(), Login_noToken.class);
-            startActivity(intent);
-            this.finish();
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), Login_noToken.class);
+        startActivity(intent);
+        this.finish();
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

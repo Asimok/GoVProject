@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text=" 员工号  姓名  部门-->
+        <!--"/>-->
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="@dimen/dp_110"
+            android:layout_height="wrap_content"
+            android:text="员工号"
+            android:textSize="@dimen/sp_16"
+
+            />
+
+        <TextView
+            android:id="@+id/text_title1"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_title"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="姓名"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/text_title2"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_title1"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="部门"
+            android:textSize="@dimen/sp_16" />
+
+        <CheckBox
+            android:id="@+id/ckb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+    </RelativeLayout>
+</LinearLayout>

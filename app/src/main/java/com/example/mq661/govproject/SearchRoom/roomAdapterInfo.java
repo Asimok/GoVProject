@@ -1,7 +1,7 @@
 package com.example.mq661.govproject.SearchRoom;
 
 public class roomAdapterInfo {
-    private String  BuildingNumber;
+    private String BuildingNumber;
     private String RoomNumber;
     private String Time;
     private String Size;
@@ -22,7 +22,6 @@ public class roomAdapterInfo {
                 ", Days='" + Days + '\'' +
                 '}';
     }
-
 
 
     public String getBuildingNumber() {
@@ -72,6 +71,7 @@ public class roomAdapterInfo {
     public void setIsMeeting(String isMeeting) {
         IsMeeting = isMeeting;
     }
+
     public String getDays() {
         return Days;
     }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/viewpager_tv_one1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="楼号"
+
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/viewpager_tv_two1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="功能"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/viewpager_tv_three1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="容量"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/viewpager_tv_four1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="日期"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/viewpager_tv_five1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="时间段"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/cursor_img"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:scaleType="matrix"
+        android:src="@drawable/point" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation" />
+
+</LinearLayout>

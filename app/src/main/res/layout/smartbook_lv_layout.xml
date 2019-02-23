@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,16 +13,14 @@
         android:layout_marginRight="@dimen/dp_15"
         android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20"
-        >
+        android:layout_marginTop="@dimen/dp_20">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="容量："
             android:layout_marginLeft="@dimen/dp_35"
-            android:textSize="@dimen/sp_20"
-            />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/Size"
@@ -30,14 +29,15 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:background="#00000000"
-            android:hint="请在此输入容量"/>
+            android:hint="请在此输入容量" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="人"
-            android:textSize="@dimen/sp_18"
-            />
+            android:textSize="@dimen/sp_18" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,8 +46,7 @@
         android:layout_marginRight="@dimen/dp_15"
         android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20"
-        >
+        android:layout_marginTop="@dimen/dp_20">
 
         <TextView
 
@@ -55,8 +54,7 @@
             android:layout_height="wrap_content"
             android:text="功能："
             android:layout_marginLeft="@dimen/dp_35"
-            android:textSize="@dimen/sp_20"
-            />
+            android:textSize="@dimen/sp_20" />
 
         <Spinner
             android:id="@+id/functions"
@@ -67,6 +65,7 @@
             android:gravity="right"
             android:entries="@array/functions"></Spinner>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,8 +74,7 @@
         android:layout_marginRight="@dimen/dp_15"
         android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20"
-        >
+        android:layout_marginTop="@dimen/dp_20">
 
         <TextView
 
@@ -84,8 +82,7 @@
             android:layout_height="wrap_content"
             android:text="时长："
             android:layout_marginLeft="@dimen/dp_35"
-            android:textSize="@dimen/sp_20"
-            />
+            android:textSize="@dimen/sp_20" />
 
         <Spinner
             android:id="@+id/length"
@@ -114,27 +111,27 @@
             android:textColor="#ebebe3"
             android:layout_gravity="center_horizontal"
             android:text="提 交"
-            android:textSize="@dimen/sp_15"/>
+            android:textSize="@dimen/sp_15" />
     </LinearLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
 
-     >
-    <ListView
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/searchroomlv"
-        android:cacheColorHint="#00000000"
-        android:fadingEdge="none"
-        android:divider="#ffffff"
-        android:dividerHeight="@dimen/dp_10"
-        android:transcriptMode="alwaysScroll"
-        android:fadeScrollbars="true"
-        />
-</LinearLayout>
+        >
+
+        <ListView
+            android:id="@+id/searchroomlv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:cacheColorHint="#00000000"
+            android:divider="#ffffff"
+            android:dividerHeight="@dimen/dp_10"
+            android:fadeScrollbars="true"
+            android:fadingEdge="none"
+            android:transcriptMode="alwaysScroll" />
+    </LinearLayout>
 
 </LinearLayout>

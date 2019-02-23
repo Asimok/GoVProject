@@ -10,6 +10,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mq661.govproject.R;
 
@@ -25,50 +26,72 @@ public class ToastUtil {
     public String msg;
     private int HIDE_DELAY = 2000;
 
-    public static boolean isRunning=false;
+    public static boolean isRunning = false;
 
     private Handler mHandler = new Handler();
 
     public static Stack<ToastUtil> stack = new Stack();
+    private static Toast toast;
+
     // 表示吐司里显示的文字
     public static ToastUtil makeText(Context context, String message,
                                      int HIDE_DELAY) {
-        ToastUtil utils=new ToastUtil();
-        utils.mContext=context;
-        utils.msg=message;
+        ToastUtil utils = new ToastUtil();
+        utils.mContext = context;
+        utils.msg = message;
 
         if (HIDE_DELAY == LENGTH_LONG) {
-            utils.HIDE_DELAY= 2500;
+            utils.HIDE_DELAY = 2500;
         } else {
-            utils.HIDE_DELAY= 1500;
+            utils.HIDE_DELAY = 1500;
         }
 
         return utils;
     }
 
-    public static void wakeUp(){
-        isRunning=true;
+    public static void wakeUp() {
+        isRunning = true;
         if (!stack.empty()) {
-            ToastUtil util=stack.pop();
+            ToastUtil util = stack.pop();
             util.doshow();
 
-        }else{
-            isRunning=false;
+        } else {
+            isRunning = false;
         }
 
 
     }
 
-    public void doshow(){
-        final ViewGroup container = (ViewGroup) ((Activity) mContext)
+    public static void showToast(Context context, String content) {
+        if (toast == null) {
+            toast = Toast.makeText(context, content, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(content);
+        }
+        toast.show();
+
+    }
+
+    //避免重叠
+
+    public void show() {
+        stack.push(this);
+        if (!isRunning) {
+            wakeUp();
+
+        }
+    }
+
+    public void doshow() {
+        final ViewGroup container = ((Activity) mContext)
                 .findViewById(android.R.id.content);
         final View mView = ((Activity) mContext).getLayoutInflater().inflate(
                 R.layout.toast_layout, null);
         container.addView(mView);
 
-        final LinearLayout mContainer = (LinearLayout) mView.findViewById(R.id.mbContainer);
+        final LinearLayout mContainer = mView.findViewById(R.id.mbContainer);
         mContainer.setVisibility(View.GONE);
-        TextView mTextView = (TextView) mView.findViewById(R.id.mbMessage);
+        TextView mTextView = mView.findViewById(R.id.mbMessage);
         mTextView.setText(msg);
 
         // 显示动画
@@ -108,14 +131,6 @@ public class ToastUtil {
                 mContainer.startAnimation(mFadeOutAnimation);
             }
         }, HIDE_DELAY);
-    }
-
-    public void show() {
-        stack.push(this);
-        if(!isRunning){
-            wakeUp();
-
-        }
     }
 
 }

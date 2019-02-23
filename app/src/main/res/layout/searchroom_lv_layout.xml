@@ -6,9 +6,8 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-
-
     <ListView
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/searchroomlv"
@@ -18,6 +17,7 @@
         android:dividerHeight="@dimen/dp_10"
         android:transcriptMode="alwaysScroll"
         android:fadeScrollbars="true"
+
         />
 
 </LinearLayout>

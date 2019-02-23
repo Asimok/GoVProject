@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B2A8A8"
+        android:gravity="center"
+        android:padding="@dimen/dp_20"
+        android:text="选择已预定会议室补加人员"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_17" />
+
+    <ListView
+        android:id="@+id/searchroomlv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="#ffffff"
+        android:dividerHeight="@dimen/dp_10"
+        android:fadeScrollbars="true"
+        android:fadingEdge="none"
+        android:transcriptMode="alwaysScroll"
+
+        />
+
+</LinearLayout>

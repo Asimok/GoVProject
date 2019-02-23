@@ -31,7 +31,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         // TODO Auto-generated method stub
-        View pageView=mPageList.get(position);
+        View pageView = mPageList.get(position);
         ViewGroup parent = (ViewGroup) pageView.getParent();
         //Log.i("ViewPaperAdapter", parent.toString());
         if (parent != null) {
@@ -47,6 +47,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         // 将当前位置的View移除
         container.removeView(mPageList.get(position));
     }
+
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;

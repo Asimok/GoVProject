@@ -2,52 +2,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全选"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="反 选"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全不选"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="删除"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
     <ListView
         android:id="@+id/listveiw"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         ></ListView>
-
-
 
 
 </LinearLayout>

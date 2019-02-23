@@ -33,7 +33,7 @@ public class mainViewPager extends AppCompatActivity
     private ViewPagerAdapter mAdapter = null;
     private ArrayList<View> mPageList = null;
     private LocalActivityManager manager;
-    private Intent intentMaininterfaceNow,intentMaininterfaceToday;
+    private Intent intentMaininterfaceNow, intentMaininterfaceToday;
     private int mOffset = 0;// 移动条图片的偏移量
     private int mCurrIndex = 0; // 当前页面的编号
     private int mOneDis = 0; // 移动条滑动一页的距离
@@ -45,22 +45,22 @@ public class mainViewPager extends AppCompatActivity
         setContentView(R.layout.viewpager_main_layout);
 
         // 获取界面组件
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mCursorImg = (ImageView) findViewById(R.id.cursor_img);
-        mOneTv = (TextView) findViewById(R.id.viewpager_tv_one);
-        mTwoTv = (TextView) findViewById(R.id.viewpager_tv_two);
+        mViewPager = findViewById(R.id.view_pager);
+        mCursorImg = findViewById(R.id.cursor_img);
+        mOneTv = findViewById(R.id.viewpager_tv_one);
+        mTwoTv = findViewById(R.id.viewpager_tv_two);
 
         // 初始化指示器位置
         initCursorPosition();
 
-        manager=new LocalActivityManager(this,true);
+        manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
 
-        intentMaininterfaceToday=new Intent(this,MainInterfaceNow_handler.class);
-        View tab01=manager.startActivity("viewID", intentMaininterfaceToday).getDecorView();
-        intentMaininterfaceNow=new Intent(this,MainInterfaceToday_handler.class);
-        View tab02=manager.startActivity("viewID", intentMaininterfaceNow).getDecorView();
+        intentMaininterfaceToday = new Intent(this, MainInterfaceNow_handler.class);
+        View tab01 = manager.startActivity("viewID", intentMaininterfaceToday).getDecorView();
+        intentMaininterfaceNow = new Intent(this, MainInterfaceToday_handler.class);
+        View tab02 = manager.startActivity("viewID", intentMaininterfaceNow).getDecorView();
 
         mPageList = new ArrayList<>();
         mPageList.add(tab01);
@@ -99,7 +99,7 @@ public class mainViewPager extends AppCompatActivity
 
         // 计算指示器图片的移动距离
         mOneDis = mOffset * 2 + cursorWidth;// 页卡1 -> 页卡2 偏移量
-      //  mTwoDis = mOneDis * 2;// 页卡1 -> 页卡3 偏移量
+        //  mTwoDis = mOneDis * 2;// 页卡1 -> 页卡3 偏移量
     }
 
     @Override
@@ -161,10 +161,11 @@ public class mainViewPager extends AppCompatActivity
     public void onPageScrollStateChanged(int state) {
 
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

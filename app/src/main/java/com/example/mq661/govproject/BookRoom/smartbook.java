@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,16 +23,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
-import com.example.mq661.govproject.tools.saveDeviceInfo;
+import com.example.mq661.govproject.Participants.addPerson_handler;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.roomAdapterInfo;
 import com.example.mq661.govproject.tools.RoomMessage;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
-import com.zyao89.view.zloading.circle.DoubleCircleBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -222,7 +218,7 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                         } else if (IsMeeting.equals("1")) {
                             IsMeeting2 = "占用";
                         } else if (IsMeeting.equals("2")) {
-                            IsMeeting2 = "维修中";
+                            IsMeeting2 = "维修";
                         } else {
                             IsMeeting2 = "未知";
                         }
@@ -416,12 +412,12 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
      * 若只需一个按钮，仅设置 setPositiveButton 即可
      */
     public void showMultiBtnDialog(final String BuildingNumber, String Size, final String RoomNumber,
-                                   final String Time, String Function, String IsMeeting, final String Days) {
+                                   final String Time, String Function, final String IsMeeting, final String Days) {
 
 
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(smartbook.this);
-        normalDialog.setIcon(R.drawable.app);
+        normalDialog.setIcon(R.drawable.book2);
         normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼号：" + BuildingNumber + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
                 + "       日期： " + Days
         );
@@ -434,28 +430,16 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                     }
                 });
 
-//        normalDialog.setNeutralButton("删除",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        deleteroom();
-//                    }
-//                });
         normalDialog.setNegativeButton("预约", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                bookroom();
-                //TODO
-                //单独的HTTP请求
-                bookroomServer book = new bookroomServer();
-                book.setContent(smartbook.this);
-                try {
-                    book.startbookroom(BuildingNumber, RoomNumber, Time, Token1, Days);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                Intent intent = new Intent(smartbook.this, addPerson_handler.class);
+                intent.putExtra("BuildingNumber", BuildingNumber);
+                intent.putExtra("RoomNumber", RoomNumber);
+                intent.putExtra("Days", Days);
+                intent.putExtra("Time", Time);
+                startActivity(intent);
             }
         });
 

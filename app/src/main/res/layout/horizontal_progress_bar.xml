@@ -3,5 +3,4 @@
     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
     android:layout_margin="20dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</ProgressBar>
+    android:layout_height="wrap_content"></ProgressBar>

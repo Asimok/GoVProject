@@ -3,22 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="发送当前时间"
-        android:id="@+id/commit"/>
+        android:id="@+id/commit" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rooms"
-        android:orientation="vertical"
-        >
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

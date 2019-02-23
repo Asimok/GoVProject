@@ -16,11 +16,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.Login_Register.Login;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
-import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.MyNotification;
+import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 
 import org.json.JSONException;
@@ -60,7 +59,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
 
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
-       // Time = findViewById(R.id.Time);
+        // Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
         Function = findViewById(R.id.function);
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
@@ -109,65 +108,65 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
 //            } else if (Integer.parseInt(time.substring(0, 2)) > Integer.parseInt(time.substring(6, 8))) {
 //                Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();
 //            } else {
-                BuildNumber1 = BuildNumber.getText().toString().trim();
-                RoomNumber1 = RoomNumber.getText().toString().trim();
-               // Time1 = Time.getText().toString().trim();
-                Size1 = Size.getText().toString().trim();
-                //Function1 =   Function.getText().toString().trim());
-                Function2 = Function1;
+        BuildNumber1 = BuildNumber.getText().toString().trim();
+        RoomNumber1 = RoomNumber.getText().toString().trim();
+        // Time1 = Time.getText().toString().trim();
+        Size1 = Size.getText().toString().trim();
+        //Function1 =   Function.getText().toString().trim());
+        Function2 = Function1;
 
-                MeetingRomeLevel2 = level;
-                Token1 = select();//读本地
+        MeetingRomeLevel2 = level;
+        Token1 = select();//读本地
 
-                if (TextUtils.isEmpty(BuildNumber1)) {
-                    Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(RoomNumber1)) {
-                    Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        if (TextUtils.isEmpty(BuildNumber1)) {
+            Toast.makeText(this, "请输入楼号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(RoomNumber1)) {
+            Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
+            return;
+        }
 //                if (TextUtils.isEmpty(Time1)) {
 //                    Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
 
-                if (TextUtils.isEmpty(Size1)) {
-                    Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(Function2)) {
-                    Toast.makeText(this, "请输入功能", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(MeetingRomeLevel2)) {
-                    Toast.makeText(this, "请填写会议室等级", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(Token1)) {
-                    Toast.makeText(this, "未获取到Token", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        if (TextUtils.isEmpty(Size1)) {
+            Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(Function2)) {
+            Toast.makeText(this, "请输入功能", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(MeetingRomeLevel2)) {
+            Toast.makeText(this, "请填写会议室等级", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(Token1)) {
+            Toast.makeText(this, "未获取到Token", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-                        sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function2, MeetingRomeLevel2, Token1);
-                    }
-
-                }).start();
-
+                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function2, MeetingRomeLevel2, Token1);
             }
-       // }
+
+        }).start();
+
+    }
+    // }
 //        else {
 //            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
 //
 //        }
 
 
-  //  }
+    //  }
 
 
     private void sendRequest(String BuildNumber1, String RoomNumber1, String Time1, String Size1,
@@ -205,7 +204,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(com.example.mq661.govproject.AlterRoom.addroom.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(addroom.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -238,20 +237,19 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
                 if (status.equals("-2")) {
                     Toast.makeText(addroom.this, "增加房间信息不合法!请重新输入！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
-                    MyNotification notify=new MyNotification(getApplicationContext());
-                    notify.MyNotification("智能会议室","房间增加成功",R.drawable.add,"addroom","增加房间",5,"增加");
+                    MyNotification notify = new MyNotification(getApplicationContext());
+                    notify.MyNotification("智能会议室", "房间增加成功", R.drawable.add, "addroom", "增加房间", 5, "增加");
                     Toast.makeText(addroom.this, "增加成功！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-3")) {
                     Toast.makeText(addroom.this, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
                     delete(Token1);
-                    saveDeviceInfo.savelogin(getApplicationContext(),"0");
+                    saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
                 } else if (status.equals("-1")) {
                     Toast.makeText(addroom.this, "增加失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-4")) {
                     Toast.makeText(addroom.this, "增加失败,房间信息重复！", Toast.LENGTH_SHORT).show();
-                }
-                else if (status.equals("-5")) {
+                } else if (status.equals("-5")) {
                     Toast.makeText(addroom.this, "您没有进行此项操作的权限！", Toast.LENGTH_SHORT).show();
                 }
 
@@ -368,10 +366,11 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

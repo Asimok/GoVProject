@@ -3,27 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="增加会议室"
         android:layout_marginTop="@dimen/dp_100"
         android:layout_gravity="center_horizontal"
-        android:onClick="addroom"/>
+        android:onClick="addroom" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="删除会议室"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="deleteroom"/>
+        android:onClick="deleteroom" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="修改会议室"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="changeroom"/>
+        android:onClick="changeroom" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,27 +34,30 @@
         android:text="查询会议室"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="searchroom"/>
+        android:onClick="searchroom" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="预约会议室"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="bookroom"/>
+        android:onClick="bookroom" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="智能预约会议室"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="smartbookroom"/>
+        android:onClick="smartbookroom" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="退出登录"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_horizontal"
-        android:onClick="quit"/>
+        android:onClick="quit" />
 
 </LinearLayout>

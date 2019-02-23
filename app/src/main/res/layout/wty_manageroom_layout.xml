@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    android:gravity="center"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/add"
+            android:onClick="addroom" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="增加会议室"
+
+            android:textColor="#2b2b28" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/dete2"
+            android:onClick="deleteroom" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除会议室"
+
+            android:textColor="#2b2b28" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/change"
+            android:onClick="changeroom" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改会议室"
+
+            android:textColor="#2b2b28" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/manageperson"
+            android:onClick="manageperson" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管理参会人员"
+            android:textColor="#2b2b28" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

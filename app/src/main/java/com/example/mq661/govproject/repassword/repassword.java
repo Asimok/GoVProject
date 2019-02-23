@@ -27,10 +27,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class repassword extends AppCompatActivity implements View.OnClickListener {
-    EditText edzhanghao,edmima,edremima;
+    EditText edzhanghao, edmima, edremima;
     Button commit;
     private OkHttpClient okhttpClient;
-    private String zhanghao,mima,remima;
+    private String zhanghao, mima, remima;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,35 +59,30 @@ public class repassword extends AppCompatActivity implements View.OnClickListene
         remima = edremima.getText().toString().trim();
 
 
-
         if (TextUtils.isEmpty(zhanghao)) {
             Toast.makeText(this, "请输入员工号", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else if (TextUtils.isEmpty(mima)) {
+        } else if (TextUtils.isEmpty(mima)) {
             Toast.makeText(this, "请输入新密码", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else if (TextUtils.isEmpty(remima)) {
+        } else if (TextUtils.isEmpty(remima)) {
             Toast.makeText(this, "请重复输入新密码", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else if (!mima.equals(remima)) {
+        } else if (!mima.equals(remima)) {
             Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sendRequest(zhanghao,mima,remima);
+                sendRequest(zhanghao, mima, remima);
             }
         }).start();
     }
 
-    private void sendRequest(String zhanghao1,String mima1,String remima1) {
+    private void sendRequest(String zhanghao1, String mima1, String remima1) {
         Map map = new HashMap();
         map.put("EmployeeNumber", zhanghao1);
         map.put("newPassword", mima1);
@@ -152,10 +148,11 @@ public class repassword extends AppCompatActivity implements View.OnClickListene
                       }
         );
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);

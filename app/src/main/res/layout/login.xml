@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_horizontal">
+
         <ImageView
             android:layout_width="@dimen/dp_70"
             android:layout_height="@dimen/dp_65"
             android:src="@drawable/iconsmall" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,13 +44,14 @@
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_40"
             android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_70"
@@ -56,7 +59,7 @@
             android:textSize="@dimen/sp_20"
             android:paddingTop="@dimen/dp_30"
             android:paddingLeft="@dimen/dp_50"
-            android:layout_gravity="left"/>
+            android:layout_gravity="left" />
 
         <EditText
             android:id="@+id/mima"
@@ -67,21 +70,22 @@
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_30"
             android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dp_50"
         android:paddingTop="@dimen/dp_5"
         android:orientation="horizontal">
+
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="check"
-            android:text="记住密码"
-            />
+            android:text="记住密码" />
 
         <TextView
             android:onClick="forgetmima"
@@ -91,6 +95,7 @@
             android:layout_marginLeft="@dimen/dp_120"
             android:text="忘记密码" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -109,8 +114,6 @@
             android:textColor="#EBEBE3" />
 
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,27 +122,28 @@
 
 
             <!--<Button-->
-                <!--android:layout_marginLeft="@dimen/dp_50"-->
-                <!--android:layout_gravity="left"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_50"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
 
-                <!--android:text="测试tab"-->
-                <!--android:background="#ffc55c"-->
-                <!--android:onClick="QQ"-->
-                <!--/>-->
+            <!--android:text="测试tab"-->
+            <!--android:background="#ffc55c"-->
+            <!--android:onClick="QQ"-->
+            <!--/>-->
             <!--<Button-->
-                <!--android:layout_marginLeft="@dimen/dp_50"-->
-                <!--android:layout_gravity="left"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_50"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
 
-                <!--android:text="抽屉"-->
-                <!--android:background="#ffc55c"-->
-                <!--android:onClick="chouti"-->
-                <!--/>-->
+            <!--android:text="抽屉"-->
+            <!--android:background="#ffc55c"-->
+            <!--android:onClick="chouti"-->
+            <!--/>-->
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,35 +151,35 @@
             android:paddingTop="@dimen/dp_10">
 
 
-            <Button
-                android:layout_marginLeft="@dimen/dp_50"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="预定信息"
-                android:onClick="face"
-                android:background="#ffc55c"
-
-                />
             <!--<Button-->
-                <!--android:layout_marginLeft="@dimen/dp_50"-->
-                <!--android:layout_gravity="left"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_50"-->
 
-                <!--android:text="发送订阅消息"-->
-                <!--android:onClick="sendSubscribeMsg"-->
-                <!--android:background="#ffc55c"-->
-                <!--/>-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:text="预定信息"-->
+            <!--android:onClick="face"-->
+            <!--android:background="#ffc55c"-->
+
+            <!--/>-->
+            <!--<Button-->
+            <!--android:layout_marginLeft="@dimen/dp_50"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:text="发送订阅消息"-->
+            <!--android:onClick="sendSubscribeMsg"-->
+            <!--android:background="#ffc55c"-->
+            <!--/>-->
 
         </LinearLayout>
 
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/n1"
@@ -183,25 +187,25 @@
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_1"
-                android:gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:onClick="zhuce"
             android:text="还没有账户？ 注册"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_15" />
 
         <!--<Button-->
-            <!--android:id="@+id/zhuce"-->
-            <!--android:layout_width="@dimen/dp_60"-->
-            <!--android:layout_height="@dimen/dp_50"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_marginLeft="-4dp"-->
-            <!--android:layout_marginBottom="1dp"-->
-            <!--android:layout_toRightOf="@+id/n1"-->
-            <!--android:background="#00000000"-->
-            <!--android:onClick="zhuce"-->
-            <!--android:text="注册"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="@dimen/sp_15" />-->
+        <!--android:id="@+id/zhuce"-->
+        <!--android:layout_width="@dimen/dp_60"-->
+        <!--android:layout_height="@dimen/dp_50"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginLeft="-4dp"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_toRightOf="@+id/n1"-->
+        <!--android:background="#00000000"-->
+        <!--android:onClick="zhuce"-->
+        <!--android:text="注册"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="@dimen/sp_15" />-->
 
 
     </RelativeLayout>
