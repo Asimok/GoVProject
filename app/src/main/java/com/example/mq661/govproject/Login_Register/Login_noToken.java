@@ -30,6 +30,7 @@ import com.example.mq661.govproject.chouti;
 import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.MyNotification;
+import com.example.mq661.govproject.tools.registInfoDBHelper;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.tools.userDBHelper;
@@ -57,6 +58,7 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
     private String zhanghu2, mima2, Token;
     private tokenDBHelper helper;
     private userDBHelper helper1;
+    private registInfoDBHelper helper5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.login);
         helper = new tokenDBHelper(this);
         helper1 = new userDBHelper(this);
+        helper5 = new registInfoDBHelper(this);
 
         countInfo = saveDeviceInfo.getcount(this);
         count = countInfo.get("count");
@@ -165,11 +168,11 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
             if (CK.isChecked()) {
 
                 boolean isSaveSuccess = saveDeviceInfo.saveUserInfo(this, number, password);
-                if (isSaveSuccess) {
-                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
-                }
+//                if (isSaveSuccess) {
+//                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
+//                }
             } else {
                 number = "请输入员工号";
                 password = "请输入密码";
@@ -199,12 +202,9 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         RequestBody body = RequestBody.create(null, jsonString);  //以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
-                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")//MQ
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
+
                 .post(body)
                 .build();
         okhttp3.Call call = okhttpClient.newCall(request);
@@ -277,12 +277,12 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
 
                     ToastUtil.makeText(Login_noToken.this, "登录成功！", ToastUtil.LENGTH_SHORT).show();
                     String Token1 = select();
-                    Toast.makeText(Login_noToken.this, "查出来的" + Token1, Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(Login_noToken.this, "查出来的" + Token1, Toast.LENGTH_SHORT).show();
 
                     if (Token1 == null) {
 
                         insert(token);
-                        Toast.makeText(Login_noToken.this, "新的" + Token, Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(Login_noToken.this, "新的" + Token, Toast.LENGTH_SHORT).show();
                     } else
                         update(token);
 
@@ -291,6 +291,12 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
                     } else
                         userupdate(zhanghu2, name);
                     saveDeviceInfo.savelogin(getApplicationContext(), "1");
+                    //TODO
+                    deletepersoninfo();
+                    searchRegistServer serg = new searchRegistServer();
+                    serg.setContent(Login_noToken.this);
+                    serg.startsearchRegist(select());
+
                     main();
                     MyNotification notify = new MyNotification(getApplicationContext());
                     notify.MyNotification("智能会议室", "登录成功", R.drawable.book2, "登录1", "登录", 5, "登录");
@@ -347,11 +353,7 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -363,11 +365,11 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         ContentValues values = new ContentValues();
         values.put("token", token);
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -375,11 +377,11 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
 
         SQLiteDatabase db = helper.getWritableDatabase();
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -405,11 +407,7 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         values.put("name", name3);
         long l = db1.insert("user", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入用户信息不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入用户信息成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db1.close();
     }
 
@@ -423,11 +421,11 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         values.put("zhanghao", zhanghu3);
         values.put("name", name3);
         int i = db.update("user", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新用户信息不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新用户信息成功", Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新用户信息不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新用户信息成功", Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -523,11 +521,28 @@ public class Login_noToken extends AppCompatActivity implements View.OnClickList
         MyNotification notify = new MyNotification(getApplicationContext());
         notify.MyNotification("1", "2", R.drawable.icon3, "ct2", "sub", 3, "测试");
     }
-//    public void face(View view) {
+
+    //    public void face(View view) {
 //        Intent intent;
 //        intent = new Intent(this, ChooseFunctionActivity.class);
 //        startActivityForResult(intent, 0);
 //    }
+    public void deletepersoninfo() {
+
+        SQLiteDatabase db = helper5.getWritableDatabase();
+        int i = db.delete("registinfo", null, null);
+        if (i == 0) {
+            Log.d("aaaa", "deletepersoninfo  删除不成功");
+        } else {
+            Log.d("aaaa", "deletepersoninfo  删除成功");
+        }
+        db.close();
+    }
+
+
+
+
+
 }
 
 

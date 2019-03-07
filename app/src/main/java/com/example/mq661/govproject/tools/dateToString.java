@@ -31,4 +31,11 @@ public class dateToString {
         return reStr;
     }
 
+    public static String nowdateToString4() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        String reStr = sdf.format(date);
+        System.out.println(reStr);
+        return reStr;
+    }
 }

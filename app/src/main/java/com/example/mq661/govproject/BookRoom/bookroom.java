@@ -48,11 +48,11 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
     EditText BuildNumber, RoomNumber, Time;
     Button commit;
     TextView bookinfo;
+    RadioButton today1, today2, today3;
+    RadioGroup Days;
     //Map<String, String> usertoken;
     private tokenDBHelper helper;
     private OkHttpClient okhttpClient;
-    RadioButton today1, today2, today3;
-    RadioGroup Days;
     private String BuildNumber1, RoomNumber1, Time1, Token1, IsMeeting2, today, tomorrow, afterTomorrow;
     private String days, days2;
 
@@ -128,7 +128,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         String time = Time.getText().toString().trim();
         if ((time.length() == 11)) {
             if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
-                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "请输入正确的时间格式", Toast.LENGTH_LONG).show();
             } else if (Integer.parseInt(time.substring(0, 2)) > Integer.parseInt(time.substring(6, 8))) {
                 Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();
             } else {
@@ -173,7 +173,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
                 }).start();
             }
         } else {
-            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "请输入正确的时间格式", Toast.LENGTH_LONG).show();
 
         }
     }
@@ -193,12 +193,9 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -290,11 +287,7 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -322,11 +315,11 @@ public class bookroom extends AppCompatActivity implements View.OnClickListener 
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }

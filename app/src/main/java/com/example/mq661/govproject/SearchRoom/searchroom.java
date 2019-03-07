@@ -43,8 +43,8 @@ import okhttp3.Response;
 
 public class searchroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     Intent ssdata = new Intent();
-    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, IsMeeting2;
     Button commit;
+    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, IsMeeting2;
     private List<roomAdapterInfo> data;
     private OkHttpClient okhttpClient;
     // Map<String, String> usertoken;
@@ -142,13 +142,9 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -230,7 +226,7 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     //relog();
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(searchroom.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(searchroom.this, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -315,11 +311,6 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
         db.close();
     }
 
@@ -347,11 +338,11 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -385,6 +376,18 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
         intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 
     private class MyAdapter extends BaseAdapter {
@@ -432,18 +435,6 @@ public class searchroom extends AppCompatActivity implements View.OnClickListene
             Days.setText(data.get(position).getDays());
             return view;
         }
-    }
-
-    @Override
-    public Resources getResources() {//还原字体大小
-        Resources res = super.getResources();
-        //非默认值
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();//设置默认
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-        }
-        return res;
     }
 }
 

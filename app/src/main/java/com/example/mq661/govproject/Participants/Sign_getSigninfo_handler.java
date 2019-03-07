@@ -1,4 +1,4 @@
-package com.example.mq661.govproject.AlterRoom;
+package com.example.mq661.govproject.Participants;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,8 +23,8 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.Login_Register.bookroomInfoAdapter;
-import com.example.mq661.govproject.Participants.subPerson_handler;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 
@@ -43,7 +44,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class sub_Person_getRoom_handler extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class Sign_getSigninfo_handler extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     //handler 处理返回的请求结果
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
@@ -79,7 +80,7 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchroom_lv_layout_forsub_person);
+        setContentView(R.layout.searchroom_lv_layout_forgetsigninfo);
         new Thread(runnable).start();  //启动子线程
         helper = new tokenDBHelper(this);
         initView();
@@ -102,13 +103,8 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/BookMessageServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -119,7 +115,7 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(sub_Person_getRoom_handler.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Sign_getSigninfo_handler.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -139,7 +135,19 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
                         String nowTime = jsonObj.getString("nowTime");
                         String Days = jsonObj.getString("days");
                         String mapx = "map" + i;
-                        showRequestResult(BuildingNumber1, RoomNumber1, Time1, nowTime, Days, mapx);
+
+                        int hh = Integer.parseInt(dateToString.nowdateToString3());
+                        int thishh = Integer.parseInt(Time1.substring(0, 2));
+                        int day = Integer.parseInt(dateToString.nowdateToString4());
+                        int thisday = Integer.parseInt(Days.substring(8, 10));
+                        if (day < thisday) {
+                            continue;
+                        } else if (hh < thishh && day == thisday) {
+                            continue;
+                        } else {
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, nowTime, Days, mapx);
+                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -158,10 +166,10 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
             public void run() {
 
                 if (BuildNumber1.equals("-1") && RoomNumber1.equals("-1") && Time1.equals("-1")) {
-                    Toast.makeText(sub_Person_getRoom_handler.this, "查询不成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sign_getSigninfo_handler.this, "查询不成功！", Toast.LENGTH_SHORT).show();
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(sub_Person_getRoom_handler.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sign_getSigninfo_handler.this, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -174,7 +182,7 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
                     mapx.setNowTime(nowTime);
                     data.add(mapx);
 
-                    searchroomlv.setAdapter(new sub_Person_getRoom_handler.MyAdapter());
+                    searchroomlv.setAdapter(new Sign_getSigninfo_handler.MyAdapter());
                 }
             }
         });
@@ -213,13 +221,27 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
     public void showMultiBtnDialog(final String BuildingNumber, final String RoomNumber,
                                    final String Time, final String ssNowTime, final String Days) {
 
+        int hh = Integer.parseInt(dateToString.nowdateToString3());
+        int thishh = Integer.parseInt(Time.substring(0, 2));
+        int days = Integer.parseInt(dateToString.nowdateToString4());
+        int thisdays = Integer.parseInt(Days.substring(8, 10));
+        Log.d("aa  thishh", thishh + "");
+        Log.d("aa  hh", hh + "");
+        String info = "";
 
+
+        if (days < thisdays) {
+            info = "请查看已经开始会议的签到信息";
+        } else if (days == thisdays && hh < thishh) {
+            info = "请查看已经开始会议的签到信息";
+        } else {
+            info = "房间信息：\n" + "楼    号：" + BuildingNumber + "      房间号：" + RoomNumber + "\n日    期： " + Days + "\n时间段：" + Time + "\n预定时间：" + ssNowTime;
+
+        }
         AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(sub_Person_getRoom_handler.this);
+                new AlertDialog.Builder(Sign_getSigninfo_handler.this);
         normalDialog.setIcon(R.drawable.subperson);
-        normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼    号：" + BuildingNumber + "      房间号：" + RoomNumber + "\n日    期： " + Days + "\n时间段：" + Time + "\n预定时间：" + ssNowTime
-
-        );
+        normalDialog.setTitle("GoV").setMessage(info);
 
         normalDialog.setPositiveButton("取消",
                 new DialogInterface.OnClickListener() {
@@ -229,15 +251,18 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
                     }
                 });
 
-        normalDialog.setNegativeButton("删减参会人员", new DialogInterface.OnClickListener() {
+        final String finalInfo = info;
+        normalDialog.setNegativeButton("查看签到信息", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(sub_Person_getRoom_handler.this, subPerson_handler.class);
+                Intent intent = new Intent(Sign_getSigninfo_handler.this, getSignInfo_handler.class);
                 intent.putExtra("BuildingNumber", BuildingNumber);
                 intent.putExtra("RoomNumber", RoomNumber);
                 intent.putExtra("Days", Days);
                 intent.putExtra("Time", Time);
-                startActivity(intent);
+                if (!finalInfo.equals("请查看已经开始会议的签到信息")) {
+                    startActivity(intent);
+                }
             }
         });
 
@@ -251,11 +276,11 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -267,8 +292,6 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
         Cursor cursor = db.rawQuery("select * from token", null);
         String token1 = null;
         while (cursor.moveToNext()) {
-//            mytoken token= new mytoken();
-//            token.setMytoken(cursor.getString(0));
             token1 = cursor.getString(0);
         }
         db.close();
@@ -324,7 +347,7 @@ public class sub_Person_getRoom_handler extends AppCompatActivity implements Vie
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view = View.inflate(sub_Person_getRoom_handler.this, R.layout.wty_bookinfo_adp_layout, null);
+            View view = View.inflate(Sign_getSigninfo_handler.this, R.layout.wty_bookinfo_adp_layout, null);
 
 
             TextView BuildingNumber = view.findViewById(R.id.BuildNumber);

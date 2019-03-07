@@ -7,16 +7,17 @@
     android:orientation="vertical">
 
     <ListView
-        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/searchroomlv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/searchroomlv"
+        android:layout_marginTop="@dimen/dp_10"
         android:cacheColorHint="#00000000"
-        android:fadingEdge="none"
         android:divider="#ffffff"
         android:dividerHeight="@dimen/dp_10"
-        android:transcriptMode="alwaysScroll"
         android:fadeScrollbars="true"
+        android:fadingEdge="none"
+        android:paddingTop="@dimen/dp_15"
+        android:transcriptMode="alwaysScroll"
 
         />
 

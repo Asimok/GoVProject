@@ -63,11 +63,7 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bundle data = msg.getData();
-            String val = data.getString("value");
-            //
-            // TODO: 更新界面
-            //
-            Log.i("mylog", "请求结果-->" + val);
+
         }
     };
     private List<roomAdapterInfo> data;
@@ -84,9 +80,7 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //
-            // TODO: http request.
-            //
+
             data = new ArrayList<roomAdapterInfo>();
             Token1 = select();
             sendRequest(Token1);
@@ -185,7 +179,7 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
                     Log.e("aa", "此时我不可以触发");
                     return;
                 }
-//TODO 全选
+
 
                 //刷新listview
                 mMyAdapter.notifyDataSetChanged();
@@ -226,13 +220,9 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/PersonServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/PersonServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -255,11 +245,17 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
                 try {
                     JSONArray jsonArray = new JSONArray(res);
                     for (int i = 0; i < jsonArray.length(); i++) {
+
+
                         JSONObject jsonObj = jsonArray.getJSONObject(i);
                         String employeeNumber = jsonObj.getString("employeeNumber");
                         String ministry = jsonObj.getString("ministry");
                         String name = jsonObj.getString("name");
-                        showRequestResult(employeeNumber, ministry, name);
+                        if (employeeNumber.equals("0") && name.equals("超级管理员")) {
+                            continue;
+                        } else {
+                            showRequestResult(employeeNumber, ministry, name);
+                        }
                     }
 
                 } catch (Exception e) {
@@ -442,8 +438,6 @@ public class addPerson_handler_forAfterPayment extends AppCompatActivity impleme
         String namesInfos = jsonArray1.toString(); // 将JSONArray转换得到String
         ssnameInfos = namesInfos;
         //Log.d("aa","ssnameInfos   "+ssnameInfos);
-
-
     }
 
     public void Commit(View view) {

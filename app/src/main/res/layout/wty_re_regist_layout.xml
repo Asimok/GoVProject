@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_20">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="昵 称："
+            android:textSize="@dimen/sp_20" />
+
+        <EditText
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请在此输入昵称" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="性 别："
+            android:textSize="@dimen/sp_20" />
+
+        <RadioGroup
+            android:id="@+id/Sex"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/man"
+                android:layout_width="wrap_content"
+                android:layout_height="45dip"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="男"
+                android:textColor="#2B2B28"
+                android:textSize="@dimen/sp_20" />
+
+            <RadioButton
+                android:id="@+id/woman"
+                android:layout_width="wrap_content"
+                android:layout_height="45dip"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:text="女"
+                android:textColor="#2B2B28"
+                android:textSize="@dimen/sp_20" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="手机号码："
+            android:textSize="@dimen/sp_20" />
+
+        <EditText
+            android:id="@+id/PhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="  请输入手机号码" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="邮 箱："
+            android:textSize="@dimen/sp_20" />
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请在此输入邮箱" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/biankuang2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:text="部 门："
+            android:textSize="@dimen/sp_20" />
+
+        <EditText
+            android:id="@+id/Ministry"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请在此输入部门" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp_10">
+
+        <Button
+            android:id="@+id/zhuce"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="#2B2B28"
+            android:text="修改"
+            android:textColor="#ebebe3"
+            android:textSize="@dimen/sp_20" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -10,16 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.bookinfo;
 import com.example.mq661.govproject.tools.bookinfoDBHelper;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.getUUID;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.tools.userDBHelper;
@@ -84,12 +80,9 @@ public class bookinfoServer extends AppCompatActivity {
         String jsonString = jsonObject.toString();
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/BookMessageServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/BookMessageServlet")
+
                 .post(body)
                 .build();
         //异步方法
@@ -108,39 +101,31 @@ public class bookinfoServer extends AppCompatActivity {
                 String res = response.body().string();//获取到传过来的字符串
                 try {
 
-                    // JSONObject jsonObj = new JSONObject(res);
-                    //  JSONObject json = new JSONObject(res);
                     JSONArray jsonArray = new JSONArray(res);
                     Log.d("ddd", "这里解析的BuildingNumber" + res);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObj = jsonArray.getJSONObject(i);
                         Log.d("ddd", "这里解析的长度" + jsonArray.length());
-                        Log.d("ddd", "这里解析的nowTime    " + i + jsonObj.getString("nowTime"));
+
                         String BuildingNumber1 = jsonObj.getString("buildingNumber");
                         String RoomNumber1 = jsonObj.getString("roomNumber");
                         String Time1 = jsonObj.getString("time");
                         String nowTime = jsonObj.getString("nowTime");
                         String Days = jsonObj.getString("days");
-                        String mapx = "map" + i;
 
-//                        Log.d("ddd","这里收到的的BuildingNumber1"+BuildingNumber1);
-//                        if(BuildingNumber1.equals("-1")&&RoomNumber1.equals("-1")&&Time1.equals("-1")) {
-//                          // showRequestResult(BuildingNumber1, RoomNumber1, Time1,Days,nowTime,mapx);
-//                            break; }
-//
-//                        else if(BuildingNumber1.equals("-3")&&RoomNumber1.equals("-3")&&Time1.equals("-3")) {
-//                           // showRequestResult(BuildingNumber1, RoomNumber1, Time1,Days,nowTime,mapx);
-//                            break; }
-//
-//
-//                        else
-//                        {
-//                           //  Log.d("ddd","调用了show方法");
-//                           // Log.d("ddd","这里传递的BuildingNumber1"+BuildingNumber1);
-//                          //  bookinsert(zhanghu,nowTime,BuildingNumber1, RoomNumber1, Time1, Days);
-//                       //  data3=showRequestResult(zhanghu,nowTime,BuildingNumber1, RoomNumber1, Time1,Days,mapx);
-//                        }
-                        bookinsert(zhanghu, nowTime, BuildingNumber1, RoomNumber1, Time1, Days);
+                        int hh = Integer.parseInt(dateToString.nowdateToString3());
+                        int thishh = Integer.parseInt(Time1.substring(0, 2));
+                        int day = Integer.parseInt(dateToString.nowdateToString4());
+                        int thisday = Integer.parseInt(Days.substring(8, 10));
+                        if (day > thisday) {
+                            continue;
+                        } else if (hh >= thishh && day == thisday) {
+                            continue;
+                        } else {
+                            bookinsert(zhanghu, nowTime, BuildingNumber1, RoomNumber1, Time1, Days);
+                        }
+
+
                     }
 
                 } catch (Exception e) {
@@ -148,7 +133,7 @@ public class bookinfoServer extends AppCompatActivity {
                 }
             }
         });
-        Log.d("ddd", "1    这里要返回的data3   " + data3.toString());
+        //  Log.d("ddd", "1    这里要返回的data3   " + data3.toString());
         return data2;
     }
 
@@ -175,8 +160,8 @@ public class bookinfoServer extends AppCompatActivity {
                     data1.add(msg);
                     data2 = data1;
                     bookinsert(zhanghu, booktime, BuildingNumber1, RoomNumber1, Time1, Days);
-                    Log.d("ddd", "2     这里的data2" + data2.get(0).getBuildingNumber());
-                    Toast.makeText(content, "刷新成功！", Toast.LENGTH_LONG).show();
+
+
                 }
 
             }
@@ -204,15 +189,6 @@ public class bookinfoServer extends AppCompatActivity {
         values.put("booktime", nowTime);
         values.put("zhanghu", zhanghu1);
         long l = db.insert("bookinfo", null, values);
-
-//        if (l == -1) {
-//            Toast.makeText(content, "插入预定信息不成功", Toast.LENGTH_SHORT).show();
-//            Looper.loop();
-//        } else {
-//
-//            Toast.makeText(content, "插入预定信息成功", Toast.LENGTH_SHORT).show();
-//            Looper.loop();
-//        }
         db.close();
     }
 
@@ -229,13 +205,13 @@ public class bookinfoServer extends AppCompatActivity {
         values.put("Time", "");
         values.put("days", "");
         int i = db.update("bookinfo", values, "zhanghu=?", new String[]{zhanghu3});
-        if (i == 0) {
-            Toast.makeText(content, "更新预定信息不成功", Toast.LENGTH_SHORT).show();
-            Looper.loop();
-        } else {
-            Toast.makeText(content, "更新预定信息成功", Toast.LENGTH_SHORT).show();
-            Looper.loop();
-        }
+//        if (i == 0) {
+//            Toast.makeText(content, "更新预定信息不成功", Toast.LENGTH_SHORT).show();
+//            Looper.loop();
+//        } else {
+//            Toast.makeText(content, "更新预定信息成功", Toast.LENGTH_SHORT).show();
+//            Looper.loop();
+//        }
         db.close();
     }
 
@@ -285,56 +261,5 @@ public class bookinfoServer extends AppCompatActivity {
         }
         db.close();
         return token1;
-    }
-
-    public void bookdelete() {
-
-        SQLiteDatabase db = helper3.getWritableDatabase();
-        int i = db.delete("bookinfo", "zhanghao=?", new String[]{userselect()[0]});
-        if (i == 0) {
-//            Toast.makeText(this, "删除用户信息不成功",Toast.LENGTH_SHORT).show();
-//        }else{  Toast.makeText(this, "删除用户信息成功",Toast.LENGTH_SHORT).show();
-        }
-        db.close();
-
-    }
-
-    private class MyAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return data.size();
-
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View view = View.inflate(bookinfoServer.this, R.layout.bookroom_info_adp_layout, null);
-
-
-            TextView BuildingNumber = view.findViewById(R.id.BuildNumber);
-            TextView RoomNumber = view.findViewById(R.id.RoomNumber);
-            TextView Time = view.findViewById(R.id.Time);
-            TextView booktime = view.findViewById(R.id.booktime);
-            TextView Days = view.findViewById(R.id.Days3);
-
-            BuildingNumber.setText(data.get(position).getBuildingNumber());
-            booktime.setText(data.get(position).getNowTime());
-            RoomNumber.setText(data.get(position).getRoomNumber());
-            Time.setText(data.get(position).getTime());
-            Days.setText(data.get(position).getDays());
-            return view;
-        }
     }
 }

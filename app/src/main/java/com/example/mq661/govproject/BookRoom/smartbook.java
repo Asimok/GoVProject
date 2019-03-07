@@ -28,6 +28,7 @@ import com.example.mq661.govproject.Participants.addPerson_handler;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.roomAdapterInfo;
 import com.example.mq661.govproject.tools.RoomMessage;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,14 +50,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class smartbook extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener {
-    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, size1, functions1, Functions, IsMeeting2, Length, Length1;
-    private List<roomAdapterInfo> data;
     EditText size;
     Spinner functions, length;
     Button commit;
     ArrayList<RoomMessage> RoomMessages;
-    private long lastClickTime = 0;
     Intent ssdata = new Intent();
+    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, size1, functions1, Functions, IsMeeting2, Length, Length1;
+    private List<roomAdapterInfo> data;
+    private long lastClickTime = 0;
     private OkHttpClient okhttpClient;
     private tokenDBHelper helper;
     private String Token1;
@@ -89,13 +91,8 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        //  searchroomlv.removeAllViews();
-//        if(TextUtils.isEmpty(size.getText()))
-//        {
-//            Toast.makeText(this, "请输入预期容量", Toast.LENGTH_SHORT).show();
-//        }
 
-        //  else {
+
         size1 = size.getText().toString();
         if (TextUtils.isEmpty(size.getText())) {
             size1 = "0";
@@ -104,22 +101,25 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         Length1 = Length;
         if (size1.equals("0") && functions1.equals("") && Length1.equals("")) {
             Toast.makeText(this, "请至少选择填写一项", Toast.LENGTH_SHORT).show();
-        }
-        data = new ArrayList<roomAdapterInfo>();
-//            Token1 = select();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        } else {
+            Toast.makeText(this, "开始查询，请稍后！长按可快速预约！", Toast.LENGTH_SHORT).show();
+            data = new ArrayList<roomAdapterInfo>();
 
-                long now = System.currentTimeMillis();
-                if (now - lastClickTime > 1500) {
-                    lastClickTime = now;
-                    Log.e("aaa", "允许单次点击!!!");
-                    //防止短时间多次点按
-                    sendRequest(Token1);
-                } else Log.e("aaa", "阻止重复点击!!!");
-            }
-        }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    long now = System.currentTimeMillis();
+                    if (now - lastClickTime > 1500) {
+                        lastClickTime = now;
+                        Log.e("aaa", "允许单次点击!!!");
+                        //防止短时间多次点按
+                        sendRequest(Token1);
+                    } else Log.e("aaa", "阻止重复点击!!!");
+                }
+            }).start();
+        }
+
     }
 
     // }
@@ -169,18 +169,18 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
-        okhttpClient = new OkHttpClient();
+        okhttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(260, TimeUnit.SECONDS)//设置连接超时时间
+                .readTimeout(260, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(20, TimeUnit.SECONDS)//设置写的超时时间
+                .build();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
                 .url("http://39.96.68.13:8080/SmartRoom/SmartBookServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
+
         Call call = okhttpClient.newCall(request);
+
         call.enqueue(new Callback() {
 
             @Override
@@ -200,14 +200,13 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                 String res = response.body().string();//获取到传过来的字符串
                 try {
 
-                    // JSONObject jsonObj = new JSONObject(res);
-                    //  JSONObject json = new JSONObject(res);
                     JSONArray jsonArray = new JSONArray(res);
+                    Log.d("nn", "jsonArray.length()  " + jsonArray.length());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObj = jsonArray.getJSONObject(i);
 
-
                         String BuildingNumber1 = jsonObj.getString("buildingNumber");
+                        Log.d("nn", "BuildingNumber1   " + i + "    " + BuildingNumber1);
                         String RoomNumber1 = jsonObj.getString("roomNumber");
                         String Time1 = jsonObj.getString("time");
                         String Size1 = jsonObj.getString("size");
@@ -222,26 +221,22 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                         } else {
                             IsMeeting2 = "未知";
                         }
-//                        Log.d("ccc", "当前时间   "+nowdateToString3());
-//                        Log.d("ccc", "数组里的时间   "+Time1.substring(0,2));
-                        Log.d("ccc", "楼号1   " + BuildingNumber1 + RoomNumber1 + Time1);
-//if((Integer.parseInt(Time1.substring(0,2))<Integer.parseInt(nowdateToString3()))&&!BuildingNumber1.equals("-1")&&!BuildingNumber1.equals("-2")&&!BuildingNumber1.equals("-3"))
-//{
-//    Log.d("ccc", "跳出循环");
-//continue;
-//}
+
                         String Days = jsonObj.getString("days");
                         Log.d("ccc", "楼号   " + BuildingNumber1 + RoomNumber1 + Time1);
                         String mapx = "map" + i;
                         if (BuildingNumber1.equals("-1") && RoomNumber1.equals("-1") && Time1.equals("-1")) {
                             Log.d("ccc", "跳出循环     因为 -1");
                             showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2, Days, mapx);
-
                             break;
                         } else if (BuildingNumber1.equals("-2") && RoomNumber1.equals("-2") && Time1.equals("-2")) {
                             showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2, Days, mapx);
-
                             break;
+                        } else if (BuildingNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2, Days, mapx);
+                            break;
+                        } else if (Integer.parseInt(Time1.substring(0, 2)) <= Integer.parseInt(dateToString.nowdateToString3()) && Integer.parseInt(dateToString.nowdateToString4()) == Integer.parseInt(Days.substring(8, 10))) {
+                            continue;
                         } else
                             showRequestResult(BuildingNumber1, RoomNumber1, Time1, Size1, Function1, IsMeeting2, Days, mapx);
                     }
@@ -264,11 +259,28 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
             public void run() {
 
                 if (BuildNumber1.equals("-1") && RoomNumber1.equals("-1") && Time1.equals("-1")) {
-                    Toast.makeText(smartbook.this, "查询不成功！", Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder normalDialog =
+                            new AlertDialog.Builder(smartbook.this);
+                    normalDialog.setIcon(R.drawable.icon2);
+                    normalDialog.setTitle("智能预约").setMessage("没有符合筛选条件的房间！");
+                    normalDialog.show();
+
+
+                    //Toast.makeText(smartbook.this, "没有符合筛选条件的房间！", Toast.LENGTH_SHORT).show();
                 } else if (BuildNumber1.equals("-2") && RoomNumber1.equals("-2") && Time1.equals("-2")) {
-                    Toast.makeText(smartbook.this, "容量不合法！", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder normalDialog =
+                            new AlertDialog.Builder(smartbook.this);
+                    normalDialog.setIcon(R.drawable.icon2);
+                    normalDialog.setTitle("智能预约").setMessage("请输入正确容量！！");
+                    normalDialog.show();
+
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(smartbook.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+//                    AlertDialog.Builder normalDialog =
+//                            new AlertDialog.Builder(smartbook.this);
+//                    normalDialog.setIcon(R.drawable.icon2);
+//                    normalDialog.setTitle("智能预约").setMessage("认证信息失效，请重新登录！！");
+//                    normalDialog.show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -282,7 +294,6 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
                     mapx.setIsMeeting(IsMeeting1);
                     mapx.setDays(Days1);
                     data.add(mapx);
-
                     searchroomlv.setAdapter(new smartbook.MyAdapter());
                 }
             }
@@ -306,40 +317,40 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         switch (parent.getId()) {
             case R.id.functions:
                 if (content.equals("多媒体房间")) {
-                    Toast.makeText(smartbook.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(smartbook.this, "选择的功能是：" + content,
+                    //            Toast.LENGTH_SHORT).show();
                     Functions = content;
                 } else if (content.equals("普通房间")) {
-                    Toast.makeText(smartbook.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //     Toast.makeText(smartbook.this, "选择的功能是：" + content,
+                    //       Toast.LENGTH_SHORT).show();
                     Functions = content;
                 } else if (content.equals("无特殊要求")) {
-                    Toast.makeText(smartbook.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(smartbook.this, "选择的功能是：" + content,
+                    //          Toast.LENGTH_SHORT).show();
                     Functions = "";
                 }
 
                 break;
             case R.id.length:
                 if (content.equals("1小时")) {
-                    Toast.makeText(smartbook.this, "选择的时长是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(smartbook.this, "选择的时长是：" + content,
+                    //         Toast.LENGTH_SHORT).show();
                     Length = content.substring(0, 1);
                 } else if (content.equals("2小时")) {
-                    Toast.makeText(smartbook.this, "选择的时长是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(smartbook.this, "选择的时长是：" + content,
+                    //      Toast.LENGTH_SHORT).show();
                     Length = content.substring(0, 1);
                 } else if (content.equals("3小时")) {
-                    Toast.makeText(smartbook.this, "选择的时长是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(smartbook.this, "选择的时长是：" + content,
+                    //      Toast.LENGTH_SHORT).show();
                     Length = content.substring(0, 1);
                 } else if (content.equals("4小时")) {
-                    Toast.makeText(smartbook.this, "选择的时长是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(smartbook.this, "选择的时长是：" + content,
+                    //      Toast.LENGTH_SHORT).show();
                     Length = content.substring(0, 1);
                 } else if (content.equals("无特殊要求")) {
-                    Toast.makeText(smartbook.this, "选择的时长是：" + content,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(smartbook.this, "选择的时长是：" + content,
+                    //      Toast.LENGTH_SHORT).show();
                     Length = "";
                 }
 
@@ -354,6 +365,147 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    /* @setNeutralButton 设置中间的按钮
+     * 若只需一个按钮，仅设置 setPositiveButton 即可
+     */
+    public void showMultiBtnDialog(final String BuildingNumber, String Size, final String RoomNumber,
+                                   final String Time, String Function, final String IsMeeting, final String Days) {
+
+
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(smartbook.this);
+        normalDialog.setIcon(R.drawable.book2);
+        normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼号：" + BuildingNumber + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
+                + "       日期： " + Days
+        );
+
+        normalDialog.setPositiveButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        normalDialog.setNegativeButton("预约", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(smartbook.this, addPerson_handler.class);
+                intent.putExtra("BuildingNumber", BuildingNumber);
+                intent.putExtra("RoomNumber", RoomNumber);
+                intent.putExtra("Days", Days);
+                intent.putExtra("Time", Time);
+                startActivity(intent);
+            }
+        });
+
+        // 创建实例并显示
+        normalDialog.show();
+    }
+
+    public void bookroom() {
+        Intent intent;
+        intent = new Intent(this, bookroom.class);
+        startActivityForResult(intent, 0);
+
+        // finish();
+    }
+
+    public void insert(String token) {
+
+
+        //自定义增加数据
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        //String token =mytoken.getMytoken();
+
+        values.put("token", token);
+        long l = db.insert("token", null, values);
+
+
+        db.close();
+    }
+
+    public void update(String token) {
+        //自定义更新
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        //     String oldtoken=mytoken.getMytoken();
+        values.put("token", token);
+//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
+        int i = db.update("token", values, null, null);
+        if (i == 0) {
+            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+
+    public void delete(String token) {
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+
+        int i = db.delete("token", "token=?", new String[]{token});
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//
+//        }
+        db.close();
+
+    }
+
+    //查找
+    public String select() {
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from token", null);
+        String token1 = null;
+        while (cursor.moveToNext()) {
+            token1 = cursor.getString(0);
+        }
+        db.close();
+        return token1;
+    }
+
+    public void relog() {
+
+        Toast.makeText(this, "认证信息失效，请重新登录！", Toast.LENGTH_LONG).show();
+        Intent intent;
+        intent = new Intent(this, Login_noToken.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        size1 = data.getStringExtra("Size");
+        functions1 = data.getStringExtra("Functions");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1) {
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
+    }
 
     private class MyAdapter extends BaseAdapter {
 
@@ -406,151 +558,6 @@ public class smartbook extends AppCompatActivity implements View.OnClickListener
         public void notifyDataSetChanged() {
             super.notifyDataSetChanged();
         }
-    }
-
-    /* @setNeutralButton 设置中间的按钮
-     * 若只需一个按钮，仅设置 setPositiveButton 即可
-     */
-    public void showMultiBtnDialog(final String BuildingNumber, String Size, final String RoomNumber,
-                                   final String Time, String Function, final String IsMeeting, final String Days) {
-
-
-        AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(smartbook.this);
-        normalDialog.setIcon(R.drawable.book2);
-        normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼号：" + BuildingNumber + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
-                + "       日期： " + Days
-        );
-
-        normalDialog.setPositiveButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-        normalDialog.setNegativeButton("预约", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Intent intent = new Intent(smartbook.this, addPerson_handler.class);
-                intent.putExtra("BuildingNumber", BuildingNumber);
-                intent.putExtra("RoomNumber", RoomNumber);
-                intent.putExtra("Days", Days);
-                intent.putExtra("Time", Time);
-                startActivity(intent);
-            }
-        });
-
-        // 创建实例并显示
-        normalDialog.show();
-    }
-
-    public void bookroom() {
-        Intent intent;
-        intent = new Intent(this, bookroom.class);
-        startActivityForResult(intent, 0);
-
-        // finish();
-    }
-
-
-    public void insert(String token) {
-
-
-        //自定义增加数据
-        SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        //String token =mytoken.getMytoken();
-
-        values.put("token", token);
-        long l = db.insert("token", null, values);
-
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
-        db.close();
-    }
-
-    public void update(String token) {
-        //自定义更新
-        SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
-        values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
-        int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
-        db.close();
-    }
-
-    public void delete(String token) {
-
-        SQLiteDatabase db = helper.getWritableDatabase();
-
-
-        int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
-        db.close();
-
-    }
-
-    //查找
-    public String select() {
-
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from token", null);
-        String token1 = null;
-        while (cursor.moveToNext()) {
-            token1 = cursor.getString(0);
-        }
-        db.close();
-        return token1;
-    }
-
-    public void relog() {
-        Intent intent;
-        intent = new Intent(this, Login_noToken.class);
-        startActivityForResult(intent, 0);
-        finish();
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        size1 = data.getStringExtra("Size");
-        functions1 = data.getStringExtra("Functions");
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        //非默认值
-        if (newConfig.fontScale != 1) {
-            getResources();
-        }
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public Resources getResources() {//还原字体大小
-        Resources res = super.getResources();
-        //非默认值
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();//设置默认
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-        }
-        return res;
     }
 
     //    public static boolean isFastDoubleClick() {

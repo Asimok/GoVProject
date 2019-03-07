@@ -19,19 +19,14 @@ import java.util.Stack;
 public class ToastUtil {
     public static final int LENGTH_SHORT = 0x00;
     public static final int LENGTH_LONG = 0x01;
-
+    public static boolean isRunning = false;
+    public static Stack<ToastUtil> stack = new Stack();
+    private static Toast toast;
     private final int ANIMATION_DURATION = 600;
-
     public Context mContext;
     public String msg;
     private int HIDE_DELAY = 2000;
-
-    public static boolean isRunning = false;
-
     private Handler mHandler = new Handler();
-
-    public static Stack<ToastUtil> stack = new Stack();
-    private static Toast toast;
 
     // 表示吐司里显示的文字
     public static ToastUtil makeText(Context context, String message,

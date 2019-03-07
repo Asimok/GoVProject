@@ -13,8 +13,8 @@
         android:id="@+id/toast_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginBottom="@dimen/dp_50"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
@@ -23,16 +23,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/dp_5"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingLeft="@dimen/dp_20"
-            android:paddingRight="@dimen/dp_20"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/shape_toastutils_bg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_10"
             android:shadowColor="#BB000000"
             android:shadowRadius="2.75"
-            android:textSize="12sp"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

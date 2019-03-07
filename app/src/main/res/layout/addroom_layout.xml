@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
         android:orientation="horizontal">
 
         <TextView
@@ -23,17 +23,17 @@
             android:id="@+id/BuildNumber"
             android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入楼号"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
         <TextView
@@ -49,17 +49,17 @@
             android:id="@+id/RoomNumber"
             android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入房间号"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
         <TextView
@@ -75,17 +75,17 @@
             android:id="@+id/Time"
             android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入开放时间"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
         <TextView
@@ -101,17 +101,17 @@
             android:id="@+id/Size"
             android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入容量"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
         <TextView
@@ -127,17 +127,17 @@
             android:id="@+id/Function"
             android:layout_width="@dimen/dp_254"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入功能"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="vertical">
 
         <TextView
@@ -151,37 +151,37 @@
 
 
         <RadioGroup
+            android:id="@+id/MeetingRomeLevel"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dp_10"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/MeetingRomeLevel">
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_10">
 
             <RadioButton
+                android:id="@+id/dsz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dsz"
                 android:text="董事长" />
 
             <RadioButton
+                android:id="@+id/zjl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/zjl"
                 android:text="总经理" />
 
             <RadioButton
+                android:id="@+id/bmjl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/bmjl"
                 android:text="部门经理" />
         </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="vertical">
 
         <Button

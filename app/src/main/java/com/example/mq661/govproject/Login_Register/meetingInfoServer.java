@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.bookinfo;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.getUUID;
 import com.example.mq661.govproject.tools.meetingInfoDBHelper;
 import com.example.mq661.govproject.tools.tokenDBHelper;
@@ -77,12 +78,8 @@ public class meetingInfoServer extends AppCompatActivity {
         String jsonString = jsonObject.toString();
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/MeetingMessageServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/MeetingMessageServlet")
                 .post(body)
                 .build();
         //异步方法
@@ -112,9 +109,18 @@ public class meetingInfoServer extends AppCompatActivity {
                         String RoomNumber1 = jsonObj.getString("roomNumber");
                         String Time1 = jsonObj.getString("time");
                         String Days = jsonObj.getString("days");
-                        Log.d("aa", "BuildingNumber1   " + BuildingNumber1);
+                        int hh = Integer.parseInt(dateToString.nowdateToString3());
+                        int thishh = Integer.parseInt(Time1.substring(0, 2));
+                        int day = Integer.parseInt(dateToString.nowdateToString4());
+                        int thisday = Integer.parseInt(Days.substring(8, 10));
+                        if (day > thisday) {
+                            continue;
+                        } else if (hh >= thishh && day == thisday) {
+                            continue;
+                        } else {
+                            bookinsert(zhanghu, BuildingNumber1, RoomNumber1, Time1, Days);
+                        }
 
-                        bookinsert(zhanghu, BuildingNumber1, RoomNumber1, Time1, Days);
                     }
 
                 } catch (Exception e) {
@@ -176,7 +182,6 @@ public class meetingInfoServer extends AppCompatActivity {
         values.put("days", Days);
         values.put("zhanghu", zhanghu1);
         long l = db.insert("meetinginfo", null, values);
-
         db.close();
     }
 
@@ -193,13 +198,13 @@ public class meetingInfoServer extends AppCompatActivity {
         values.put("Time", "");
         values.put("days", "");
         int i = db.update("meetinginfo", values, "zhanghu=?", new String[]{zhanghu3});
-        if (i == 0) {
-            Toast.makeText(content, "更新预定信息不成功", Toast.LENGTH_SHORT).show();
-            Looper.loop();
-        } else {
-            Toast.makeText(content, "更新预定信息成功", Toast.LENGTH_SHORT).show();
-            Looper.loop();
-        }
+//        if (i == 0) {
+//            Toast.makeText(content, "更新预定信息不成功", Toast.LENGTH_SHORT).show();
+//            Looper.loop();
+//        } else {
+//            Toast.makeText(content, "更新预定信息成功", Toast.LENGTH_SHORT).show();
+//            Looper.loop();
+//        }
         db.close();
     }
 

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.SearchRoom.searchroom_handler_forbook;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler_fordelete_only;
 import com.example.mq661.govproject.tools.DatePickerActivity;
 import com.example.mq661.govproject.tools.MyNotification;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
@@ -39,10 +39,9 @@ import okhttp3.Response;
 
 public class deleteroom extends AppCompatActivity implements View.OnClickListener, NumberPicker.OnValueChangeListener {
     EditText BuildNumber, RoomNumber, Time, Days;
+    Button commit;
     private NumberPicker mNumberPickerYear, mNumberPickerMonth, mNumberPickerDay;
     private String year = "2019", month = "01", day = "01", ssDays = "2019-01-01";
-    Button commit;
-    // Map<String, String> usertoken;
     private OkHttpClient okhttpClient;
     private String BuildNumber1, RoomNumber1, Time1, Token1, days;
     private tokenDBHelper helper;
@@ -94,7 +93,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 //        String time=Time.getText().toString().trim();
 //        if((time.length()==11)) {
 //            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
-//                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "请输入正确的时间格式", Toast.LENGTH_LONG).show();
 //            }
 //            else if(Integer.parseInt(time.substring(0,2))>Integer.parseInt(time.substring(6,8))){Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();}
 //
@@ -133,7 +132,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         }).start();
     }
 //        else {
-//            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "请输入正确的时间格式", Toast.LENGTH_LONG).show();
 //
 //        }
 //    }
@@ -153,12 +152,9 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -235,7 +231,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     public void searchroom3(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom_handler_forbook.class);
+        intent = new Intent(this, searchroom_handler_fordelete_only.class);
         startActivityForResult(intent, 0);
     }
 
@@ -243,13 +239,6 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         if (!(data.getStringExtra("BuildingNumber").equals("空的"))) {
             BuildNumber.setText(data.getStringExtra("BuildingNumber"));
             RoomNumber.setText(data.getStringExtra("RoomNumber"));
-//            Time.setText(data.getStringExtra("Time"));
-//            Days.setText(data.getStringExtra("Days"));
-            ssDays = data.getStringExtra("Days");
-            days = ssDays;
-//            mNumberPickerYear.setValue(Integer.parseInt(ssDays.substring(0, 4)));
-//            mNumberPickerMonth.setValue(Integer.parseInt(ssDays.substring(5, 7)));
-//            mNumberPickerDay.setValue(Integer.parseInt(ssDays.substring(8, 10)));
         }
     }
 
@@ -264,11 +253,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -278,15 +263,9 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         //自定义更新
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
         values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -296,11 +275,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
 
     }
@@ -312,8 +287,7 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
         Cursor cursor = db.rawQuery("select * from token", null);
         String token1 = null;
         while (cursor.moveToNext()) {
-//            mytoken token= new mytoken();
-//            token.setMytoken(cursor.getString(0));
+
             token1 = cursor.getString(0);
         }
         db.close();
@@ -329,24 +303,6 @@ public class deleteroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-//        switch (picker.getId()) {
-//            case R.id.numberPickerYear:
-//                year= String.valueOf(newVal);
-//                break;
-//            case R.id.numberPickerMonth:
-//                month= String.valueOf(String.format("%02d",newVal));
-//                break;
-//            case R.id.numberPickerDay:
-//                day= String.valueOf(String.format("%02d",newVal));
-//                break;
-//            default:
-//                break;
-//        }
-//        days=year+"-"+month+"-"+day;
-//        Days.setText(days);
-//        Toast.makeText(deleteroom.this, "选择的日期是：" + days,
-//                Toast.LENGTH_SHORT).show();
 
     }
 

@@ -54,5 +54,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+
+        <Button
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/signinfo"
+            android:onClick="SignInfo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看签到状态"
+
+            android:textColor="#2b2b28" />
+
+    </LinearLayout>
 </LinearLayout>

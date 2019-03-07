@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="@dimen/dp_110"
+            android:layout_height="wrap_content"
+            android:text="员工号"
+            android:textSize="@dimen/sp_16"
+
+            />
+
+        <TextView
+            android:id="@+id/text_title1"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_title"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="姓名"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/text_title2"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_title1"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="部门"
+            android:textSize="@dimen/sp_16" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/zttm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="签到时间："
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/signtime"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/zttm"
+            android:layout_toRightOf="@+id/zttm"
+            android:paddingLeft="@dimen/dp_2"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:id="@+id/status1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/signtime"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="状态："
+            android:textSize="@dimen/sp_16" />\
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@+id/status1"
+            android:textSize="@dimen/sp_16" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

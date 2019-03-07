@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.SearchRoom.searchroom_handler_forbook;
+import com.example.mq661.govproject.SearchRoom.searchroom_handler_forchange_only;
 import com.example.mq661.govproject.tools.MyNotification;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
@@ -41,15 +41,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class changeroom extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-    EditText BuildNumber, RoomNumber, Time, Size;
+    EditText BuildNumber, RoomNumber, Size;
     TextView zhuangtai;
     Button commit;
     CheckBox weixiu;
-    Map<String, String> usertoken;
-    private OkHttpClient okhttpClient;
     Spinner MeetingRoomLevel, Function;
+    private OkHttpClient okhttpClient;
     private tokenDBHelper helper;
-    private String BuildNumber1, RoomNumber1, Time1, Size1, Function1, Function2, MeetingRomeLevel2, Token1, weixiu1 = "0", level = "0";
+    private String BuildNumber1, RoomNumber1, Size1, Function1, Function2, MeetingRomeLevel2, Token1, weixiu1 = "0", level = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +59,12 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         initView();
 
     }
-//TODO 判断信息不重复待做
-    //和删除整合在一起
 
     private void initView() {
 
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
-        Time = findViewById(R.id.Time);
+
         Size = findViewById(R.id.Size);
         Function = findViewById(R.id.Function);
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
@@ -85,11 +82,9 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
 
         BuildNumber1 = BuildNumber.getText().toString().trim();
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        //  Time1 = Time.getText().toString().trim();
         Size1 = Size.getText().toString().trim();
         Function2 = Function1.trim();
         MeetingRomeLevel2 = level;
@@ -103,10 +98,6 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (TextUtils.isEmpty(Time1)) {
-//            Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
 
         if (TextUtils.isEmpty(Size1)) {
             Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
@@ -129,22 +120,20 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
             return;
         }
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                sendRequest(BuildNumber1, RoomNumber1, Time1, Size1, Function2, MeetingRomeLevel2, Token1, weixiu1);
+                sendRequest(BuildNumber1, RoomNumber1, Size1, Function2, MeetingRomeLevel2, Token1, weixiu1);
             }
         }).start();
     }
 
-    private void sendRequest(String BuildNumber1, String RoomNumber1, String Time1, String Size1,
+    private void sendRequest(String BuildNumber1, String RoomNumber1, String Size1,
                              String Function1, String MettingRomeLevel1, String Token1, String weixiu2) {
         Map map = new HashMap();
         map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
-        map.put("Time", Time1);
         map.put("Size", Size1);
         map.put("Function", Function1);
         map.put("MeetingRoomLevel", MettingRomeLevel1);
@@ -155,16 +144,13 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
 
-//        Log.d("这将JSON对象转换为json字符串", jsonString);
+
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
+
                 .url("http://39.96.68.13:8080/SmartRoom/ChangeServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/ChangeServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -218,7 +204,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
                 } else if (status.equals("-2")) {
-                    Toast.makeText(changeroom.this, "容量非法，只能填入数字！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(changeroom.this, "容量一栏请输入数字！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-5")) {
                     Toast.makeText(changeroom.this, "您没有进行此项操作的权限！", Toast.LENGTH_SHORT).show();
                 }
@@ -240,16 +226,10 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         //自定义增加数据
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //String token =mytoken.getMytoken();
 
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
         db.close();
     }
 
@@ -259,15 +239,9 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         //自定义更新
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
         values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -277,11 +251,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
 
     }
@@ -293,8 +263,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         Cursor cursor = db.rawQuery("select * from token", null);
         String token1 = null;
         while (cursor.moveToNext()) {
-//            mytoken token= new mytoken();
-//            token.setMytoken(cursor.getString(0));
+
             token1 = cursor.getString(0);
         }
         db.close();
@@ -306,26 +275,26 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         String content = parent.getItemAtPosition(position).toString();
         switch (parent.getId()) {
             case R.id.Function:
-                if (content.equals("多媒体房间")) {
-                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
-                } else if (content.equals("普通房间")) {
-                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
-                }
+//                if (content.equals("多媒体房间")) {
+//                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (content.equals("普通房间")) {
+//                    Toast.makeText(changeroom.this, "选择的功能是：" + content,
+//                            Toast.LENGTH_SHORT).show();
+//                }
                 Function1 = content;
                 break;
             case R.id.MeetingRomeLevel:
-                if (content.equals("董事长")) {
-                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
-                } else if (content.equals("总经理")) {
-                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
-                } else if (content.equals("部门经理")) {
-                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
-                }
+//                if (content.equals("董事长")) {
+//                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (content.equals("总经理")) {
+//                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (content.equals("部门经理")) {
+//                    Toast.makeText(changeroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
+//                }
                 level = content;
                 break;
             default:
@@ -341,7 +310,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
 
     public void searchroom2(View v) {
         Intent intent;
-        intent = new Intent(this, searchroom_handler_forbook.class);
+        intent = new Intent(this, searchroom_handler_forchange_only.class);
         startActivityForResult(intent, 0);
     }
 
@@ -350,7 +319,7 @@ public class changeroom extends AppCompatActivity implements View.OnClickListene
         if (!(data.getStringExtra("BuildingNumber").equals("空的"))) {
             BuildNumber.setText(data.getStringExtra("BuildingNumber"));
             RoomNumber.setText(data.getStringExtra("RoomNumber"));
-            Time.setText(data.getStringExtra("Time"));
+
 
             if (data.getStringExtra("IsMeeting").equals("空闲")) {
                 weixiu.setChecked(false);

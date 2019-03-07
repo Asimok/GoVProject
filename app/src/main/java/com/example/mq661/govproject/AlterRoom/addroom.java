@@ -59,62 +59,23 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
 
         BuildNumber = findViewById(R.id.BuildNumber);
         RoomNumber = findViewById(R.id.RoomNumber);
-        // Time = findViewById(R.id.Time);
         Size = findViewById(R.id.Size);
         Function = findViewById(R.id.function);
         MeetingRoomLevel = findViewById(R.id.MeetingRomeLevel);
-//        zjl = findViewById(R.id.zjl);
-//        bmjl = findViewById(R.id.bmjl);
-//        dsz = findViewById(R.id.dsz);
         commit = findViewById(R.id.commit);
         Function.setOnItemSelectedListener(this);
         MeetingRoomLevel.setOnItemSelectedListener(this);
         commit.setOnClickListener(this);
         // 提交修改
-        //  usertoken = savetoken.getUsertoken(this);//用作读取本地token
-
-//        MeetingRoomLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-//                // 获取用户选中的性别
-//                //String sex = "";
-//                switch (checkedId) {
-//                    case R.id.dsz:
-//                        level = "董事长";
-//                        break;
-//                    case R.id.zjl:
-//                        level = "总经理";
-//                        break;
-//                    case R.id.bmjl:
-//                        level = "部门经理";
-//                        break;
-//                    default:
-//                        break;
-//                }
-//
-//                // 消息提示
-//                Toast.makeText(addroom.this,
-//                        "最低使用权限是：" + level, Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
     public void onClick(View v) {
-//        String time = Time.getText().toString().trim();
-//        if ((time.length() == 11)) {
-//            if (!(time.substring(5, 6).equals("-") && time.substring(2, 3).equals(":") && time.substring(8, 9).equals(":"))) {
-//                Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
-//            } else if (Integer.parseInt(time.substring(0, 2)) > Integer.parseInt(time.substring(6, 8))) {
-//                Toast.makeText(this, "开始时间不能大于结束时间", Toast.LENGTH_LONG).show();
-//            } else {
+
         BuildNumber1 = BuildNumber.getText().toString().trim();
         RoomNumber1 = RoomNumber.getText().toString().trim();
-        // Time1 = Time.getText().toString().trim();
         Size1 = Size.getText().toString().trim();
-        //Function1 =   Function.getText().toString().trim());
         Function2 = Function1;
-
         MeetingRomeLevel2 = level;
         Token1 = select();//读本地
 
@@ -126,10 +87,6 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
             Toast.makeText(this, "请输入房间号", Toast.LENGTH_SHORT).show();
             return;
         }
-//                if (TextUtils.isEmpty(Time1)) {
-//                    Toast.makeText(this, "请输入时间段", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
 
         if (TextUtils.isEmpty(Size1)) {
             Toast.makeText(this, "请输入容量", Toast.LENGTH_SHORT).show();
@@ -159,14 +116,6 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         }).start();
 
     }
-    // }
-//        else {
-//            Toast.makeText(this, "时间格式不合法", Toast.LENGTH_LONG).show();
-//
-//        }
-
-
-    //  }
 
 
     private void sendRequest(String BuildNumber1, String RoomNumber1, String Time1, String Size1,
@@ -174,7 +123,6 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         Map map = new HashMap();
         map.put("BuildingNumber", BuildNumber1);
         map.put("RoomNumber", RoomNumber1);
-        //map.put("Time", Time1);
         map.put("Size", Size1);
         map.put("Function", Function1);
         map.put("MeetingRoomLevel", MeetingRoomLevel1);
@@ -187,13 +135,9 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
+
                 .url("http://39.96.68.13:8080/SmartRoom/AddServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-//                .url("http://192.168.43.174:8080/SmartRoom/AddServlet") //马琦IP
-                .url("http://39.96.68.13:8080/SmartRoom/AddServlet") //马琦IP2
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -235,7 +179,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
              */
             public void run() {
                 if (status.equals("-2")) {
-                    Toast.makeText(addroom.this, "增加房间信息不合法!请重新输入！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(addroom.this, "请输入正确的房间信息！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("0")) {
                     MyNotification notify = new MyNotification(getApplicationContext());
                     notify.MyNotification("智能会议室", "房间增加成功", R.drawable.add, "addroom", "增加房间", 5, "增加");
@@ -248,7 +192,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
                 } else if (status.equals("-1")) {
                     Toast.makeText(addroom.this, "增加失败！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-4")) {
-                    Toast.makeText(addroom.this, "增加失败,房间信息重复！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(addroom.this, "增加失败,该房间已存在！", Toast.LENGTH_SHORT).show();
                 } else if (status.equals("-5")) {
                     Toast.makeText(addroom.this, "您没有进行此项操作的权限！", Toast.LENGTH_SHORT).show();
                 }
@@ -275,11 +219,7 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -289,15 +229,13 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         //自定义更新
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
         values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -307,11 +245,11 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -335,24 +273,24 @@ public class addroom extends AppCompatActivity implements View.OnClickListener, 
         switch (parent.getId()) {
             case R.id.function:
                 if (content.equals("多媒体房间")) {
-                    Toast.makeText(addroom.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(addroom.this, "选择的功能是：" + content,
+//                            Toast.LENGTH_SHORT).show();
                 } else if (content.equals("普通房间")) {
-                    Toast.makeText(addroom.this, "选择的功能是：" + content,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(addroom.this, "选择的功能是：" + content,
+//                            Toast.LENGTH_SHORT).show();
                 }
                 Function1 = content;
                 break;
             case R.id.MeetingRomeLevel:
                 if (content.equals("董事长")) {
-                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
                 } else if (content.equals("总经理")) {
-                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
                 } else if (content.equals("部门经理")) {
-                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(addroom.this, "选择的最低可使用职务是：" + content,
+//                            Toast.LENGTH_SHORT).show();
                 }
                 level = content;
                 break;

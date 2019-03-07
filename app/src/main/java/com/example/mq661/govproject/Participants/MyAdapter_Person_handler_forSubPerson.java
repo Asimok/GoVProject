@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.personName;
@@ -76,13 +75,13 @@ public class MyAdapter_Person_handler_forSubPerson extends BaseAdapter {
                     checkBox.setChecked(false);
                     data.get(i).setIscheck(false);
                     Log.e("myadapter", "" + i);
-                    Toast.makeText(context, "取消添加  " + data.get(i).getName(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, "取消添加  " + data.get(i).getName(), Toast.LENGTH_SHORT).show();
 
                     removeName(data.get(i).getName(), data.get(i).getEmployeeNumber1());
                 } else {
                     checkBox.setChecked(true);
                     data.get(i).setIscheck(true);
-                    Toast.makeText(context, "添加  " + data.get(i).getName(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(context, "添加  " + data.get(i).getName(), Toast.LENGTH_SHORT).show();
                     addName(data.get(i).getName(), data.get(i).getEmployeeNumber1());
                     Log.d("aa", "addnum  " + data.get(i).getEmployeeNumber1());
                 }

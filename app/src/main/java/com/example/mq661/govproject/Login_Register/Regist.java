@@ -94,7 +94,7 @@ public class Regist extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // Toast.makeText(this,"登陆成功",Toast.LENGTH_LONG).show();
+
 
         zhanghu1 = zhanghu.getText().toString().trim();
         mima1 = mima.getText().toString().trim();
@@ -165,16 +165,12 @@ public class Regist extends AppCompatActivity implements View.OnClickListener {
         JSONObject jsonObject = new JSONObject(map);
         String jsonString = jsonObject.toString();
 
-//        Log.d("这将JSON对象转换为json字符串", jsonString);
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/RegistServlet")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);

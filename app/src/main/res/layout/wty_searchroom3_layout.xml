@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="@dimen/dp_50"
@@ -14,24 +14,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_15">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="楼  号:"
             android:layout_marginLeft="@dimen/dp_35"
+            android:text="楼  号:"
             android:textSize="@dimen/sp_20" />
 
         <EditText
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
             android:background="#00000000"
             android:hint="  请在此输入楼号" />
     </LinearLayout>
@@ -39,24 +39,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="房间号："
             android:layout_marginLeft="@dimen/dp_35"
+            android:text="房间号："
             android:textSize="@dimen/sp_20" />
 
         <EditText
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
             android:background="#00000000"
             android:hint="  请在此输入房间号" />
     </LinearLayout>
@@ -64,24 +64,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开放时间："
             android:layout_marginLeft="@dimen/dp_35"
+            android:text="开放时间："
             android:textSize="@dimen/sp_20" />
 
         <EditText
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
             android:background="#00000000"
             android:hint="  请在此输入开放时间" />
     </LinearLayout>
@@ -89,24 +89,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="容量："
             android:layout_marginLeft="@dimen/dp_35"
+            android:text="容量："
             android:textSize="@dimen/sp_20" />
 
         <EditText
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
             android:background="#00000000"
             android:hint="  请在此输入容量" />
     </LinearLayout>
@@ -114,24 +114,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="功能："
             android:layout_marginLeft="@dimen/dp_35"
+            android:text="功能："
             android:textSize="@dimen/sp_20" />
 
         <EditText
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
             android:background="#00000000"
             android:hint="  请在此输入功能" />
     </LinearLayout>
@@ -139,12 +139,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
-        android:gravity="center_vertical"
         android:background="@drawable/biankuang2"
-        android:layout_marginTop="@dimen/dp_20">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -156,17 +156,17 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="45dip"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="是"
             android:textColor="#2B2B28"
-            android:layout_marginLeft="@dimen/dp_10"
             android:textSize="@dimen/sp_20" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="45dip"
+            android:layout_marginLeft="@dimen/dp_30"
             android:text="否"
             android:textColor="#2B2B28"
-            android:layout_marginLeft="@dimen/dp_30"
             android:textSize="@dimen/sp_20" />
     </LinearLayout>
 
@@ -174,19 +174,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_15"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/dp_20">
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#2b2b28"
             android:text="保 存"
-            android:textSize="@dimen/sp_20"
-            android:textColor="#ebebe3" />
+            android:textColor="#ebebe3"
+            android:textSize="@dimen/sp_20" />
     </LinearLayout>
 
 

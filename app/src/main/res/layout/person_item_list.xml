@@ -50,4 +50,5 @@
             android:focusableInTouchMode="false" />
 
     </RelativeLayout>
+
 </LinearLayout>

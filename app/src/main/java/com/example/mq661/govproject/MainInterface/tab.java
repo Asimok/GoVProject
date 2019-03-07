@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.mq661.govproject.AlterRoom.gov_Admin;
 import com.example.mq661.govproject.AlterRoom.gov_Founction;
-import com.example.mq661.govproject.Login_Register.Logout;
+import com.example.mq661.govproject.Login_Register.mine;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.roomSortDBHelper;
 
@@ -53,7 +52,7 @@ public class tab extends TabActivity implements NavigationView.OnNavigationItemS
         tab_manage.setContent(new Intent(this, gov_Admin.class));
         TabHost.TabSpec tab_mine = tabHost.newTabSpec("4");
         tab_mine.setIndicator(getImageView(4));
-        tab_mine.setContent(new Intent(this, Logout.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        tab_mine.setContent(new Intent(this, mine.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         tabHost.addTab(tab_function);
         tabHost.addTab(tab_smartGroup);
@@ -64,7 +63,7 @@ public class tab extends TabActivity implements NavigationView.OnNavigationItemS
 
 //            tabHost.addTab(tabHost.newTabSpec(0 + "").setIndicator(getImageView(0)).setContent(new Intent(this, mainViewPager.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 //            tabHost.addTab(tabHost.newTabSpec(1 + "").setIndicator(getImageView(2)).setContent(new Intent(this, gov_Founction.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
-//        tabHost.addTab(tabHost.newTabSpec(2 + "").setIndicator(getImageView(4)).setContent(new Intent(this, Logout.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
+//        tabHost.addTab(tabHost.newTabSpec(2 + "").setIndicator(getImageView(4)).setContent(new Intent(this, mine.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
         tabHost.setCurrentTab(2);
         setContentView(tabHost);
 
@@ -185,11 +184,11 @@ public class tab extends TabActivity implements NavigationView.OnNavigationItemS
 
         SQLiteDatabase db = helper4.getWritableDatabase();
         int i = db.delete("allroom", null, null);
-        if (i == 0) {
-            Log.d("aaa", "deleteAllRoom  删除不成功");
-        } else {
-            Log.d("aaa", "deleteAllRoom  删除成功");
-        }
+//        if (i == 0) {
+//            Log.d("aaa", "deleteAllRoom  删除不成功");
+//        } else {
+//            Log.d("aaa", "deleteAllRoom  删除成功");
+//        }
         db.close();
     }
 }

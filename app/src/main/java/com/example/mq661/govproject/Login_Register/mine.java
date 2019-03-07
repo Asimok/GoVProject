@@ -1,6 +1,7 @@
 package com.example.mq661.govproject.Login_Register;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,7 @@ import com.example.mq661.govproject.tools.MyNotification;
 import com.example.mq661.govproject.tools.bookinfo;
 import com.example.mq661.govproject.tools.bookinfoDBHelper;
 import com.example.mq661.govproject.tools.meetingInfoDBHelper;
+import com.example.mq661.govproject.tools.registInfoDBHelper;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 import com.example.mq661.govproject.tools.userDBHelper;
@@ -44,25 +47,26 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Logout extends AppCompatActivity implements View.OnClickListener {
+public class mine extends AppCompatActivity implements View.OnClickListener {
     Button logout;
     bookinfo mybook = new bookinfo();
-    private OkHttpClient okhttpClient;
-    private userDBHelper helper1;
-    TextView tvzhanghu, tvname, bookinfo;
+    TextView tvzhanghu, tvname, bookinfo, chnum, ydnum;
     ArrayList<bookinfo> bookinfos, meetingInfos;
     Map<String, String> countlogin;
+    LinearLayout linear, linear2;
+    String room[];
+    String room1;
+    private OkHttpClient okhttpClient;
+    private userDBHelper helper1;
+    private registInfoDBHelper helper5;
     private tokenDBHelper helper;
     private bookinfoDBHelper helper3;
-    LinearLayout linear, linear2;
     private String Token, zhanghu, name;
     private ListView bookinfo2;
     private meetingInfoDBHelper helper4;
     private ArrayList<bookroomInfoAdapter> data, data2;
     private List<bookinfo> data11, data41;
-    String room[];
-    String room1;
-    // int i=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
         helper1 = new userDBHelper(this);
         helper3 = new bookinfoDBHelper(this);
         helper4 = new meetingInfoDBHelper(this);
+        helper5 = new registInfoDBHelper(this);
         bookinfos = new ArrayList<bookinfo>();
         meetingInfos = new ArrayList<bookinfo>();
         linear = findViewById(R.id.linear3);
@@ -89,11 +94,18 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
         tvname = findViewById(R.id.name);
         bookinfo = findViewById(R.id.bookinfo);
         tvzhanghu = findViewById(R.id.zhanghu);
+        chnum = findViewById(R.id.chnum);
+        ydnum = findViewById(R.id.ydnum);
         logout.setOnClickListener(this);
         Toast.makeText(this, "已刷新", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initdata() {
+        searchRegistServer serg = new searchRegistServer();
+        serg.setContent(mine.this);
+        serg.startsearchRegist(select());
+
         zhanghu = userselect()[0];
         name = userselect()[1];
         tvzhanghu.setText(zhanghu);
@@ -101,17 +113,19 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
 
         //填充预定信息
         bookinfoServer bookinfo1 = new bookinfoServer();
-        bookinfo1.setContent(Logout.this);
-
+        bookinfo1.setContent(mine.this);
+        Log.d("ddd", "获取预定信息");
         data = bookinfo1.startGetInfo();
 
 
-        List<bookinfo> data = bookselect();
-        data11 = data;
-        for (int i = 0; i < data.size(); i++) {
-            Log.d("ccc", i + data.get(i).getBuildNumber());
-            if (data.get(i).getBuildNumber().equals("-3")) {
-                Toast.makeText(Logout.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
+        List<bookinfo> data6 = bookselect();
+        data11 = data6;
+        Log.d("ccc", "data11 size     " + data11.size());
+        ydnum.setText(data11.size() + "  条");
+        for (int i = 0; i < data11.size(); i++) {
+            Log.d("ccc", i + data11.get(i).getBuildNumber());
+            if (data11.get(i).getBuildNumber().equals("-3")) {
+                Toast.makeText(mine.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
                 delete(Token);
                 saveDeviceInfo.savelogin(getApplicationContext(), "0");
                 relog();
@@ -119,7 +133,8 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
             }
             TextView tv = new TextView(this);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            tv.setText(data.get(i).getBuildNumber() + "   " + data.get(i).getRoomNumber() + "\n预约日期:    " + data.get(i).getDays() + "  " + data.get(i).getTime() + "\n预定时间:    " + data.get(i).getBooktime());
+            tv.setTextColor(Color.rgb(12, 35, 80));
+            tv.setText(data11.get(i).getBuildNumber() + "   " + data11.get(i).getRoomNumber() + "\n预约日期:    " + data11.get(i).getDays() + "  " + data11.get(i).getTime() + "\n预定时间:    " + data11.get(i).getBooktime() + "\n");
             linear.addView(tv);
 
         }
@@ -128,18 +143,18 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
 
         //填充参会信息
         meetingInfoServer bookinfo2 = new meetingInfoServer();
-        bookinfo2.setContent(Logout.this);
+        bookinfo2.setContent(mine.this);
 
         data2 = bookinfo2.startGetMeetingInfo();
 
 
         List<bookinfo> data4 = meetingselect();
         data41 = data4;
-
+        chnum.setText(data41.size() + "  条");
         for (int i = 0; i < data4.size(); i++) {
-            Log.d("aa", i + data4.get(i).getBuildNumber());
-            if (data.get(i).getBuildNumber().equals("-3")) {
-                Toast.makeText(Logout.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
+
+            if (data4.get(i).getBuildNumber().equals("-3")) {
+                Toast.makeText(mine.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
                 delete(Token);
                 saveDeviceInfo.savelogin(getApplicationContext(), "0");
                 relog();
@@ -147,7 +162,8 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
             }
             TextView tv = new TextView(this);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            tv.setText(data4.get(i).getBuildNumber() + "   " + data4.get(i).getRoomNumber() + "\n参会日期:    " + data4.get(i).getDays() + "  " + data4.get(i).getTime());
+            tv.setTextColor(Color.rgb(12, 35, 80));
+            tv.setText(data4.get(i).getBuildNumber() + "   " + data4.get(i).getRoomNumber() + "\n参会日期:    " + data4.get(i).getDays() + "\n时间段:        " + data4.get(i).getTime() + "\n");
             linear2.addView(tv);
 
         }
@@ -160,7 +176,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Token = select();
-        Toast.makeText(Logout.this, "查出来的" + Token, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(mine.this, "查出来的" + Token, Toast.LENGTH_SHORT).show();
 
         new Thread(new Runnable() {
             @Override
@@ -180,12 +196,9 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
         RequestBody body = RequestBody.create(null, jsonString);  //以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/LoginServlet")
+
                 .url("http://39.96.68.13:8080/SmartRoom/LogoutServlet")//MQ
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         okhttp3.Call call = okhttpClient.newCall(request);
@@ -196,7 +209,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(Logout.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mine.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 e.printStackTrace();
@@ -227,20 +240,21 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
              */
             public void run() {
                 if (status.equals("-3")) {
-                    Toast.makeText(Logout.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mine.this, "token失效！返回重新登陆", Toast.LENGTH_SHORT).show();
                     delete(Token);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
                 } else if (status.equals("quit")) {
                     MyNotification notify = new MyNotification(getApplicationContext());
-                    notify.MyNotification("智能会议室", "注销成功", R.drawable.logout, "Logout", "注销", 9, "注销");
+                    notify.MyNotification("智能会议室", "注销成功", R.drawable.logout, "mine", "注销", 9, "注销");
                     delete(Token);
+                    deletepersoninfo();
                     String zhanghao = userselect()[0];
                     Log.d("ddd", "要删除的账户   " + zhanghao);
                     userdelete(zhanghao);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
-                    Toast.makeText(Logout.this, "注销成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mine.this, "注销成功！", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -268,11 +282,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -300,11 +310,11 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -457,7 +467,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
     public void showMultiBtnDialogBook(List<bookinfo> data) {
         String books2 = "";
         AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(Logout.this);
+                new AlertDialog.Builder(mine.this);
         normalDialog.setIcon(R.drawable.app);
         normalDialog.setTitle("预定信息");
         for (int i = 0; i < data.size(); i++) {
@@ -477,7 +487,7 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
     public void showMultiBtnDialogMeeting(List<bookinfo> data4) {
         String books2 = "";
         AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(Logout.this);
+                new AlertDialog.Builder(mine.this);
         normalDialog.setIcon(R.drawable.app);
         normalDialog.setTitle("参会信息");
         for (int i = 0; i < data4.size(); i++) {
@@ -492,6 +502,28 @@ public class Logout extends AppCompatActivity implements View.OnClickListener {
                 });
 
         normalDialog.show();
+    }
+
+    public void reRegist(View view) {
+        Intent intent = new Intent(this, ReRegist.class);
+        startActivity(intent);
+    }
+
+    public void deletepersoninfo() {
+
+        SQLiteDatabase db = helper5.getWritableDatabase();
+        int i = db.delete("registinfo", null, null);
+        if (i == 0) {
+            Log.d("aaaa", "deletepersoninfo  删除不成功");
+        } else {
+            Log.d("aaaa", "deletepersoninfo  删除成功");
+        }
+        db.close();
+    }
+
+    public void about(View view) {
+        Intent intent = new Intent(this, about.class);
+        startActivity(intent);
     }
 }
 

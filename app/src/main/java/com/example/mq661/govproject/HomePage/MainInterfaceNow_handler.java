@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -54,7 +53,6 @@ import okhttp3.Response;
 
 public class MainInterfaceNow_handler extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     Intent ssdata = new Intent();
-    private List<roomAdapterInfo> data;
     Button commit;
     //handler 处理返回的请求结果
     @SuppressLint("HandlerLeak")
@@ -63,13 +61,10 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bundle data = msg.getData();
-            String val = data.getString("value");
-            //
-            // TODO: 更新界面
-            //
-            Log.i("mylog", "请求结果-->" + val);
+
         }
     };
+    private List<roomAdapterInfo> data;
     private OkHttpClient okhttpClient;
     private tokenDBHelper helper;
     private String Token1;
@@ -79,9 +74,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //
-            // TODO: http request.
-            //
+
             data = new ArrayList<roomAdapterInfo>();
             Token1 = select();
             sendRequest(Token1, ssTime);
@@ -94,13 +87,12 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
 
 
     };
+    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, IsMeeting2, ssssTime;
 
     protected void onResume() {
         super.onResume();
         onCreate(null);
     }
-
-    private String ssBuildingNumber, ssRoomNumber, ssTime, ssSize, ssFunction, ssIsMeeting, ssDays, IsMeeting2, ssssTime;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,13 +121,9 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/MainInterfaceServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -215,7 +203,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
                 if (BuildNumber1.equals("-1") && RoomNumber1.equals("-1") && Time1.equals("-1")) {
                     Toast.makeText(MainInterfaceNow_handler.this, "当前时段没有会议室！", Toast.LENGTH_SHORT).show();
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(MainInterfaceNow_handler.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainInterfaceNow_handler.this, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -279,7 +267,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
 
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(this.getParent());
-        normalDialog.setIcon(R.drawable.app);
+        normalDialog.setIcon(R.drawable.icon2);
         normalDialog.setTitle("GoV").setMessage("房间信息：\n" + "楼号：" + BuildingNumber + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
                 + "       日期： " + Days
         );
@@ -296,19 +284,28 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (IsMeeting.equals("占用")) {
-                    ZLoadingDialog dialog2 = new ZLoadingDialog(MainInterfaceNow_handler.this);
+                    ZLoadingDialog dialog2 = new ZLoadingDialog(getParent());
                     dialog2.setLoadingBuilder(Z_TYPE.PAC_MAN)//设置类型
                             .setLoadingColor(Color.RED)//颜色
                             .setHintTextSize(16)
                             .setHintText("此会议室该时段不可用，无法预约")
                             .show();
                 } else if (IsMeeting.equals("维修")) {
-                    ZLoadingDialog dialog2 = new ZLoadingDialog(MainInterfaceNow_handler.this);
+                    ZLoadingDialog dialog2 = new ZLoadingDialog(getParent());
                     dialog2.setLoadingBuilder(Z_TYPE.ELASTIC_BALL)//设置类型
                             .setLoadingColor(Color.RED)//颜色
                             .setHintTextSize(16)
                             .setHintText("非常抱歉，该会议室正在维修！")
                             .show();
+                } else if (Integer.parseInt(Time.substring(0, 2)) <= Integer.parseInt(dateToString.nowdateToString3()) && Integer.parseInt(dateToString.nowdateToString4()) == Integer.parseInt(Days.substring(8, 10))) {
+
+                    ZLoadingDialog dialog2 = new ZLoadingDialog(getParent());
+                    dialog2.setLoadingBuilder(Z_TYPE.SNAKE_CIRCLE)//设置类型
+                            .setLoadingColor(Color.RED)//颜色
+                            .setHintTextSize(16)
+                            .setHintText("请预约 " + dateToString.nowdateToString3() + "点 后的房间")
+                            .show();
+
                 } else {
                     Intent intent = new Intent(MainInterfaceNow_handler.this, addPerson_handler.class);
                     intent.putExtra("BuildingNumber", BuildingNumber);
@@ -343,11 +340,7 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -361,11 +354,11 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         values.put("token", token);
 //        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -373,11 +366,11 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
 
         SQLiteDatabase db = helper.getWritableDatabase();
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -411,6 +404,18 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
         intent = new Intent(this, Login_noToken.class);
         startActivityForResult(intent, 0);
         finish();
+    }
+
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 
     private class MyAdapter extends BaseAdapter {
@@ -457,17 +462,5 @@ public class MainInterfaceNow_handler extends AppCompatActivity implements Adapt
             Days.setText(data.get(position).getDays());
             return view;
         }
-    }
-
-    @Override
-    public Resources getResources() {//还原字体大小
-        Resources res = super.getResources();
-        //非默认值
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();//设置默认
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-        }
-        return res;
     }
 }

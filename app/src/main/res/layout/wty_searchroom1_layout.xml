@@ -13,8 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:layout_marginLeft="9dp"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="7dp">
 
             <TextView
@@ -29,9 +29,9 @@
                 android:background="#00000000" />
 
             <TextView
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:text="房间号："
                 android:textSize="@dimen/sp_20" />
 
@@ -46,10 +46,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="9dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="@dimen/dp_5">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,9 +63,9 @@
                 android:background="#00000000" />
 
             <TextView
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:text="功 能："
                 android:textSize="@dimen/sp_20" />
 
@@ -79,10 +79,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="9dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="@dimen/dp_5">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,8 +102,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="@dimen/dp_5">
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="7dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,18 +114,18 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="是"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:textSize="@dimen/sp_20"
-                android:textColor="#4b4b48" />
+                android:text="是"
+                android:textColor="#4b4b48"
+                android:textSize="@dimen/sp_20" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="否"
                 android:layout_marginLeft="@dimen/dp_25"
-                android:textSize="@dimen/sp_20"
-                android:textColor="#4b4b48" />
+                android:text="否"
+                android:textColor="#4b4b48"
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
@@ -141,8 +141,8 @@
             android:layout_height="@dimen/dp_40"
             android:layout_gravity="center"
             android:background="#2b2b28"
-            android:textColor="#ebebe3"
             android:text="确 认"
+            android:textColor="#ebebe3"
             android:textSize="@dimen/sp_15" />
 
     </LinearLayout>

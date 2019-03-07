@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:background="#00000000"
-        android:textColor="#0e9861"
-        android:text="点击进入"
         android:padding="@dimen/dp_10"
+        android:text="点击进入"
+        android:textColor="#0e9861"
         android:textSize="@dimen/sp_18" />
 
 </FrameLayout>

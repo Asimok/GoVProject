@@ -37,6 +37,7 @@ public class bookroomServer extends AppCompatActivity {
     bookinfo myinfo = new bookinfo();
     private bookinfoDBHelper helper3;
     private userDBHelper helper1;
+    private Context content;
 
     public Context getContent() {
         return content;
@@ -45,8 +46,6 @@ public class bookroomServer extends AppCompatActivity {
     public void setContent(Context content) {
         this.content = content;
     }
-
-    private Context content;
 
     public void startbookroom(String BuildNumber1, String RoomNumber1, String Time1, String Token1, String days1) {
         final OkHttpClient okHttpClient = new OkHttpClient();
@@ -69,12 +68,8 @@ public class bookroomServer extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/BookRoomServlet")
                 .post(body)
                 .build();
         //异步方法
@@ -118,10 +113,9 @@ public class bookroomServer extends AppCompatActivity {
                     bookupdate();
                     Looper.loop();
                 } else if (Status.equals("0")) {
-                    Toast.makeText(content, "预定成功！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(content, "会议室预定成功！", Toast.LENGTH_LONG).show();
                     MyNotification notify = new MyNotification(content);
                     notify.MyNotification("智能会议室", "房间预定成功", R.drawable.book, "bookroom", "预定房间", 7, "预定");
-                    //     Looper.loop();
                 } else if (Status.equals("-3")) {
 
                     Toast.makeText(content, "token失效，请重新登录！", Toast.LENGTH_SHORT).show();
@@ -174,10 +168,10 @@ public class bookroomServer extends AppCompatActivity {
         long l = db.insert("bookinfo", null, values);
 
         if (l == -1) {
-            Toast.makeText(content, "插入预定信息不成功", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(content, "插入预定信息不成功", Toast.LENGTH_SHORT).show();
             Looper.loop();
         } else {
-            Toast.makeText(content, "插入预定信息成功", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(content, "插入预定信息成功", Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
         db.close();

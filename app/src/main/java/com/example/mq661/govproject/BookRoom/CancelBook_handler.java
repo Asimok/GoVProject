@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.Login_Register.bookroomInfoAdapter;
 import com.example.mq661.govproject.R;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
 import com.example.mq661.govproject.tools.tokenDBHelper;
 
@@ -54,12 +55,6 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Bundle data = msg.getData();
-            String val = data.getString("value");
-            //
-            // TODO: 更新界面
-            //
-            Log.i("mylog", "请求结果-->" + val);
         }
     };
     private List<bookroomInfoAdapter> data;
@@ -72,9 +67,6 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //
-            // TODO: http request.
-            //
 
             data = new ArrayList<bookroomInfoAdapter>();
             Token1 = select();
@@ -116,13 +108,7 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
                 .url("http://39.96.68.13:8080/SmartRoom/BookMessageServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -153,7 +139,21 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
                         String nowTime = jsonObj.getString("nowTime");
                         String Days = jsonObj.getString("days");
                         String mapx = "map" + i;
-                        showRequestResult(BuildingNumber1, RoomNumber1, Time1, nowTime, Days, mapx);
+
+                        int hh = Integer.parseInt(dateToString.nowdateToString3());
+                        int thishh = Integer.parseInt(Time1.substring(0, 2));
+                        int day = Integer.parseInt(dateToString.nowdateToString4());
+                        int thisday = Integer.parseInt(Days.substring(8, 10));
+                        Log.d("abb", day + "    " + thisday);
+                        Log.d("abb", hh + "    " + thishh);
+                        if (day > thisday) {
+                            continue;
+                        } else if (hh >= thishh && day == thisday) {
+                            continue;
+                        } else {
+                            showRequestResult(BuildingNumber1, RoomNumber1, Time1, nowTime, Days, mapx);
+                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -177,7 +177,7 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     // relog();
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(CancelBook_handler.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CancelBook_handler.this, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -278,11 +278,7 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+
         db.close();
     }
 
@@ -296,11 +292,11 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
         values.put("token", token);
 //        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -310,11 +306,11 @@ public class CancelBook_handler extends AppCompatActivity implements View.OnClic
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }

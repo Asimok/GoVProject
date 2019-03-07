@@ -109,13 +109,9 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -194,7 +190,7 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
             saveDeviceInfo.savelogin(getApplicationContext(), "0");
             // relog();
         } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-            Toast.makeText(content, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+            Toast.makeText(content, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
             delete(Token1);
             saveDeviceInfo.savelogin(getApplicationContext(), "0");
             relog();
@@ -233,11 +229,6 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
         values.put("token", token);
         long l = db.insert("token", null, values);
 
-        if (l == -1) {
-            Toast.makeText(content, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(content, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
         db.close();
     }
 
@@ -249,11 +240,11 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("token", token);
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(content, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(content, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+        //   if (i == 0) {
+//            Toast.makeText(content, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(content, "更新成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -261,11 +252,11 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
 
         SQLiteDatabase db = helper.getWritableDatabase();
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(content, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(content, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(content, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(content, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }
@@ -353,11 +344,11 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
 
         SQLiteDatabase db = helper4.getWritableDatabase();
         int i = db.delete("allroom", null, null);
-        if (i == 0) {
-            Log.d("aaa", "deleteAllRoom  删除不成功");
-        } else {
-            Log.d("aaa", "deleteAllRoom  删除成功");
-        }
+//        if (i == 0) {
+//            Log.d("aaa", "deleteAllRoom  删除不成功");
+//        } else {
+//            Log.d("aaa", "deleteAllRoom  删除成功");
+//        }
         db.close();
     }
 
@@ -385,11 +376,11 @@ public class searchroom_server_forSmartGroup extends AppCompatActivity {
 
         SQLiteDatabase db = helper4.getWritableDatabase();
         int i = db.delete("Functions1", null, null);
-        if (i == 0) {
-            Log.d("aaa", "deleteFunctions  删除不成功");
-        } else {
-            Log.d("aaa", "deleteFunctions  删除成功");
-        }
+//        if (i == 0) {
+//            Log.d("aaa", "deleteFunctions  删除不成功");
+//        } else {
+//            Log.d("aaa", "deleteFunctions  删除成功");
+//        }
         db.close();
     }
 

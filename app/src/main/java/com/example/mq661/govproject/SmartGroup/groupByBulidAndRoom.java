@@ -19,6 +19,7 @@ import com.example.mq661.govproject.Participants.addPerson_handler;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.SearchRoom.searchroom_server_forSmartGroup;
 import com.example.mq661.govproject.tools.RoomMessage;
+import com.example.mq661.govproject.tools.dateToString;
 import com.example.mq661.govproject.tools.roomSortDBHelper;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -111,7 +112,7 @@ public class groupByBulidAndRoom extends AppCompatActivity implements SwipeRefre
 
                     android.support.v7.app.AlertDialog.Builder normalDialog =
                             new android.support.v7.app.AlertDialog.Builder(getParent());
-                    normalDialog.setIcon(R.drawable.app);
+                    normalDialog.setIcon(R.drawable.build);
                     normalDialog.setTitle("房间信息").setMessage("房间信息：\n" + "楼号：" + BuildingNumber + " 房间号：" + RoomNumber + " 容量：" + Size + "\n时间段：" + Time + "    功能：" + Function + "\n是否开会：" + IsMeeting
                             + "       日期： " + Days
                     );
@@ -141,6 +142,15 @@ public class groupByBulidAndRoom extends AppCompatActivity implements SwipeRefre
                                         .setHintTextSize(16)
                                         .setHintText("非常抱歉，该会议室正在维修！")
                                         .show();
+                            } else if (Integer.parseInt(Time.substring(0, 2)) <= Integer.parseInt(dateToString.nowdateToString3()) && Integer.parseInt(dateToString.nowdateToString4()) == Integer.parseInt(Days.substring(8, 10))) {
+
+                                ZLoadingDialog dialog2 = new ZLoadingDialog(getParent());
+                                dialog2.setLoadingBuilder(Z_TYPE.SNAKE_CIRCLE)//设置类型
+                                        .setLoadingColor(Color.RED)//颜色
+                                        .setHintTextSize(16)
+                                        .setHintText("请预约 " + dateToString.nowdateToString4() + "日 " + dateToString.nowdateToString3() + "点 后的房间")
+                                        .show();
+
                             } else {
                                 Intent intent = new Intent(groupByBulidAndRoom.this, addPerson_handler.class);
                                 intent.putExtra("BuildingNumber", BuildingNumber);

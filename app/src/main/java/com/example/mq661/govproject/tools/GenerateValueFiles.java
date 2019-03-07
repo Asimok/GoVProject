@@ -10,21 +10,16 @@ import java.io.PrintWriter;
  */
 public class GenerateValueFiles {
 
-    private int baseW;
-    private int baseH;
-
-    private String dirStr = "./res";
-
     private final static String WTemplate = "<dimen name=\"x{0}\">{1}px</dimen>\n";
     private final static String HTemplate = "<dimen name=\"y{0}\">{1}px</dimen>\n";
-
     /**
      * {0}-HEIGHT
      */
     private final static String VALUE_TEMPLATE = "values-{0}x{1}";
-
     private static final String SUPPORT_DIMESION = "320,480;480,800;480,854;540,960;600,1024;720,1184;720,1196;720,1280;768,1024;768,1280;800,1280;1080,1812;1080,1920;1440,2560;";
-
+    private int baseW;
+    private int baseH;
+    private String dirStr = "./res";
     private String supportStr = SUPPORT_DIMESION;
 
     public GenerateValueFiles(int baseX, int baseY, String supportStr) {
@@ -46,6 +41,37 @@ public class GenerateValueFiles {
         }
         System.out.println(dir.getAbsoluteFile());
 
+    }
+
+    public static float change(float a) {
+        int temp = (int) (a * 100);
+        return temp / 100f;
+    }
+
+    public static void main(String[] args) {
+        int baseW = 320;
+        int baseH = 480;
+        String addition = "";
+        try {
+            if (args.length >= 3) {
+                baseW = Integer.parseInt(args[0]);
+                baseH = Integer.parseInt(args[1]);
+                addition = args[2];
+            } else if (args.length >= 2) {
+                baseW = Integer.parseInt(args[0]);
+                baseH = Integer.parseInt(args[1]);
+            } else if (args.length >= 1) {
+                addition = args[0];
+            }
+        } catch (NumberFormatException e) {
+
+            System.err
+                    .println("right input params : java -jar xxx.jar width height w,h_w,h_..._w,h;");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+        new GenerateValueFiles(baseW, baseH, addition).generate();
     }
 
     /**
@@ -131,37 +157,6 @@ public class GenerateValueFiles {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public static float change(float a) {
-        int temp = (int) (a * 100);
-        return temp / 100f;
-    }
-
-    public static void main(String[] args) {
-        int baseW = 320;
-        int baseH = 480;
-        String addition = "";
-        try {
-            if (args.length >= 3) {
-                baseW = Integer.parseInt(args[0]);
-                baseH = Integer.parseInt(args[1]);
-                addition = args[2];
-            } else if (args.length >= 2) {
-                baseW = Integer.parseInt(args[0]);
-                baseH = Integer.parseInt(args[1]);
-            } else if (args.length >= 1) {
-                addition = args[0];
-            }
-        } catch (NumberFormatException e) {
-
-            System.err
-                    .println("right input params : java -jar xxx.jar width height w,h_w,h_..._w,h;");
-            e.printStackTrace();
-            System.exit(-1);
-        }
-
-        new GenerateValueFiles(baseW, baseH, addition).generate();
     }
 
 }

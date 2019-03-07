@@ -30,10 +30,9 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        // TODO Auto-generated method stub
+
         View pageView = mPageList.get(position);
         ViewGroup parent = (ViewGroup) pageView.getParent();
-        //Log.i("ViewPaperAdapter", parent.toString());
         if (parent != null) {
             parent.removeAllViews();
         }

@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login_Register.Login"
     android:background="@drawable/login"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dp_30">
+    android:paddingTop="@dimen/dp_30"
+    tools:context=".Login_Register.Login">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,8 +24,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_20">
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="@dimen/dp_100"
@@ -40,11 +40,11 @@
             android:id="@+id/zhanghao"
             android:layout_width="@dimen/dp_225"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入员工号"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_40"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,30 +55,30 @@
         <TextView
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_70"
-            android:text="密码:"
-            android:textSize="@dimen/sp_20"
-            android:paddingTop="@dimen/dp_30"
+            android:layout_gravity="left"
             android:paddingLeft="@dimen/dp_50"
-            android:layout_gravity="left" />
+            android:paddingTop="@dimen/dp_30"
+            android:text="密码:"
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/mima"
             android:layout_width="@dimen/dp_225"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:paddingLeft="@dimen/dp_40"
             android:paddingTop="@dimen/dp_30"
-            android:paddingRight="@dimen/dp_40"
-            android:gravity="center_horizontal" />
+            android:paddingRight="@dimen/dp_40" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_50"
-        android:paddingTop="@dimen/dp_5"
-        android:orientation="horizontal">
+        android:paddingTop="@dimen/dp_5">
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -88,11 +88,11 @@
             android:text="记住密码" />
 
         <TextView
-            android:onClick="forgetmima"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
             android:layout_marginLeft="@dimen/dp_120"
+            android:gravity="right"
+            android:onClick="forgetmima"
             android:text="忘记密码" />
     </LinearLayout>
 

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class MyPagerAdapter extends PagerAdapter {
 
-    private ArrayList<View> viewLists;
     int image[] = {R.drawable.guide1, R.drawable.guide2, R.drawable.guide3, R.drawable.guide4};
+    private ArrayList<View> viewLists;
 
     public MyPagerAdapter() {
         super();

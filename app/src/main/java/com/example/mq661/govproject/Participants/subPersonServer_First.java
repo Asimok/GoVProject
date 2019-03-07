@@ -66,12 +66,9 @@ public class subPersonServer_First extends AppCompatActivity {
         Days = days1;
         RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/CancelCommitServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/CancelCommitServlet")
+
                 .post(body)
                 .build();
         //异步方法
@@ -116,8 +113,10 @@ public class subPersonServer_First extends AppCompatActivity {
                     notify.MyNotification("智能会议室", "参会人员删减成功", R.drawable.book, "subPerson", "删减人员", 19, "删减");
                     showMultiBtnDialog(persons);
 
+                } else if (Status.equals("-4")) {
+                    Toast.makeText(content, "提交前请选择至少一名员工！", Toast.LENGTH_LONG).show();
                 } else if (Status.equals("-3")) {
-                    Toast.makeText(content, "Token失效，请重新的登陆！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(content, "用户认证失效，请重新登录！", Toast.LENGTH_LONG).show();
                     relog();
 
                     //    Looper.loop();
@@ -149,7 +148,7 @@ public class subPersonServer_First extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO 跳转到主界面
+
                         Intent intent;
                         intent = new Intent(content, tab.class);
                         intent.setClass(content, tab.class);
@@ -162,7 +161,7 @@ public class subPersonServer_First extends AppCompatActivity {
         normalDialog.setNegativeButton("继续移除其他人员", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO 跳转到补交人员
+
                 Intent intent;
                 intent = new Intent(content, subPerson_handler.class);
                 intent.setClass(content, subPerson_handler.class);

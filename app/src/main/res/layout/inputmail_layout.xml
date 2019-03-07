@@ -28,9 +28,9 @@
         android:id="@+id/commit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_50"
-        android:text="进行下一步" />
+        android:text="进行下一步"
+        android:textSize="@dimen/sp_15" />
 
 </LinearLayout>

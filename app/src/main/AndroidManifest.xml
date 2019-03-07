@@ -17,13 +17,13 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
+        android:icon="@drawable/iconsmall"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@drawable/iconsmall"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".AlterRoom.managePerson"></activity>
         <activity
             android:name=".Login_Register.Login_noToken"
             android:hardwareAccelerated="false"
@@ -41,10 +41,13 @@
             android:name=".Login_Register.Regist"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AlterRoom.after_Payment_Person_handler"
+            android:name=".Login_Register.ReRegist"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AlterRoom.sub_Person_getRoom_handler"
+            android:name=".Participants.after_Payment_Person_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Participants.sub_Person_getRoom_handler"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AlterRoom.manage_person"
@@ -56,6 +59,23 @@
             android:name=".Participants.addPerson_handler_forAfterPayment"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".Participants.getSignInfo_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchRoom.searchroom_handler_fordelete_only"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Participants.Sign_getSigninfo_handler"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login_Register.about"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".SearchRoom.searchroom_handler_forchange_only"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AlterRoom.gov_Founction"
             android:screenOrientation="portrait" />
@@ -81,7 +101,7 @@
             android:name=".BookRoom.CancelBook_handler"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Login_Register.Logout"
+            android:name=".Login_Register.mine"
             android:screenOrientation="portrait" />
         <activity
             android:name=".repassword.repassword"

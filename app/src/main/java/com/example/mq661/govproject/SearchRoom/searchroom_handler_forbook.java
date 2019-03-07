@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mq661.govproject.AlterRoom.deleteroom;
+import com.example.mq661.govproject.AlterRoom.deleteroomServer;
 import com.example.mq661.govproject.Login_Register.Login_noToken;
 import com.example.mq661.govproject.R;
 import com.example.mq661.govproject.tools.saveDeviceInfo;
@@ -55,11 +56,6 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bundle data = msg.getData();
-            String val = data.getString("value");
-            //
-            // TODO: 更新界面
-            //
-            Log.i("mylog", "请求结果-->" + val);
         }
     };
     private List<roomAdapterInfo> data;
@@ -72,9 +68,7 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //
-            // TODO: http request.
-            //
+
             data = new ArrayList<roomAdapterInfo>();
             Token1 = select();
             sendRequest(Token1);
@@ -115,13 +109,9 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         okhttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/LoginProject/login")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                //  .url("http://192.168.43.174:8080/SmartRoom4/SelectServlet") //马琦IP
+
                 .url("http://39.96.68.13:8080/SmartRoom/SearchServlet")
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
                 .post(body)
                 .build();
         Call call = okhttpClient.newCall(request);
@@ -196,11 +186,10 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
 
                 if (BuildNumber1.equals("-1") && RoomNumber1.equals("-1") && Time1.equals("-1")) {
                     Toast.makeText(searchroom_handler_forbook.this, "查询不成功！", Toast.LENGTH_SHORT).show();
-                    //   delete(Token1);
+
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
-                    // relog();
                 } else if (BuildNumber1.equals("-3") && RoomNumber1.equals("-3") && Time1.equals("-3")) {
-                    Toast.makeText(searchroom_handler_forbook.this, "token失效！请重新登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(searchroom_handler_forbook.this, " 认证信息失效，请重新登录", Toast.LENGTH_SHORT).show();
                     delete(Token1);
                     saveDeviceInfo.savelogin(getApplicationContext(), "0");
                     relog();
@@ -251,7 +240,6 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
         ssIsMeeting = data.get(position).getIsMeeting();
         ssDays = data.get(position).getDays();
 
-        Toast.makeText(this, "短按显示", Toast.LENGTH_LONG).show();
 
         ssdata.putExtra("BuildingNumber", ssBuildingNumber);
         ssdata.putExtra("Size", ssSize);
@@ -272,8 +260,8 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
         ssFunction = data.get(position).getFunction();
         ssIsMeeting = data.get(position).getIsMeeting();
         ssDays = data.get(position).getDays();
-        Toast.makeText(this, "长按显示"
-                , Toast.LENGTH_LONG).show();
+        //  Toast.makeText(this, "长按显示"
+        //       , Toast.LENGTH_LONG).show();
         showMultiBtnDialog(ssBuildingNumber, ssSize, ssRoomNumber, ssTime, ssFunction, ssIsMeeting, ssDays);
         return true;      //返回true时可以解除长按与短按的冲突。
 
@@ -283,7 +271,7 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
     /* @setNeutralButton 设置中间的按钮
      * 若只需一个按钮，仅设置 setPositiveButton 即可
      */
-    public void showMultiBtnDialog(String BuildingNumber, String Size, String RoomNumber,
+    public void showMultiBtnDialog(final String BuildingNumber, String Size, final String RoomNumber,
                                    String Time, String Function, String IsMeeting, String Days) {
 
 
@@ -302,17 +290,36 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
                     }
                 });
 
-//        normalDialog.setNeutralButton("删除",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        deleteroom();
-//                    }
-//                });
+
         normalDialog.setNegativeButton("删除", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteroom();
+
+                AlertDialog.Builder normalDialog =
+                        new AlertDialog.Builder(searchroom_handler_forbook.this);
+                normalDialog.setIcon(R.drawable.find2);
+                normalDialog.setTitle("删除房间").setMessage("是否确认删除该房间所有信息");
+                normalDialog.setPositiveButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                normalDialog.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteroomServer deleteroom = new deleteroomServer();
+                        deleteroom.setContent(searchroom_handler_forbook.this);
+                        deleteroom.startdeleteroom(BuildingNumber, RoomNumber, Token1);
+
+                        // deleteroom();
+                    }
+                });
+                normalDialog.show();
+
+
             }
         });
 
@@ -338,12 +345,12 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
 
         values.put("token", token);
         long l = db.insert("token", null, values);
-
-        if (l == -1) {
-            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
-        }
+//
+//        if (l == -1) {
+//            Toast.makeText(this, "插入不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "插入成功" + l, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -353,15 +360,13 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
         //自定义更新
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //     String oldtoken=mytoken.getMytoken();
         values.put("token", token);
-//        int i = db.update("token", values, "token=?",new String[]{oldtoken});
         int i = db.update("token", values, null, null);
-        if (i == 0) {
-            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "更新不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "更新成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
     }
 
@@ -371,11 +376,11 @@ public class searchroom_handler_forbook extends AppCompatActivity implements Vie
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }

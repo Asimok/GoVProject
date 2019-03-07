@@ -5,7 +5,27 @@ package com.example.mq661.govproject.Participants;
  */
 public class Model {
     private boolean ischeck;
-    private String EmployeeNumber1, Name, Ministry;
+    private String EmployeeNumber1;
+    private String Name;
+    private String Ministry;
+    private String Statue;
+    private String Time;
+
+    public String getStatue() {
+        return Statue;
+    }
+
+    public void setStatue(String statue) {
+        Statue = statue;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
 
     public String getEmployeeNumber1() {
         return EmployeeNumber1;

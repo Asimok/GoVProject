@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.mq661.govproject.Participants.Sign_getSigninfo_handler;
+import com.example.mq661.govproject.Participants.after_Payment_Person_handler;
+import com.example.mq661.govproject.Participants.sub_Person_getRoom_handler;
 import com.example.mq661.govproject.R;
 
 public class manage_person extends AppCompatActivity {
@@ -48,5 +51,11 @@ public class manage_person extends AppCompatActivity {
             res.updateConfiguration(newConfig, res.getDisplayMetrics());
         }
         return res;
+    }
+
+    public void SignInfo(View view) {
+        Intent intent;
+        intent = new Intent(this, Sign_getSigninfo_handler.class);
+        startActivityForResult(intent, 0);
     }
 }

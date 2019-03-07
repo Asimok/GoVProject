@@ -57,12 +57,9 @@ public class deleteroomServer extends AppCompatActivity {
         String jsonString = jsonObject.toString();
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/DeleteServlet")
+
                 .post(body)
                 .build();
         //异步方法
@@ -106,7 +103,7 @@ public class deleteroomServer extends AppCompatActivity {
                     Toast.makeText(content, "删除失败，房间不存在！", Toast.LENGTH_LONG).show();
 
                 } else if (status.equals("0")) {
-                    MyNotification notify = new MyNotification(getApplicationContext());
+                    MyNotification notify = new MyNotification(content);
                     notify.MyNotification("智能会议室", "删除房间成功", R.drawable.dete2, "deleteroom", "删除房间", 7, "删除");
                     Toast.makeText(content, "删除成功！", Toast.LENGTH_LONG).show();
 
@@ -136,11 +133,11 @@ public class deleteroomServer extends AppCompatActivity {
 
 
         int i = db.delete("token", "token=?", new String[]{token});
-        if (i == 0) {
-            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
-        }
+//        if (i == 0) {
+//            Toast.makeText(this, "删除不成功", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "删除成功" + i, Toast.LENGTH_SHORT).show();
+//        }
         db.close();
 
     }

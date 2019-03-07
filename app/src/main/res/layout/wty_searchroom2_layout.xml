@@ -6,9 +6,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10"
         android:orientation="vertical">
 
@@ -16,19 +16,19 @@
             android:id="@+id/commit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
             android:background="#2b2b28"
-            android:textColor="#ebebe3"
-            android:layout_gravity="center_horizontal"
             android:text="提 交"
+            android:textColor="#ebebe3"
             android:textSize="@dimen/sp_15" />
     </LinearLayout>
 
     <ListView
+        android:id="@+id/searchroomlv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/searchroomlv"
 
         />
 

@@ -55,12 +55,9 @@ public class CancelBookServer extends AppCompatActivity {
         String jsonString = jsonObject.toString();
         RequestBody body = RequestBody.create(null, jsonString);//以字符串方式
         final Request request = new Request.Builder()
-                //dafeng 192.168.2.176
-                //  .url("http://192.168.2.176:8080/SmartRoom/DeleteServlet")
-                // .url("http://192.168.43.174:8080/LoginProject/login")
-                // .url("http://39.96.68.13:8080/SmartRoom/RegistServlet") //服务器
-                .url("http://39.96.68.13:8080/SmartRoom/CancelBookServlet") //马琦IP
-                // .url("http://192.168.2.176:8080/SmartRoom/login")
+
+                .url("http://39.96.68.13:8080/SmartRoom/CancelBookServlet")
+
                 .post(body)
                 .build();
         //异步方法
