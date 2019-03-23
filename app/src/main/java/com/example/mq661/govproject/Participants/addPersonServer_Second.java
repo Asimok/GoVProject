@@ -50,7 +50,7 @@ public class addPersonServer_Second extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
                 String name = jsonObj.getString("Name");
-                persons = persons + "  " + name;
+               // persons = persons + "  " + name;
             }
 
         } catch (Exception e) {
@@ -86,6 +86,7 @@ public class addPersonServer_Second extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(res);
                     String status = jsonObj.getString("Name");
+
                     Log.d("aa", "res Name   " + status);
                     showRequestResult(status);
                 } catch (JSONException e) {
@@ -110,7 +111,7 @@ public class addPersonServer_Second extends AppCompatActivity {
                     Toast.makeText(content, "补加成功！", Toast.LENGTH_LONG).show();
                     MyNotification notify = new MyNotification(content);
                     notify.MyNotification("智能会议室", "参会人员补加成功", R.drawable.book, "addPersonSecond", "补加人员", 17, "补加");
-                    showMultiBtnDialog(Status);
+                    showMultiBtnDialog1(Status);
                 } else if (Status.equals("-3")) {
                     Toast.makeText(content, "用户认证失效，请重新登录！", Toast.LENGTH_LONG).show();
                     relog();
@@ -142,7 +143,46 @@ public class addPersonServer_Second extends AppCompatActivity {
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(content);
         normalDialog.setIcon(R.drawable.manageperson);
-        normalDialog.setTitle("以下人员已经参加会议").setMessage(persons);
+        normalDialog.setTitle("以下人员已经参加会议").setMessage(res);
+        normalDialog.setCancelable(false);
+
+        normalDialog.setPositiveButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent;
+                        intent = new Intent(content, tab.class);
+                        intent.setClass(content, tab.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        content.startActivity(intent);
+                        addPerson_handler_forAfterPayment.instance.finish();
+                    }
+                });
+
+        normalDialog.setNegativeButton("继续添加其他人员", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent;
+                intent = new Intent(content, after_Payment_Person_handler.class);
+                intent.setClass(content, after_Payment_Person_handler.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                content.startActivity(intent);
+                addPerson_handler_forAfterPayment.instance.finish();
+            }
+        });
+
+        // 创建实例并显示
+        normalDialog.show();
+    }
+    public void showMultiBtnDialog1(final String res) {
+
+
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(content);
+        normalDialog.setIcon(R.drawable.manageperson);
+        normalDialog.setTitle("参会人员补加成功").setMessage(res);
         normalDialog.setCancelable(false);
 
         normalDialog.setPositiveButton("取消",

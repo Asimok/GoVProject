@@ -25,7 +25,6 @@ import com.example.mq661.govproject.AlterRoom.gov_Founction;
 import com.example.mq661.govproject.MainInterface.FirstStartActivity;
 import com.example.mq661.govproject.MainInterface.tab;
 import com.example.mq661.govproject.R;
-import com.example.mq661.govproject.chouti;
 import com.example.mq661.govproject.mytoast.ToastUtil;
 import com.example.mq661.govproject.repassword.inputmail;
 import com.example.mq661.govproject.tools.MyNotification;
@@ -458,11 +457,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void chouti(View view) {
-        Intent intent;
-        intent = new Intent(this, chouti.class);
-        startActivityForResult(intent, 0);
-    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

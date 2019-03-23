@@ -168,10 +168,6 @@
             android:hardwareAccelerated="false"
             android:largeHeap="true"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".chouti"
-            android:label="@string/title_activity_chouti"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

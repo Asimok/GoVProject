@@ -1,15 +1,378 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+    android:layout_margin="@dimen/dp_15"
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about" />
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 功能"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#a0a0a0"
+                android:text=" 注：所有功能的操作均有权限限制，普通员工只能查看房间信息，不可进行预约、修改房间！"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   预览会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    用于查看所有会议室三天内的状态，短按 或 长按 可以快速删除该房间所有信息，快速预约选中的房间。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   预约会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    可以手动输入需要预约的 楼号，房间号，开放时间，选择预约日期（今天 明天 后天）进行预约·。也可以点击 选择房间 按钮预览房间信息,短按选择需要预约的房间，长按可快速删除该房间所有信息。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   智能预约"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    可以输入预约的房间容量，房间功能，开会时长，点击提交即可为您智能筛选出最优方案。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#434343"
+                android:text="     *三项最少需填写一项。（如果房间较多，查询过程可能较慢，请耐心等待！）,长按需要预定的房间信息进行预约。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   取消预约"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    短按 或 长按 该账号（已预定并且未开始的会议室的情况），其信息可以取消预约。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 智能分组"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#a0a0a0"
+                android:text=" 注：在任意智能分组界面可以下拉刷新，获取最新的会议室。刷新成功后需要切换到 非智能分组 界面再切换回 智能分组 界面即可加载获取到的最新信息。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   楼号 功能 容量 日期 时间段"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    在相应的界面可以按不同分类快速预览会议室状态，长按 会议室信息可以进行快速预约。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 首页"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#a0a0a0"
+                android:text=" APP进入的默认主界面。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   当前时段会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    快速预览当前时段会议室状态。短按 或 长按 会议室信息可以快速预约。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#434343"
+                android:text="     *限制不可预约被占用会议室以及维修中的会议室。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   今日会议室状态"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    快速预览当日会议室状态。*限制不可预约超过当前时间段的过期会议室、被占用会议室以及维修中的会议室。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 管理员"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   增加会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    输入 楼号，房间号，容量，选择功能，最低可使用职务，完成新增会议室。 *不同的 最低可使用职务 代表房间的不同使用权限。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#434343"
+                android:text="     *容量只能输入数字."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   删除会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     可以输入 楼号，房间号 删除指定房间。也可以点击 选择房间 按钮，选择房间进行删除。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   修改会议室"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     选择房间可修改房间功能，使用权限，房间状态。房间状态 点选 设为维修，可将房间设为 维修 状态，不点选可以设为 空闲 状态。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 管理参会人员"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#a0a0a0"
+                android:text=" 注：选择人员界面可以输入 部门 快速全选该部门人员。如果添加的参会人员当前时间段已有待参加会议，则只会添加当前时间段没有会议的人员，并且提示会议冲突的参会人员。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   删减参会人员"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    选择已预定并且未开始会议的会议室，可删减该会议的参会人员。点击提交完成操作。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   补选参会人员"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     选择已预定并且未开始会议的会议室，可增加该会议的参会人员。点击提交完成操作。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   查看签到状态"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     查看当前时间段以及3天内该账号预定会议室中已结束会议的签到状态."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="  · 我的"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#a0a0a0"
+                android:text=" 注：“ 我的 ”界面上部显示的信息为用户昵称以及员工号。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#2b2b28"
+                android:text="   预定信息"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="    显示该账号预定的未开始会议信息，并且提示条数。点击 详情 可以查看详细的预约信息。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   参会信息"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     显示该账号将要参加的未开始会议信息，并且提示条数。点击 详情 可以查看详细的参会信息。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   编辑"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     可以自定义更改注册时的 昵称、性别、手机号、邮箱。"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2b2b28"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:text="   注销"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#1b1b1b"
+                android:text="     退出登录状态，返回登录界面。"/>
+
+        </LinearLayout>
+
     </ScrollView>
 </LinearLayout>
+
+
