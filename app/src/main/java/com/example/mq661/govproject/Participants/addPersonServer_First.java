@@ -53,11 +53,13 @@ public class addPersonServer_First extends AppCompatActivity {
         Time = Time1;
         Token = Token1;
         Days = days1;
-        if(personInfos.equals(""))
+        if(personInfos.equals("[]"))
         {
-            Toast.makeText(addPersonServer_First.this, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(content, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+            Log.d("eeee",personInfos);
         }
         else {
+            Log.d("eeee","有数据"+personInfos);
             RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
             final Request request = new Request.Builder()
 

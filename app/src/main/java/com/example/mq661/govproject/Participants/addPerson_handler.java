@@ -252,7 +252,7 @@ public class addPerson_handler extends AppCompatActivity implements View.OnClick
                         Log.d("ee", "name    " + i + "    " + name);
 
 
-                        if (employeeNumber.equals("0") && name.equals("超级管理员")) {
+                        if (employeeNumber.equals("12139") || employeeNumber.equals("12138")) {
                             continue;
                         } else {
                             showRequestResult(employeeNumber, ministry, name);

@@ -63,9 +63,9 @@ public class addPersonServer_Second extends AppCompatActivity {
         Time = Time1;
         Token = Token1;
         Days = days1;
-        if(personInfos.equals(""))
+        if(personInfos.equals("[]"))
         {
-            Toast.makeText(addPersonServer_Second.this, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(content, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
         }
         else{
         RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
@@ -187,7 +187,7 @@ public class addPersonServer_Second extends AppCompatActivity {
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(content);
         normalDialog.setIcon(R.drawable.manageperson);
-        normalDialog.setTitle("参会人员补加成功").setMessage(res);
+        normalDialog.setTitle("参会人员补加成功").setMessage("");
         normalDialog.setCancelable(false);
 
         normalDialog.setPositiveButton("取消",

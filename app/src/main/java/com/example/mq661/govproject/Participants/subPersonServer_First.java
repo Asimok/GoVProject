@@ -66,7 +66,7 @@ public class subPersonServer_First extends AppCompatActivity {
         Days = days1;
         if(personInfos.equals(""))
         {
-            Toast.makeText(subPersonServer_First.this, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(content, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
         }
         else {
             RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
