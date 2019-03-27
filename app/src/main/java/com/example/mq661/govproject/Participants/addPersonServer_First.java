@@ -53,35 +53,41 @@ public class addPersonServer_First extends AppCompatActivity {
         Time = Time1;
         Token = Token1;
         Days = days1;
-        RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
-        final Request request = new Request.Builder()
+        if(personInfos.equals(""))
+        {
+            Toast.makeText(addPersonServer_First.this, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
+            final Request request = new Request.Builder()
 
-                .url("http://39.96.68.13:8080/SmartRoom/CommitServlet")
-                .post(body)
-                .build();
-        //异步方法
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Toast.makeText(addPersonServer_First.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                String res = response.body().string();//获取到传过来的字符串
-                Log.d("aa", "res    " + res);
-                try {
-                    JSONObject jsonObj = new JSONObject(res);
-                    String status = jsonObj.getString("Name");
-                    Log.d("aa", "res Name   " + status);
-                    showRequestResult(status);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    .url("http://39.96.68.13:8080/SmartRoom/CommitServlet")
+                    .post(body)
+                    .build();
+            //异步方法
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Toast.makeText(addPersonServer_First.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    String res = response.body().string();//获取到传过来的字符串
+                    Log.d("aa", "res    " + res);
+                    try {
+                        JSONObject jsonObj = new JSONObject(res);
+                        String status = jsonObj.getString("Name");
+                        Log.d("aa", "res Name   " + status);
+                        showRequestResult(status);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     private void showRequestResult(final String Status) {

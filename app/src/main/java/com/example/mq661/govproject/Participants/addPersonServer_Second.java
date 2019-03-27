@@ -63,6 +63,11 @@ public class addPersonServer_Second extends AppCompatActivity {
         Time = Time1;
         Token = Token1;
         Days = days1;
+        if(personInfos.equals(""))
+        {
+            Toast.makeText(addPersonServer_Second.this, "提交人员不能为空！", Toast.LENGTH_SHORT).show();
+        }
+        else{
         RequestBody body = RequestBody.create(null, personInfos);//以字符串方式
         final Request request = new Request.Builder()
 
@@ -94,7 +99,7 @@ public class addPersonServer_Second extends AppCompatActivity {
                 }
             }
         });
-    }
+    }}
 
     private void showRequestResult(final String Status) {
         runOnUiThread(new Runnable() {
