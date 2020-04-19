@@ -5,15 +5,13 @@ android {
         config {
             keyAlias 'gov'
             keyPassword '12398qq'
-            storeFile file('G:/mqjks.jks')
-            storePassword '12398qq'
-        }
+                   }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.example.mq661.govproject"
         minSdkVersion 24
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "GoV 2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

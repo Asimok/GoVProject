@@ -108,7 +108,13 @@ public class addPersonServer_First extends AppCompatActivity {
 //
                     bookroomServer book = new bookroomServer();
                     book.setContent(content);
-                    book.startbookroom(BuildingNumber, RoomNumber, Time, Token, Days);
+                    try {
+                        book.startbookroom(BuildingNumber, RoomNumber, Time, Token, Days);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //
 //                    notify.MyNotification("智能会议室", "参会人员添加成功", R.drawable.book, "addPerson", "添加人员", 15, "添加");
                     addPerson_handler.instance.finish();
@@ -123,7 +129,13 @@ public class addPersonServer_First extends AppCompatActivity {
 
                     bookroomServer book = new bookroomServer();
                     book.setContent(content);
-                    book.startbookroom(BuildingNumber, RoomNumber, Time, Token, Days);
+                    try {
+                        book.startbookroom(BuildingNumber, RoomNumber, Time, Token, Days);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     notify.MyNotification("智能会议室", "部分参会人员添加成功", R.drawable.book, "addPerson1", "添加人员", 16, "添加");
                     showMultiBtnDialog(Status);
 //

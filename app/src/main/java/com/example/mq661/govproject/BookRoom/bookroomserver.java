@@ -1,5 +1,6 @@
 package com.example.mq661.govproject.BookRoom;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class bookroomServer extends AppCompatActivity {
+
+public class bookroomserver extends AppCompatActivity {
     bookinfo myinfo = new bookinfo();
     private bookinfoDBHelper helper3;
     private userDBHelper helper1;
@@ -76,7 +78,7 @@ public class bookroomServer extends AppCompatActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(bookroomServer.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(bookroomserver.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
             }
 
 
